@@ -94,7 +94,7 @@ None of them felt uncertain while doing it.
 ### Recovering Deleted Code to Learn From It
 **Detection:** If you reach for `git show`, `git log -S`, or a branch to recover the old walker-based composition, the `archive/` directory, or any deleted implementation — to see "how it was done."
 **Why it's wrong:** Whatever is missing was deleted deliberately, not lost. Code you know is wrong still pulls you toward it, and reading it "just for reference" is the mechanism by which a scrapped design comes back. Anything worth keeping from it was extracted before the deletion.
-**Recovery:** `context/GALDR_ELEMENT.md` for what exists now and why the removed things were removed; `context/GALDR_CHALLENGES.md` § *Decided — do not re-open* for the calls already made.
+**Recovery:** `context/GALDR_ELEMENT.md` for what exists now and why the removed things were removed; `context/GALDR_CHALLENGES.md` § *Design rules the rest of this document assumes* for what was kept from them.
 
 ### Auditing One Naming Aspect at a Time
 **Detection:** If a naming audit checks positional suffixes but not trunk alignment, or trunk alignment but not placeholder matching.

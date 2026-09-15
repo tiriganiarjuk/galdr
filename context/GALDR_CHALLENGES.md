@@ -67,30 +67,32 @@ aspect at a time each declared success and left the other three broken.
 
 ---
 
-## Decided — do not re-open
+## Design rules the rest of this document assumes
 
-These were settled. Re-litigating them wastes the session and risks reversing a call made
-with context no longer in the room.
+Each of these rests on something specific, stated with it. Any can be challenged; none is a
+stamp.
 
 > **Data is the source of truth for names.** When a control surface disagrees with a data
-> field's name, the *surface* is renamed. The data model is never bent to fit.
+> field's name, the *surface* is renamed. The data model is never bent to fit — because the
+> data is the invariant across every variant of an agent, and the surfaces are the knobs.
 
 > **Structure says WHICH, Display says WHAT COUNT.** A threshold living in `display.toml`
 > beside a toggle in `structure.toml` is not entanglement. Structure names the choice;
-> Display names the count that triggers automatic behaviour. Explicitly struck as *"NOT A
-> MISMATCH"* when the naming work was done.
+> Display names the count that triggers automatic behaviour. Checked and struck as *"NOT A
+> MISMATCH"* during the naming work.
 
 > **The engine is generic.** No per-section functions, no per-section registry. Attempted
-> twice — once as a class hierarchy, once as per-section composers — scrapped both times.
+> twice — once as a class hierarchy, once as per-section composers — and scrapped both times,
+> because section knowledge in Python is agent behaviour that nothing can version.
 
 > **The orphaned walker is deleted.** It was retained for a period as non-normative
-> reference; that call was reversed and the code removed, along with `markdown_render/`,
-> `template_interpolate/` and `data_unwrap/`, which nothing else used. Fifty-six functions.
-> Stage 1 is what remains. Do not restore it from git to consult — its presence is what the
-> deletion was for.
+> reference; the code was then removed, along with `markdown_render/`,
+> `template_interpolate/` and `data_unwrap/`, which nothing else used. Stage 1 is what
+> remains. Restoring it from git to consult defeats the reason it was removed — code you know
+> is wrong still pulls you toward it.
 
 > **`role_responsibility` stays scalar.** An earlier plan recorded the opposite; the field
-> definition forbids the conversion and that plan is void. See A1 for why the reasoning
+> definition forbids the conversion and that plan is void. A1 records why the reasoning
 > failed, which is the part worth keeping.
 
 ---
@@ -104,8 +106,8 @@ above, and what it got wrong is recorded in A1.
 
 ### A1 — `role_responsibility` scalar→list: CLOSED, superseded
 
-The plan's DECIDED entry is dead. See *Decided — do not re-open* above; the field
-definition forbids the conversion, and `e0cb1e1` was right.
+The plan's entry for this is void. The field definition forbids the conversion, and
+`e0cb1e1` was right.
 
 Worth keeping the shape of the error, because it is repeatable. The plan justified the
 change with *"Current usage confirms agents can have multiple responsibility statements."*
