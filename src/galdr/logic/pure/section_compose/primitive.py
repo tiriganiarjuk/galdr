@@ -50,6 +50,19 @@ def strip_display_control_suffix(name: str) -> str:
     )
 
 
+def extract_trunk(name: str) -> str:
+    """Extract the trunk name from any field on any axis.
+
+    Strips all control suffixes (structure, display) and modifiers
+    (content). Operations are idempotent — stripping a suffix that
+    isn't present is a no-op. No axis parameter needed.
+
+    Used by the bundling probe, which lives outside src/ — do not judge
+    this reachable or otherwise by scanning src/ alone.
+    """
+    return strip_modifiers(strip_display_control_suffix(strip_structure_control_suffix(name)))
+
+
 def is_preprocessing_field(name: str) -> bool:
     """True if a field name starts with the `pre_` prefix.
 
