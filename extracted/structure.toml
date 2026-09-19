@@ -70,14 +70,11 @@ follow_strictly_preamble_visible = true
 
 # Step structure
 steps_index_tracking = "n_of_m"  # "n_only" | "n_of_m"
-steps_done_when_postscript_visible = false
 
 # Closing
 follow_strictly_closing_visible = true
-instruction_mode_recap_closing_visible = false
 
-# Dependency and progress
-steps_dependency_label_visible = false
+# Progress
 reminder_midpoint_preamble_visible = false
 
 # Scaffolding tier override (null = auto from step count)

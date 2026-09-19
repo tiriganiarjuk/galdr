@@ -174,7 +174,7 @@ Interpolation is case-insensitive. Placeholder names draw from three sources, no
 
 ```
 {{role_identity}}          a field of the section's data
-{{completion_condition}}   a field of the current list item
+{{success_definition}}     a field of the current list item — SuccessItem.success_definition
 {{step_total}}             a value the engine computes — counts, indices, midpoints
 ```
 

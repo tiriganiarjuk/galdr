@@ -44,11 +44,8 @@ rule_count_awareness_preamble_template = "There are {{rule_count}} inviolable ru
 highlight_step_count_preamble_template = "You will execute {{step_count}} steps."
 sequence_integrity_preamble = "Do not add steps. Do not skip steps. Do not reorder steps."
 follow_strictly_preamble = "Each instruction step is a complete specification. Do not supplement steps with general knowledge or add operations not specified."
-steps_done_when_postscript_template = "Done when: {{completion_condition}}"
-steps_dependency_label_template = "Uses output from: {{dependency_steps}}"
 reminder_midpoint_preamble_template = "You are past the halfway point. Steps 1-{{midpoint}} established the foundation. Steps {{midpoint_next}}-{{step_total}} build on that work."
 follow_strictly_closing_template = "These {{step_count}} steps constitute your complete task. Do not add additional steps."
-instruction_mode_recap_closing_template = "{{mode_recap_text}} There are no other steps."
 steps_heading_template = "Step {{step_n}} of {{step_total}}."
 steps_heading_n_only_template = "Step {{step_n}}."
 
@@ -104,9 +101,9 @@ success_failure_independence_statement_postscript = "Success criteria define qua
 criteria_separator = "Additionally"
 
 [success_criteria.definition_declaration_variant_template]
-declarative_assertion = "{{DEFINITION}}"
-conditional_gate = "This task is complete if and only if: {{DEFINITION}}"
-completion_identity = "You have succeeded when {{DEFINITION}}"
+declarative_assertion = "{{success_definition}}"
+conditional_gate = "This task is complete if and only if: {{success_definition}}"
+completion_identity = "You have succeeded when {{success_definition}}"
 
 [success_criteria.evidence_intro_variant]
 properties = "A successful output has these properties:"

@@ -24,10 +24,7 @@ Agent-builder has 7 steps. Modes vary per step (mixed).
 | ✅ | 8 | `steps_heading_template` | StringTemplate | `_template` | body | `"Step {{step_n}} of {{step_total}}."` |
 | ✅ | 9 | `steps_heading_n_only_template` | StringTemplate | `_template` | body | `"Step {{step_n}}."` |
 | ✅ | 10 | `steps_mode_label_variant` | BaseModel | `_variant` | body | `{deterministic: "**EXACT**", probabilistic: "**JUDGMENT**"}` |
-| ✅ | 11 | `steps_done_when_postscript_template` | StringTemplate | `_postscript_template` | body | `"Done when: {{completion_condition}}"` |
-| ✅ | 12 | `steps_dependency_label_template` | StringTemplate | `_label_template` | body | `"Uses output from: {{dependency_steps}}"` |
 | ✅ | 13 | `follow_strictly_closing_template` | StringTemplate | `_closing_template` | closing | `"These {{step_count}} steps constitute your complete task. Do not add additional steps."` |
-| ✅ | 14 | `instruction_mode_recap_closing_template` | StringTemplate | `_closing_template` | closing | `"{{mode_recap_text}} There are no other steps."` |
 
 ## Structure (InstructionsStructure)
 
@@ -39,10 +36,7 @@ Agent-builder has 7 steps. Modes vary per step (mixed).
 | ✅ | 4 | `sequence_integrity_preamble_visible` | Boolean | `true` | → content #3 |
 | ✅ | 5 | `follow_strictly_preamble_visible` | Boolean | `true` | → content #5 |
 | ✅ | 6 | `steps_index_tracking` | InstructionsStepIndexTracking (enum) | `"n_of_m"` | Selects `steps_heading_template` vs `steps_heading_n_only_template` |
-| ✅ | 7 | `steps_done_when_postscript_visible` | Boolean | `false` | → content #11 |
 | ✅ | 8 | `follow_strictly_closing_visible` | Boolean | `true` | → content #13 |
-| ✅ | 9 | `instruction_mode_recap_closing_visible` | Boolean | `false` | → content #14 |
-| ✅ | 10 | `steps_dependency_label_visible` | Boolean | `false` | → content #12 |
 | ✅ | 11 | `reminder_midpoint_preamble_visible` | Boolean | `false` | → content #7 |
 | ⚠️ | 12 | `pre_scaffolding_tier_override` | InstructionsScaffoldingTierOverride | `"auto"` | Meta-policy that computes visibility toggles from step count |
 
@@ -92,16 +86,9 @@ BODY:
     STEP BODY:   instruction_text            rendered as markdown prose
                                              [display: steps_body_container = "none"]
 
-  steps_done_when_postscript_template      "Done when: {{completion_condition}}"
-                                             [visible: steps_done_when_postscript_visible = false]
-  steps_dependency_label_template          "Uses output from: {{dependency_steps}}"
-                                             [visible: steps_dependency_label_visible = false]
-
 CLOSING:
   ✅ follow_strictly_closing_template      "These {{step_count}} steps constitute your complete task..."
                                              [visible: follow_strictly_closing_visible = true]
-  ✅ instruction_mode_recap_closing_template  "{{mode_recap_text}} There are no other steps."
-                                             [visible: instruction_mode_recap_closing_visible = false]
 ```
 
 ---
@@ -122,4 +109,6 @@ A meta-control that computes which visibility toggles should be active based on 
 
 ### ⚠️ ISSUE 4: Computed placeholders
 
-`{{step_count}}`, `{{step_n}}`, `{{step_total}}`, `{{midpoint}}`, `{{completion_condition}}`, `{{dependency_steps}}`, `{{mode_recap_text}}` are all computed values, not data fields. The engine needs to generate these before interpolation.
+`{{step_count}}`, `{{step_n}}`, `{{step_total}}`, `{{midpoint}}` are computed values, not data fields — counts and indices derived from the list in scope. The engine needs to generate these before interpolation.
+
+This issue previously also listed `{{completion_condition}}`, `{{dependency_steps}}` and `{{mode_recap_text}}` as computed. They were not computed and were not data: they named nothing at all, and their content fields have been deleted.

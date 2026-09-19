@@ -19,7 +19,7 @@ Agent-builder has 1 SuccessItem. Each item has a definition string and a list of
 | ✅ | 2 | `criteria_separator` | TitleString | `_separator` | body | `"Additionally"` |
 | ✅ | 3 | `verification_guidance_postscript` | StringProse | `_postscript` | body | `"Some conditions above are mechanically verifiable; others require your judgment..."` |
 | ✅ | 4 | `success_failure_independence_statement_postscript` | StringProse | `_postscript` | body | `"Success criteria define quality. Failure criteria define breakage. These are independent evaluations."` |
-| ✅ | 5 | `definition_declaration_variant_template` | BaseModel | `_variant_template` | body | `{declarative_assertion: "{{DEFINITION}}", conditional_gate: "...", completion_identity: "..."}` |
+| ✅ | 5 | `definition_declaration_variant_template` | BaseModel | `_variant_template` | body | `{declarative_assertion: "{{success_definition}}", conditional_gate: "...", completion_identity: "..."}` |
 | ✅ | 6 | `evidence_intro_variant` | BaseModel | `_variant` | body | `{properties: "A successful output has these properties:", verification_checklist: "...", quality_signals: "..."}` |
 | ✅ | 7 | `definition_to_evidence_transition_variant` | BaseModel | `_variant` | body | `{goal_then_criteria: "Meeting this standard means:", proof: "...", dual_presentation: "..."}` |
 
@@ -59,7 +59,7 @@ BODY:
     .success_definition                    → scalar string (SuccessDefinition)
     .success_evidence                      → list of StringProse scalars
 
-    ⚠️ definition_declaration_variant_template  {selector: "declarative_assertion" → "{{DEFINITION}}"}
+    ⚠️ definition_declaration_variant_template  {selector: "declarative_assertion" → "{{success_definition}}"}
                                              wraps success_definition — per-item rendering not yet wired
     ⚠️ definition_to_evidence_transition_variant  {selector: "goal_then_criteria" → "Meeting this standard means:"}
                                              transition between definition and evidence list — not wired

@@ -198,14 +198,10 @@ preamble:
 body:
   [steps]
     data: steps
-    content: steps_done_when_postscript_template
-    content: steps_dependency_label_template
     content: steps_heading_template
     content: steps_heading_n_only_template
     content: steps_mode_label_variant
     structure: steps_index_tracking
-    structure: steps_done_when_postscript_visible
-    structure: steps_dependency_label_visible
     display: steps_heading_format
     display: steps_body_container
     display: steps_mode_separator
@@ -217,9 +213,6 @@ closing:
   [follow_strictly_closing]
     content: follow_strictly_closing_template
     structure: follow_strictly_closing_visible
-  [instruction_mode_recap_closing]
-    content: instruction_mode_recap_closing_template
-    structure: instruction_mode_recap_closing_visible
 ```
 
 ## examples

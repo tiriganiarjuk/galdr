@@ -133,24 +133,26 @@ B1 and E2 need the second, not the first. Both are cheap; neither is free. The m
 teeth — taken as "no regeneration," B1 looks like a TOML edit, and the gate rejects `"auto"`
 where a Boolean is declared, because the gate embeds the schema it was built with.
 
-### A2 — Two groups landed without achieving the plan's own goal
+### A2 — Groups that landed without achieving the plan's own goal
 
-The plan exists so trunks correspond mechanically. Two groups were renamed but not onto a
+The plan exists so trunks correspond mechanically. A group was renamed but not onto a
 matching trunk:
 
 ```
 examples       data       ExampleEntry.example_heading
                content    example_heading_template           trunk  example_heading       ✓
                display    groups_entry_heading_format        trunk  groups_entry_heading  ✗
-
-instructions   content    instruction_mode_recap_closing_template   trunk  instruction_mode_recap  ✓
-               structure  instruction_mode_recap_closing_visible    trunk  instruction_mode_recap  ✓
-               display    steps_mode_recap_format                   trunk  steps_mode_recap        ✗
 ```
 
-Both times the display axis settled on a trunk that exists on no other axis. Both are
-inside groups the plan treats as addressed, and neither is catchable by gate validation —
-a gate checks a file's shape, never cross-axis agreement.
+The display axis settled on a trunk that exists on no other axis. It sits inside a group the
+plan treats as addressed, and it is not catchable by gate validation — a gate checks a file's
+shape, never cross-axis agreement.
+
+The instructions group had the same shape — content and structure on
+`instruction_mode_recap`, display on `steps_mode_recap` — and is gone. The content and
+structure fields were deleted along with `{{mode_recap_text}}`, the placeholder that named no
+data field. `steps_mode_recap_format` survives in the display surface with nothing on any
+other axis, so what was a mismatch is now an orphan.
 
 ---
 
