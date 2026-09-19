@@ -55,9 +55,6 @@ steps_mode_restrict_to_transition = false
 steps_scaffolding_lightweight_threshold = 3
 steps_scaffolding_standard_threshold = 7
 
-# Mode recap format in closer
-steps_mode_recap_format = "prose"  # "prose" | "tabular"
-
 [examples]
 # Entry heading format — bold text vs H4
 # Bold preserves boundaries without visual density for groups with 5+ entries

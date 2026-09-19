@@ -208,7 +208,6 @@ body:
     display: steps_mode_restrict_to_transition
     display: steps_scaffolding_lightweight_threshold
     display: steps_scaffolding_standard_threshold
-    display: steps_mode_recap_format
 closing:
   [follow_strictly_closing]
     content: follow_strictly_closing_template

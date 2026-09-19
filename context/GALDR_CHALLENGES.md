@@ -149,10 +149,16 @@ plan treats as addressed, and it is not catchable by gate validation — a gate 
 shape, never cross-axis agreement.
 
 The instructions group had the same shape — content and structure on
-`instruction_mode_recap`, display on `steps_mode_recap` — and is gone. The content and
-structure fields were deleted along with `{{mode_recap_text}}`, the placeholder that named no
-data field. `steps_mode_recap_format` survives in the display surface with nothing on any
-other axis, so what was a mismatch is now an orphan.
+`instruction_mode_recap`, display on `steps_mode_recap` — and is gone entirely. The content
+and structure fields went with `{{mode_recap_text}}`, the placeholder that named no data
+field; `steps_mode_recap_format` was then excised too, since a format for something that no
+longer renders is a control over nothing.
+
+Worth noting how that one resolved, because it is the cheaper path when it is available: the
+mismatch was not repaired by renaming a trunk. The whole group turned out to rest on a
+placeholder that could never fill, so the fix was removal at the source rather than alignment
+across three axes. Check whether a mismatched trunk is pointing at something real before
+deciding which end to move.
 
 ---
 
