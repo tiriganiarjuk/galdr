@@ -60,12 +60,11 @@ One field, two mutually exclusive behaviours it cannot express.
 
 ### Neither behaviour is enforced
 
-Verified, not inferred. A `context_required` path pointing at a nonexistent
-file:
+Tested. A `context_required` path pointing at a nonexistent file:
 
 - passes all fourteen Regin stages and every gate
-- ships into the prompt as "Read `/…/THIS-FILE-DOES-NOT-EXIST.md`"
-- **mints an implicit read grant for the missing path**
+- lands in `anthropic_render.toml` as `[[input.context_required]]`
+- **gets a `Read` hook minted for it** — `frontmatter.hooks.tool_entries`
 
 Why: `context_path__abs` uses `atom/path_absolute`. Every other resolved path in
 the project — `input_schema__x_abs`, `workspace_path__x_abs`,
@@ -73,6 +72,52 @@ the project — `input_schema__x_abs`, `workspace_path__x_abs`,
 `element/path_exists_absolute`, which is the same atom plus `format: exists`.
 Context is the exception. Path resolution is type-driven and has no
 required/available branch.
+
+> An earlier version of this section said the path "ships into the prompt."
+> It does not — there is no prompt. Galdr builds stage 1 only; its output is
+> a slot inspection listing, and stages 2–4 are not built. The claim was read
+> off the content template, not observed.
+
+### Prior question: is context embedded, or pointed at?
+
+**This has to be answered before the type split**, because it decides what
+"must" and "should" reduce to mechanically.
+
+`field/context_path__any` — the field both lists share — describes itself:
+
+> *"The transformer **embeds this file's content into the agent prompt** as a
+> labeled section (using context_label as the heading) AND adds the path to
+> read hooks… Because content is embedded, **consider file size — large files
+> consume context window**."*
+
+Nothing embeds. The only file Regin's logic opens is
+`nornir/tool_registry.toml`; Galdr never sees a context file. The content
+template is `**{{context_label}}**: Read \`{{context_path}}\`` — a pointer the
+agent resolves at runtime, which is why the read hook exists at all.
+
+| | if **embedded** | if **pointed at** |
+|---|---|---|
+| required missing | build fails — can't embed what isn't there | a build-time existence check |
+| available missing | drop the section — natural | **not a build behaviour**; the agent hits it at runtime |
+| read hook needed | no | yes |
+| file size matters | yes | no |
+
+"Silently skipped if missing" only coheres under embed. Under the pointer
+design nothing skips anything — unless Galdr checks existence at compose time
+and omits the entry, which is a separate decision.
+
+### What Regin and Galdr actually do with a context entry
+
+| stage | effect on a context path |
+|---|---|
+| Regin L1 `paths_resolve` | `./x.md` → `/abs/x.md`, type-driven, no branch |
+| Regin L3 `permissions_resolve` | adds the path to the `Read` hook list |
+| Regin L7 `render_regroup` | reshapes into `input.context_required` / `_available` |
+| Galdr stage 1 | chunks the fields into section/slot buckets |
+| Galdr stages 2–4 | **not built** |
+
+Galdr's output today begins `# Stage 1 Slot Inspection` and contains no
+rendered prose.
 
 ### The proposal — share the label, split the path
 
@@ -288,7 +333,7 @@ misled me once; fix before trusting a path string from it.
 
 ---
 
-## My two errors this session, for the record
+## My three errors this session, for the record
 
 **I asserted both context arrays "specialize `simplegroup/context_item`."** They
 alias it. I read `context_required.yaml` and assumed the other file was
@@ -298,3 +343,8 @@ justification did not.
 
 **I reported 13 thresholds twice.** There are 12; I had counted comment lines
 in a grep.
+
+**I wrote that a missing context path "ships into the prompt."** There is no
+prompt — Galdr builds stage 1 only, and I had seen its output earlier the same
+session. I read the claim off the content template and reported it as an
+observation. The verified facts are narrower and are stated above.
