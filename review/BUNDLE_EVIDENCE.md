@@ -11,63 +11,101 @@ raw material they are drawn from.
 
 | verdict | count | meaning |
 |---|---|---|
-| exact | 14 | stripped name *is* the bundle trunk — quiet |
-| depth | 1 | remainder names a nested field — needs path syntax |
-| abbreviated | 11 | remainder matches only a field's last word — rename |
-| role | 23 | one word after the trunk — decorates the anchor |
-| **compound** | **19** | several words, naming nothing — the open problem |
-| selector | 13 | variant chooser — placed by a different rule |
-| unstripped | 16 | trunk still ends in an unknown control tail |
+| exact | 14 | the stripped name *is* the bundle trunk |
+| role | 19 | declared positional suffix on the trunk |
+| sub-block | 5 | declared sub-block pattern, group found in data |
+| sub-block? | 6 | same pattern, but no such group in the data |
+| abbreviated | 9 | resolves only by a field's last word — rename |
+| depth | 1 | remainder names a nested field directly |
+| selector | 5 | variant chooser — placed by a different rule |
+| plain enum | 2 | the two the document declares by name |
+| **undeclared** | **12** | ends in nothing the positional table contains |
+| **bad control** | **27** | control suffix outside the declared set — of which 10 are `_selector` (in code, not in the table) and 3 a bare `_threshold` |
 | prose anchors | 74 | content opened its own bundle (most by design) |
 
-## Undeclared compounds — the worst of it
+## Control suffixes outside the declared set
 
-Absorbed into the bundle by prefix alone, and what follows the trunk is
-*several words* that name no field at any depth. Either it addresses
-something nested by an ad-hoc name, or the vocabulary is missing a word.
-Sorted by bundle, because a bundle with many of these has one cause.
+Every structure and display field is a control, and the declared set is
+closed: `_visible` `_override` `_format` `_format_threshold`
+`_visibility_threshold` `_activation_threshold` `_auto_threshold`
+(TOML_ARCHITECTURE § Field Interface Patterns, § Threshold Types).
+A bare `_threshold` is the most tractable case — the same document's
+§ Threshold Types gives the three it could be, and its own example for
+`_activation_threshold` is polarity grouping.
 
-| section | bundle | field | axis | what follows the trunk |
+| section | field | axis | tail | status |
 |---|---|---|---|---|
-| constraints | `rules` | `rules_polarity_normalization` | display | `polarity_normalization` |
-| constraints | `rules` | `rules_polarity_grouping_threshold` | display | `polarity_grouping_threshold` |
-| examples | `groups` | `groups_entry_body_container` | display | `entry_body_container` |
-| examples | `groups` | `groups_entry_separator` | display | `entry_separator` |
-| input | `context` | `context_required_heading` | content | `required_heading` |
-| input | `context` | `context_required_intro` | content | `required_intro` |
-| input | `context` | `context_required_entry_template` | content | `required_entry` |
-| input | `context` | `context_available_heading` | content | `available_heading` |
-| input | `context` | `context_required_intro_visible` | structure | `required_intro` |
-| instructions | `steps` | `steps_heading_n_only_template` | content | `heading_n_only` |
-| instructions | `steps` | `steps_mode_label_variant` | content | `mode_label` |
-| instructions | `steps` | `steps_index_tracking` | structure | `index_tracking` |
-| instructions | `steps` | `steps_body_container` | display | `body_container` |
-| instructions | `steps` | `steps_mode_separator` | display | `mode_separator` |
-| instructions | `steps` | `steps_mode_restrict_to_transition` | display | `mode_restrict_to_transition` |
-| instructions | `steps` | `steps_scaffolding_lightweight_threshold` | display | `scaffolding_lightweight_threshold` |
-| instructions | `steps` | `steps_scaffolding_standard_threshold` | display | `scaffolding_standard_threshold` |
-| security_boundary | `filesystem_permissions` | `filesystem_permissions_path_style` | display | `path_style` |
-| success_criteria | `criteria` | `criteria_evidence_type_handling` | structure | `evidence_type_handling` |
+| constraints | `compliance_reminder_closing_selector` | structure | `_selector` | in code, absent from the table |
+| constraints | `no_inferred_constraints_preamble_selector` | structure | `_selector` | in code, absent from the table |
+| constraints | `rules_polarity_grouping_threshold` | display | `_threshold` | bare — needs a threshold type |
+| constraints | `rules_polarity_normalization` | display | `_normalization` | undeclared |
+| constraints | `section_preamble_selector` | structure | `_selector` | in code, absent from the table |
+| critical_rules | `tool_name_repetition` | display | `_repetition` | undeclared |
+| examples | `groups_entry_body_container` | display | `_container` | undeclared |
+| examples | `groups_entry_separator` | display | `_separator` | undeclared |
+| examples | `groups_separator` | display | `_separator` | undeclared |
+| examples | `groups_display_headings` | structure | `_headings` | undeclared |
+| examples | `groups_max_number` | structure | `_number` | undeclared |
+| examples | `groups_suppress_lone_heading` | structure | `_heading` | undeclared |
+| failure_criteria | `abort_stance_selector` | structure | `_selector` | in code, absent from the table |
+| instructions | `section_start_selector` | structure | `_selector` | in code, absent from the table |
+| instructions | `steps_body_container` | display | `_container` | undeclared |
+| instructions | `steps_mode_restrict_to_transition` | display | `_transition` | undeclared |
+| instructions | `steps_mode_separator` | display | `_separator` | undeclared |
+| instructions | `steps_scaffolding_lightweight_threshold` | display | `_threshold` | bare — needs a threshold type |
+| instructions | `steps_scaffolding_standard_threshold` | display | `_threshold` | bare — needs a threshold type |
+| output | `directory_location_selector` | structure | `_selector` | in code, absent from the table |
+| output | `schema_embed` | structure | `_embed` | undeclared |
+| security_boundary | `filesystem_permissions_path_style` | display | `_style` | undeclared |
+| security_boundary | `framing_selector` | structure | `_selector` | in code, absent from the table |
+| success_criteria | `criteria_evidence_type_handling` | structure | `_handling` | undeclared |
+| success_criteria | `definition_declaration_selector` | structure | `_selector` | in code, absent from the table |
+| success_criteria | `definition_to_evidence_transition_selector` | structure | `_selector` | in code, absent from the table |
+| success_criteria | `evidence_intro_selector` | structure | `_selector` | in code, absent from the table |
 
-## Role suffixes — one word after the trunk
+## Positional suffixes outside the declared table
 
-The control decorates the anchor as a whole: its label, its heading, its
-separator. Not a mis-binding — but the words below are a vocabulary nobody
-has declared, and the engine cannot tell them from a field name.
+08_NAMING_REQUIREMENTS rule 1: every content field carries a *terminal*
+positional suffix, and TOML_ARCHITECTURE § Universal Block Assembly Order
+is the table. These names end in something that is not in it, so the
+engine cannot place them and the author gets no steer from the name.
 
-| word | count | used by |
-|---|---|---|
-| `heading` | 5 | input.`parameters_heading_auto_threshold`, input.`parameters_heading_visible`, input.`parameters_heading`, instructions.`steps_heading_format`, instructions.`steps_heading_template` |
-| `postscript` | 4 | identity.`role_expertise_postscript_visible`, identity.`role_expertise_postscript`, identity.`role_identity_postscript_template`, identity.`role_identity_postscript_visible` |
-| `label` | 4 | identity.`role_expertise_label`, security_boundary.`filesystem_permissions_label_visibility_threshold`, security_boundary.`filesystem_permissions_label_visible`, security_boundary.`filesystem_permissions_label` |
-| `transition` | 2 | input.`parameters_transition_visible`, input.`parameters_transition` |
-| `separator` | 2 | examples.`groups_separator`, success_criteria.`criteria_separator` |
-| `toolset` | 1 | security_boundary.`filesystem_permissions_toolset_format` |
-| `list` | 1 | security_boundary.`filesystem_permissions_list_format` |
-| `entry` | 1 | input.`parameters_entry_template` |
-| `repetition` | 1 | critical_rules.`tool_name_repetition` |
-| `relationship` | 1 | success_criteria.`criteria_relationship` |
-| `intro` | 1 | output.`schema_embed_intro` |
+| section | bundle | field | axis | ends in |
+|---|---|---|---|---|
+| constraints | `rules` | `rules_polarity_grouping_threshold` | display | `threshold` |
+| constraints | `rules` | `rules_polarity_normalization` | display | `normalization` |
+| critical_rules | `tool_name` | `tool_name_repetition` | display | `repetition` |
+| examples | `groups` | `groups_entry_body_container` | display | `container` |
+| instructions | `steps` | `steps_heading_n_only_template` | content | `only` |
+| instructions | `steps` | `steps_body_container` | display | `container` |
+| instructions | `steps` | `steps_scaffolding_lightweight_threshold` | display | `threshold` |
+| instructions | `steps` | `steps_scaffolding_standard_threshold` | display | `threshold` |
+| security_boundary | `filesystem_permissions` | `filesystem_permissions_list_format` | display | `list` |
+| security_boundary | `filesystem_permissions` | `filesystem_permissions_path_style` | display | `style` |
+| security_boundary | `filesystem_permissions` | `filesystem_permissions_toolset_format` | display | `toolset` |
+| success_criteria | `criteria` | `criteria_evidence_type_handling` | structure | `handling` |
+
+## Sub-blocks — the declared pattern the engine does not model
+
+TOML_ARCHITECTURE line 87: *within a section, each data group
+(context_required, parameters, etc.) follows the same heading → preamble
+→ label → entries → postscript pattern.* These fields use it correctly.
+The bundler does not know sub-blocks exist, so it binds them to the
+section's data field by prefix and loses which group they belong to.
+
+| section | bundle | sub-block | suffix | field | group in data |
+|---|---|---|---|---|---|
+| examples | `groups` | `entry` | `_heading` | `groups_entry_heading_format` | **not found** |
+| examples | `groups` | `entry` | `_separator` | `groups_entry_separator` | **not found** |
+| examples | `groups` | `suppress_lone` | `_heading` | `groups_suppress_lone_heading` | **not found** |
+| input | `context` | `available` | `_heading` | `context_available_heading` | `context[].context_available` |
+| input | `context` | `required` | `_entry_template` | `context_required_entry_template` | `context[].context_required` |
+| input | `context` | `required` | `_heading` | `context_required_heading` | `context[].context_required` |
+| input | `context` | `required` | `_intro` | `context_required_intro` | `context[].context_required` |
+| input | `context` | `required` | `_intro` | `context_required_intro_visible` | `context[].context_required` |
+| instructions | `steps` | `mode` | `_label` | `steps_mode_label_variant` | **not found** |
+| instructions | `steps` | `mode_restrict_to` | `_transition` | `steps_mode_restrict_to_transition` | **not found** |
+| instructions | `steps` | `mode` | `_separator` | `steps_mode_separator` | **not found** |
 
 ## Abbreviated matches — the name is short for something
 
@@ -78,12 +116,10 @@ These are renames, not defects — the suggestion is mechanical, check it.
 |---|---|---|---|
 | input | `context_required_format` | context_required / param_required | `context_context_required` |
 | input | `context_available_format` | context_available | `context_context_available` |
-| examples | `groups_suppress_lone_heading` | example_heading | `groups_example_heading` |
 | examples | `groups_display_headings_override` | example_display_headings | `groups_example_display_headings` |
 | examples | `groups_max_number_override` | examples_max_number | `groups_examples_max_number` |
 | examples | `groups_display_headings` | example_display_headings | `groups_example_display_headings` |
 | examples | `groups_max_number` | examples_max_number | `groups_examples_max_number` |
-| examples | `groups_entry_heading_format` | example_heading | `groups_example_heading` |
 | success_criteria | `criteria_evidence_format` | success_evidence | `criteria_success_evidence` |
 | success_criteria | `criteria_evidence_format_threshold` | success_evidence | `criteria_success_evidence` |
 | failure_criteria | `criteria_evidence_format` | failure_evidence | `criteria_failure_evidence` |
@@ -97,23 +133,20 @@ trunk vocabulary has no syntax for the path; the name only works by luck.
 |---|---|---|
 | input | `description_format_template` | `format` |
 
-## Vocabulary gaps — tails no strip function knows
+## Conforming roles — quiet, listed for completeness
 
-The stripped name still ends in a control-looking word, so what the
-matcher called a trunk is not one. Every match made on it is suspect.
+A declared positional suffix directly on the anchor's trunk. These are
+the cases the naming law was written for; nothing to decide here.
 
-| tail | count | fields |
-|---|---|---|
-| `_separator` | 4 | `criteria_separator`, `groups_entry_separator`, `groups_separator`, `steps_mode_separator` |
-| `_container` | 2 | `groups_entry_body_container`, `steps_body_container` |
-| `_headings` | 2 | `groups_display_headings_override`, `groups_display_headings` |
-| `_number` | 2 | `groups_max_number_override`, `groups_max_number` |
-| `_style` | 1 | `filesystem_permissions_path_style` |
-| `_repetition` | 1 | `tool_name_repetition` |
-| `_tracking` | 1 | `steps_index_tracking` |
-| `_normalization` | 1 | `rules_polarity_normalization` |
-| `_handling` | 1 | `criteria_evidence_type_handling` |
-| `_relationship` | 1 | `criteria_relationship` |
+| suffix | count |
+|---|---|
+| `_heading` | 5 |
+| `_postscript` | 4 |
+| `_label` | 4 |
+| `_transition` | 2 |
+| `_separator` | 2 |
+| `_entry_template` | 1 |
+| `_intro` | 1 |
 
 ## Anchors with no data field
 
@@ -161,15 +194,15 @@ cannot tell which, but every one is a thing to account for.
 | body | `title` | data | `title` | data | anchor |  |
 | body | `role_identity` | data | `role_identity` | data | anchor |  |
 |  |  |  | `role_identity_template` | content | exact |  |
-|  |  |  | `role_identity_postscript_template` | content | role | `postscript` |
-|  |  |  | `role_identity_postscript_visible` | structure | role | `postscript` |
+|  |  |  | `role_identity_postscript_template` | content | role |  |
+|  |  |  | `role_identity_postscript_visible` | structure | role |  |
 | body | `role_responsibility` | data | `role_responsibility` | data | anchor |  |
 |  |  |  | `role_responsibility_template` | content | exact |  |
 | body | `role_description` | data | `role_description` | data | anchor |  |
 | body | `role_expertise` | data | `role_expertise` | data | anchor |  |
-|  |  |  | `role_expertise_label` | content | role | `label` |
-|  |  |  | `role_expertise_postscript` | content | role | `postscript` |
-|  |  |  | `role_expertise_postscript_visible` | structure | role | `postscript` |
+|  |  |  | `role_expertise_label` | content | role |  |
+|  |  |  | `role_expertise_postscript` | content | role |  |
+|  |  |  | `role_expertise_postscript_visible` | structure | role |  |
 |  |  |  | `role_expertise_format` | display | exact |  |
 |  |  |  | `role_expertise_format_threshold` | display | exact |  |
 | closing | `identity_reminder_closing` | prose | `identity_reminder_closing_template` | content | exact (prose anchor) |  |
@@ -186,12 +219,12 @@ cannot tell which, but every one is a thing to account for.
 |  |  |  | `framing_selector` | structure | selector |  |
 | body | `workspace_path` | data | `workspace_path` | data | anchor |  |
 | body | `filesystem_permissions` | data | `filesystem_permissions` | data | anchor |  |
-|  |  |  | `filesystem_permissions_label` | content | role | `label` |
-|  |  |  | `filesystem_permissions_label_visible` | structure | role | `label` |
-|  |  |  | `filesystem_permissions_path_style` | display | COMPOUND | `path_style` |
-|  |  |  | `filesystem_permissions_toolset_format` | display | role | `toolset` |
-|  |  |  | `filesystem_permissions_label_visibility_threshold` | display | role | `label` |
-|  |  |  | `filesystem_permissions_list_format` | display | role | `list` |
+|  |  |  | `filesystem_permissions_label` | content | role |  |
+|  |  |  | `filesystem_permissions_label_visible` | structure | role |  |
+|  |  |  | `filesystem_permissions_path_style` | display | UNDECLARED |  |
+|  |  |  | `filesystem_permissions_toolset_format` | display | UNDECLARED |  |
+|  |  |  | `filesystem_permissions_label_visibility_threshold` | display | role |  |
+|  |  |  | `filesystem_permissions_list_format` | display | UNDECLARED |  |
 | body | `compound_entry` | prose | `compound_entry_template` | content | exact (prose anchor) |  |
 | body | `grouped_tool_heading` | prose | `grouped_tool_heading_template` | content | exact (prose anchor) |  |
 | body | `framing_declaration` | prose | `framing_declaration_variant_template` | content | exact (prose anchor) |  |
@@ -212,20 +245,20 @@ cannot tell which, but every one is a thing to account for.
 | body | `delivery` | data | `delivery` | data | anchor |  |
 | body | `input_schema` | data | `input_schema` | data | anchor |  |
 | body | `parameters` | data | `parameters` | data | anchor |  |
-|  |  |  | `parameters_transition` | content | role | `transition` |
-|  |  |  | `parameters_heading` | content | role | `heading` |
-|  |  |  | `parameters_entry_template` | content | role | `entry` |
-|  |  |  | `parameters_transition_visible` | structure | role | `transition` |
-|  |  |  | `parameters_heading_visible` | structure | role | `heading` |
-|  |  |  | `parameters_heading_auto_threshold` | structure | role | `heading` |
+|  |  |  | `parameters_transition` | content | role |  |
+|  |  |  | `parameters_heading` | content | role |  |
+|  |  |  | `parameters_entry_template` | content | role |  |
+|  |  |  | `parameters_transition_visible` | structure | role |  |
+|  |  |  | `parameters_heading_visible` | structure | role |  |
+|  |  |  | `parameters_heading_auto_threshold` | structure | role |  |
 |  |  |  | `parameters_format` | display | exact |  |
 |  |  |  | `parameters_format_threshold` | display | exact |  |
 | body | `context` | data | `context` | data | anchor |  |
-|  |  |  | `context_required_heading` | content | COMPOUND | `required_heading` |
-|  |  |  | `context_required_intro` | content | COMPOUND | `required_intro` |
-|  |  |  | `context_required_entry_template` | content | COMPOUND | `required_entry` |
-|  |  |  | `context_available_heading` | content | COMPOUND | `available_heading` |
-|  |  |  | `context_required_intro_visible` | structure | COMPOUND | `required_intro` |
+|  |  |  | `context_required_heading` | content | sub-block | context[].context_required |
+|  |  |  | `context_required_intro` | content | sub-block | context[].context_required |
+|  |  |  | `context_required_entry_template` | content | sub-block | context[].context_required |
+|  |  |  | `context_available_heading` | content | sub-block | context[].context_available |
+|  |  |  | `context_required_intro_visible` | structure | sub-block | context[].context_required |
 |  |  |  | `context_required_format` | display | abbreviated | context_required / param_required |
 |  |  |  | `context_available_format` | display | abbreviated | context_available |
 | body | `input_completeness_postscript` | prose | `input_completeness_postscript` | content | exact (prose anchor) |  |
@@ -248,7 +281,7 @@ cannot tell which, but every one is a thing to account for.
 | body | `has_output_tool` | data | `has_output_tool` | data | anchor |  |
 | body | `tool_name` | data | `tool_name` | data | anchor |  |
 |  |  |  | `tool_name_format` | display | exact |  |
-|  |  |  | `tool_name_repetition` | display | role | `repetition` |
+|  |  |  | `tool_name_repetition` | display | UNDECLARED |  |
 | body | `name_needed` | data | `name_needed` | data | anchor |  |
 | body | `batch_size` | data | `batch_size` | data | anchor |  |
 |  |  |  | `batch_size_format` | display | exact |  |
@@ -272,7 +305,7 @@ cannot tell which, but every one is a thing to account for.
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
 | heading | `section_start` | prose | `section_start_variant_template` | content | exact (prose anchor) |  |
-|  |  |  | `section_start_selector` | structure | selector |  |
+|  |  |  | `section_start_selector` | structure | exact (prose anchor) |  |
 | preamble | `highlight_step_count_preamble` | prose | `highlight_step_count_preamble_template` | content | exact (prose anchor) |  |
 |  |  |  | `highlight_step_count_preamble_visible` | structure | exact (prose anchor) |  |
 | preamble | `sequence_integrity_preamble` | prose | `sequence_integrity_preamble` | content | exact (prose anchor) |  |
@@ -284,16 +317,16 @@ cannot tell which, but every one is a thing to account for.
 | preamble | `instruction_mode_explanation_preamble` | prose | `instruction_mode_explanation_preamble_variant` | content | exact (prose anchor) |  |
 |  |  |  | `instruction_mode_explanation_preamble_visible` | structure | exact (prose anchor) |  |
 | body | `steps` | data | `steps` | data | anchor |  |
-|  |  |  | `steps_heading_template` | content | role | `heading` |
-|  |  |  | `steps_heading_n_only_template` | content | COMPOUND | `heading_n_only` |
-|  |  |  | `steps_mode_label_variant` | content | COMPOUND | `mode_label` |
-|  |  |  | `steps_index_tracking` | structure | COMPOUND | `index_tracking` |
-|  |  |  | `steps_heading_format` | display | role | `heading` |
-|  |  |  | `steps_body_container` | display | COMPOUND | `body_container` |
-|  |  |  | `steps_mode_separator` | display | COMPOUND | `mode_separator` |
-|  |  |  | `steps_mode_restrict_to_transition` | display | COMPOUND | `mode_restrict_to_transition` |
-|  |  |  | `steps_scaffolding_lightweight_threshold` | display | COMPOUND | `scaffolding_lightweight_threshold` |
-|  |  |  | `steps_scaffolding_standard_threshold` | display | COMPOUND | `scaffolding_standard_threshold` |
+|  |  |  | `steps_heading_template` | content | role |  |
+|  |  |  | `steps_heading_n_only_template` | content | UNDECLARED |  |
+|  |  |  | `steps_mode_label_variant` | content | SUB-BLOCK? |  |
+|  |  |  | `steps_index_tracking` | structure | plain enum |  |
+|  |  |  | `steps_heading_format` | display | role |  |
+|  |  |  | `steps_body_container` | display | UNDECLARED |  |
+|  |  |  | `steps_mode_separator` | display | SUB-BLOCK? |  |
+|  |  |  | `steps_mode_restrict_to_transition` | display | SUB-BLOCK? |  |
+|  |  |  | `steps_scaffolding_lightweight_threshold` | display | UNDECLARED |  |
+|  |  |  | `steps_scaffolding_standard_threshold` | display | UNDECLARED |  |
 | closing | `follow_strictly_closing` | prose | `follow_strictly_closing_template` | content | exact (prose anchor) |  |
 |  |  |  | `follow_strictly_closing_visible` | structure | exact (prose anchor) |  |
 
@@ -307,15 +340,15 @@ cannot tell which, but every one is a thing to account for.
 | preamble | `group_framing_preamble` | prose | `group_framing_preamble_template` | content | exact (prose anchor) |  |
 |  |  |  | `group_framing_preamble_visible` | structure | exact (prose anchor) |  |
 | body | `groups` | data | `groups` | data | anchor |  |
-|  |  |  | `groups_suppress_lone_heading` | structure | abbreviated | example_heading |
+|  |  |  | `groups_suppress_lone_heading` | structure | SUB-BLOCK? |  |
 |  |  |  | `groups_display_headings_override` | structure | abbreviated | example_display_headings |
 |  |  |  | `groups_max_number_override` | structure | abbreviated | examples_max_number |
 |  |  |  | `groups_display_headings` | structure | abbreviated | example_display_headings |
 |  |  |  | `groups_max_number` | structure | abbreviated | examples_max_number |
-|  |  |  | `groups_entry_heading_format` | display | abbreviated | example_heading |
-|  |  |  | `groups_entry_body_container` | display | COMPOUND | `entry_body_container` |
-|  |  |  | `groups_entry_separator` | display | COMPOUND | `entry_separator` |
-|  |  |  | `groups_separator` | display | role | `separator` |
+|  |  |  | `groups_entry_heading_format` | display | SUB-BLOCK? |  |
+|  |  |  | `groups_entry_body_container` | display | UNDECLARED |  |
+|  |  |  | `groups_entry_separator` | display | SUB-BLOCK? |  |
+|  |  |  | `groups_separator` | display | role |  |
 | body | `example_heading` | prose | `example_heading_template` | content | exact (prose anchor) |  |
 
 ### constraints
@@ -331,22 +364,22 @@ cannot tell which, but every one is a thing to account for.
 |  |  |  | `hierarchy_three_tier_explanation_preamble_visible` | structure | exact (prose anchor) |  |
 | preamble | `section_preamble` | prose | `section_preamble_variant` | content | exact (prose anchor) |  |
 |  |  |  | `section_preamble_visible` | structure | exact (prose anchor) |  |
-|  |  |  | `section_preamble_selector` | structure | selector |  |
+|  |  |  | `section_preamble_selector` | structure | exact (prose anchor) |  |
 | preamble | `no_inferred_constraints_preamble` | prose | `no_inferred_constraints_preamble_variant_template` | content | exact (prose anchor) |  |
 |  |  |  | `no_inferred_constraints_preamble_visible` | structure | exact (prose anchor) |  |
-|  |  |  | `no_inferred_constraints_preamble_selector` | structure | selector |  |
+|  |  |  | `no_inferred_constraints_preamble_selector` | structure | exact (prose anchor) |  |
 | body | `rules` | data | `rules` | data | anchor |  |
 |  |  |  | `rules_format` | display | exact |  |
 |  |  |  | `rules_format_threshold` | display | exact |  |
-|  |  |  | `rules_polarity_normalization` | display | COMPOUND | `polarity_normalization` |
-|  |  |  | `rules_polarity_grouping_threshold` | display | COMPOUND | `polarity_grouping_threshold` |
+|  |  |  | `rules_polarity_normalization` | display | UNDECLARED |  |
+|  |  |  | `rules_polarity_grouping_threshold` | display | UNDECLARED |  |
 | body | `constraint_count_heading` | prose | `constraint_count_heading_template` | content | exact (prose anchor) |  |
 |  |  |  | `constraint_count_heading_visible` | structure | exact (prose anchor) |  |
 |  |  |  | `constraint_count_heading_visibility_threshold` | display | exact (prose anchor) |  |
 | closing | `compliance_reminder_closing` | prose | `compliance_reminder_closing_variant_template` | content | exact (prose anchor) |  |
 |  |  |  | `compliance_reminder_closing_visible` | structure | exact (prose anchor) |  |
 |  |  |  | `compliance_reminder_closing_visibility_threshold` | display | exact (prose anchor) |  |
-|  |  |  | `compliance_reminder_closing_selector` | structure | selector |  |
+|  |  |  | `compliance_reminder_closing_selector` | structure | exact (prose anchor) |  |
 
 ### anti_patterns
 
@@ -366,9 +399,9 @@ cannot tell which, but every one is a thing to account for.
 |---|---|---|---|---|---|---|
 | heading | `section_start` | prose | `section_start` | content | exact (prose anchor) |  |
 | body | `criteria` | data | `criteria` | data | anchor |  |
-|  |  |  | `criteria_separator` | content | role | `separator` |
-|  |  |  | `criteria_evidence_type_handling` | structure | COMPOUND | `evidence_type_handling` |
-|  |  |  | `criteria_relationship` | structure | role | `relationship` |
+|  |  |  | `criteria_separator` | content | role |  |
+|  |  |  | `criteria_evidence_type_handling` | structure | UNDECLARED |  |
+|  |  |  | `criteria_relationship` | structure | plain enum |  |
 |  |  |  | `criteria_evidence_format` | display | abbreviated | success_evidence |
 |  |  |  | `criteria_evidence_format_threshold` | display | abbreviated | success_evidence |
 | body | `verification_guidance_postscript` | prose | `verification_guidance_postscript` | content | exact (prose anchor) |  |
@@ -376,11 +409,11 @@ cannot tell which, but every one is a thing to account for.
 | body | `success_failure_independence_statement_postscript` | prose | `success_failure_independence_statement_postscript` | content | exact (prose anchor) |  |
 |  |  |  | `success_failure_independence_statement_postscript_visible` | structure | exact (prose anchor) |  |
 | body | `definition_declaration` | prose | `definition_declaration_variant_template` | content | exact (prose anchor) |  |
-|  |  |  | `definition_declaration_selector` | structure | selector |  |
+|  |  |  | `definition_declaration_selector` | structure | exact (prose anchor) |  |
 | body | `evidence_intro` | prose | `evidence_intro_variant` | content | exact (prose anchor) |  |
-|  |  |  | `evidence_intro_selector` | structure | selector |  |
+|  |  |  | `evidence_intro_selector` | structure | exact (prose anchor) |  |
 | body | `definition_to_evidence_transition` | prose | `definition_to_evidence_transition_variant` | content | exact (prose anchor) |  |
-|  |  |  | `definition_to_evidence_transition_selector` | structure | selector |  |
+|  |  |  | `definition_to_evidence_transition_selector` | structure | exact (prose anchor) |  |
 
 ### failure_criteria
 
@@ -416,12 +449,12 @@ cannot tell which, but every one is a thing to account for.
 | body | `name_template` | data | `name_template` | data | anchor |  |
 | body | `name_instruction` | data | `name_instruction` | data | anchor |  |
 | body | `schema_embed` | data | `schema_embed` | data | anchor |  |
-|  |  |  | `schema_embed_intro` | content | role | `intro` |
+|  |  |  | `schema_embed_intro` | content | role |  |
 |  |  |  | `schema_embed` | structure | exact |  |
 | body | `output_description` | prose? | `output_description_template` | content | exact (prose anchor) |  |
 | body | `schema_reference_label` | prose | `schema_reference_label_template` | content | exact (prose anchor) |  |
 | body | `directory_location` | prose? | `directory_location_variant_template` | content | exact (prose anchor) |  |
-|  |  |  | `directory_location_selector` | structure | selector |  |
+|  |  |  | `directory_location_selector` | structure | exact (prose anchor) |  |
 
 ### return_format
 
