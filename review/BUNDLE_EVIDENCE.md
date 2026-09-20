@@ -11,11 +11,11 @@ raw material they are drawn from.
 
 | verdict | count | meaning |
 |---|---|---|
-| exact | 14 | the stripped name *is* the bundle trunk |
-| role | 19 | declared positional suffix on the trunk |
-| sub-block | 5 | declared sub-block pattern, group found in data |
+| exact | 16 | the stripped name *is* the bundle trunk |
+| role | 24 | declared positional suffix on the trunk |
+| sub-block | 0 | declared sub-block pattern, group found in data |
 | sub-block? | 6 | same pattern, but no such group in the data |
-| abbreviated | 9 | resolves only by a field's last word — rename |
+| abbreviated | 7 | resolves only by a field's last word — rename |
 | depth | 1 | remainder names a nested field directly |
 | selector | 5 | variant chooser — placed by a different rule |
 | plain enum | 2 | the two the document declares by name |
@@ -98,11 +98,6 @@ section's data field by prefix and loses which group they belong to.
 | examples | `groups` | `entry` | `_heading` | `groups_entry_heading_format` | **not found** |
 | examples | `groups` | `entry` | `_separator` | `groups_entry_separator` | **not found** |
 | examples | `groups` | `suppress_lone` | `_heading` | `groups_suppress_lone_heading` | **not found** |
-| input | `context` | `available` | `_heading` | `context_available_heading` | `context[].context_available` |
-| input | `context` | `required` | `_entry_template` | `context_required_entry_template` | `context[].context_required` |
-| input | `context` | `required` | `_heading` | `context_required_heading` | `context[].context_required` |
-| input | `context` | `required` | `_intro` | `context_required_intro` | `context[].context_required` |
-| input | `context` | `required` | `_intro` | `context_required_intro_visible` | `context[].context_required` |
 | instructions | `steps` | `mode` | `_label` | `steps_mode_label_variant` | **not found** |
 | instructions | `steps` | `mode_restrict_to` | `_transition` | `steps_mode_restrict_to_transition` | **not found** |
 | instructions | `steps` | `mode` | `_separator` | `steps_mode_separator` | **not found** |
@@ -114,8 +109,6 @@ These are renames, not defects — the suggestion is mechanical, check it.
 
 | section | field | resolves to | suggested trunk |
 |---|---|---|---|
-| input | `context_required_format` | context_required / param_required | `context_context_required` |
-| input | `context_available_format` | context_available | `context_context_available` |
 | examples | `groups_display_headings_override` | example_display_headings | `groups_example_display_headings` |
 | examples | `groups_max_number_override` | examples_max_number | `groups_examples_max_number` |
 | examples | `groups_display_headings` | example_display_headings | `groups_example_display_headings` |
@@ -140,13 +133,13 @@ the cases the naming law was written for; nothing to decide here.
 
 | suffix | count |
 |---|---|
-| `_heading` | 5 |
+| `_heading` | 7 |
 | `_postscript` | 4 |
 | `_label` | 4 |
+| `_intro` | 3 |
 | `_transition` | 2 |
+| `_entry_template` | 2 |
 | `_separator` | 2 |
-| `_entry_template` | 1 |
-| `_intro` | 1 |
 
 ## Anchors with no data field
 
@@ -253,14 +246,15 @@ cannot tell which, but every one is a thing to account for.
 |  |  |  | `parameters_heading_auto_threshold` | structure | role |  |
 |  |  |  | `parameters_format` | display | exact |  |
 |  |  |  | `parameters_format_threshold` | display | exact |  |
-| body | `context` | data | `context` | data | anchor |  |
-|  |  |  | `context_required_heading` | content | sub-block | context[].context_required |
-|  |  |  | `context_required_intro` | content | sub-block | context[].context_required |
-|  |  |  | `context_required_entry_template` | content | sub-block | context[].context_required |
-|  |  |  | `context_available_heading` | content | sub-block | context[].context_available |
-|  |  |  | `context_required_intro_visible` | structure | sub-block | context[].context_required |
-|  |  |  | `context_required_format` | display | abbreviated | context_required / param_required |
-|  |  |  | `context_available_format` | display | abbreviated | context_available |
+| body | `context_required` | data | `context_required` | data | anchor |  |
+|  |  |  | `context_required_heading` | content | role |  |
+|  |  |  | `context_required_intro` | content | role |  |
+|  |  |  | `context_required_entry_template` | content | role |  |
+|  |  |  | `context_required_intro_visible` | structure | role |  |
+|  |  |  | `context_required_format` | display | exact |  |
+| body | `context_available` | data | `context_available` | data | anchor |  |
+|  |  |  | `context_available_heading` | content | role |  |
+|  |  |  | `context_available_format` | display | exact |  |
 | body | `input_completeness_postscript` | prose | `input_completeness_postscript` | content | exact (prose anchor) |  |
 |  |  |  | `input_completeness_postscript_visible` | structure | exact (prose anchor) |  |
 | body | `schema_label` | prose | `schema_label_template` | content | exact (prose anchor) |  |
