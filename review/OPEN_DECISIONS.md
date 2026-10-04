@@ -235,8 +235,13 @@ stated.
 
 ### Open questions
 
-**Q1 — Where does embed live?** Data, structure surface, or data plus
-`_override`. Really: how much permission looseness buys how much testability.
+*Where embed lives was Q1 and is answered — it arrives as data. See the embed
+section above.*
+
+**Q1 — Who performs the inlining?** The decision is data; the act is
+unassigned. Regin reading the file into the data keeps Galdr's four gated
+inputs; Galdr reading at render — which `grant_derive`'s comment assumes —
+makes it the first ungated content in the stage. Deferrable until stage 3.
 
 **Q2 — The wording of the mandate rule** for pointed-required. Prose that sets
 agent behaviour.
