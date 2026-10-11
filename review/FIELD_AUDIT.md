@@ -29,33 +29,34 @@ identity
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start_template
+    content    section_start_template                       identity_section_start_template
 body:
   [title]
-    data       title
+    data       title                                        title
   [role_identity]
-    data       role_identity
-    content    role_identity_template
-    content    role_identity_postscript_template
-    structure  role_identity_postscript_visible
+    data       role_identity                                role_identity
+    content    role_identity_template                       identity_role_identity_template
+    content    role_identity_postscript_template            identity_role_identity_postscript_template
+    structure  role_identity_postscript_visible             identity_role_identity_postscript_visible
   [role_responsibility]
-    data       role_responsibility
-    content    role_responsibility_template
+    data       role_responsibility                          role_responsibility
+    content    role_responsibility_template                 identity_role_responsibility_template
   [role_description]
-    data       role_description
+    data       role_description                             role_description
   [role_expertise]
-    data       role_expertise
-    content    role_expertise_label
-    content    role_expertise_postscript
-    structure  role_expertise_postscript_visible
-    display    role_expertise_format
-    display    role_expertise_format_threshold
+    data       role_expertise                               role_expertise
+    content    role_expertise_label                         identity_role_expertise_label
+    content    role_expertise_postscript                    identity_role_expertise_postscript
+    structure  role_expertise_postscript_visible            identity_role_expertise_postscript_visible
+    display    role_expertise_format                        identity_role_expertise_format
+    display    role_expertise_format_threshold              identity_role_expertise_format_threshold
 closing:
   [identity_reminder_closing]
-    content    identity_reminder_closing_template
-    structure  identity_reminder_closing_visible
+    content    identity_reminder_closing_template           identity_identity_reminder_closing_template
+    structure  identity_reminder_closing_visible            identity_identity_reminder_closing_visible
 ```
 
 **Already identified in the review document**
@@ -64,7 +65,7 @@ closing:
 
 ### identity — needs attention (7)
 
-#### `identity_role_identity_template` · content
+#### `identity_role_identity_template` → `role_identity_template` · content
 
 - **Defined as:** Core identity declaration. Template with {{role_identity}} placeholder. Establishes who the agent is — the foundational sentence that frames all subsequent behavior. Position: immediately after heading.
 
@@ -75,7 +76,7 @@ closing:
 
 - **Tentative fix:** 2 of its section-mates declare `_postscript`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `identity_role_identity_postscript_template`
 
-#### `identity_role_responsibility_template` · content
+#### `identity_role_responsibility_template` → `role_responsibility_template` · content
 
 - **Defined as:** Label introducing the agent's responsibility scope. Template with {{role_responsibility}} placeholder. Position: label immediately before the responsibility data.
 
@@ -86,7 +87,7 @@ closing:
 
 - **Tentative fix:** 2 of its section-mates declare `_postscript`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `identity_role_responsibility_postscript_template`
 
-#### `identity_role_expertise_postscript` · content
+#### `identity_role_expertise_postscript` → `role_expertise_postscript` · content
 
 - **Defined as:** Reinforcement postscript after the expertise list. Constrains the agent's authoritative judgment to the listed areas only. Visibility controlled by identity_expertise_postscript_visible in structure. Position: postscript after expertise data.
 
@@ -97,7 +98,7 @@ closing:
 
 - **Problem:** description names `identity_expertise_postscript_visible`, which exists nowhere
 
-#### `identity_identity_reminder_closing_template` · content
+#### `identity_identity_reminder_closing_template` → `identity_reminder_closing_template` · content
 
 - **Defined as:** Optional closing sentence restating the agent's role identity. Template with {{role_identity}} placeholder. Visibility controlled by identity_closing_reminder_visible in structure. Position: last element of the section.
 
@@ -108,7 +109,7 @@ closing:
 
 - **Problem:** description names `identity_closing_reminder_visible`, which exists nowhere
 
-#### `identity_pre_field_ordering` · structure
+#### `identity_pre_field_ordering` → `pre_field_ordering` · structure
 
 - **Defined as:** Structural variant for identity section field sequence. Controls whether the section leads with role identity and declaration (identity_first) or with scope and responsibility (responsibility_first).
 
@@ -119,7 +120,7 @@ closing:
 
 - **Problem:** stated purpose implies `_visible`, name carries none
 
-#### `identity_role_expertise_format` · display
+#### `identity_role_expertise_format` → `role_expertise_format` · display
 
 - **Defined as:** How the expertise list renders. Plain string means always that format. Two-element array means threshold-based switching: first element above threshold, second at or below. Threshold is identity_expertise_format_threshold.
 
@@ -130,7 +131,7 @@ closing:
 
 - **Problem:** description names `identity_expertise_format_threshold`, which exists nowhere
 
-#### `identity_role_expertise_format_threshold` · display
+#### `identity_role_expertise_format_threshold` → `role_expertise_format_threshold` · display
 
 - **Defined as:** Item count threshold for expertise format switching. When identity_expertise_format is a pair, items above this count use the first format, items at or below use the second.
 
@@ -143,14 +144,14 @@ closing:
 
 ### identity — conforming (6)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `identity_section_start_template` | prose, role `_start` under `section` |
-| content | `identity_role_identity_postscript_template` | decorates `role_identity` |
-| content | `identity_role_expertise_label` | decorates `role_expertise` |
-| structure | `identity_role_identity_postscript_visible` | decorates `role_identity` |
-| structure | `identity_role_expertise_postscript_visible` | decorates `role_expertise` |
-| structure | `identity_identity_reminder_closing_visible` | prose, role `_closing` under `identity_reminder` |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `identity_section_start_template` | `section_start_template` | prose, role `_start` under `section` |
+| content | `identity_role_identity_postscript_template` | `role_identity_postscript_template` | decorates `role_identity` |
+| content | `identity_role_expertise_label` | `role_expertise_label` | decorates `role_expertise` |
+| structure | `identity_role_identity_postscript_visible` | `role_identity_postscript_visible` | decorates `role_identity` |
+| structure | `identity_role_expertise_postscript_visible` | `role_expertise_postscript_visible` | decorates `role_expertise` |
+| structure | `identity_identity_reminder_closing_visible` | `identity_reminder_closing_visible` | prose, role `_closing` under `identity_reminder` |
 
 ## security_boundary
 
@@ -165,42 +166,43 @@ security_boundary
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [framing_section_start]
-    content    framing_section_start_variant
-    structure  framing_selector
+    content    framing_section_start_variant                security_boundary_framing_section_start_variant
+    structure  framing_selector                             security_boundary_framing_selector
 preamble:
   [framing_section_preamble]
-    content    framing_section_preamble_variant
-    structure  framing_section_preamble_visible
-    structure  framing_selector
+    content    framing_section_preamble_variant             security_boundary_framing_section_preamble_variant
+    structure  framing_section_preamble_visible             security_boundary_framing_section_preamble_visible
+    structure  framing_selector                             security_boundary_framing_selector
 body:
   [workspace_path]
-    data       workspace_path
+    data       workspace_path                               workspace_path
   [filesystem_permissions]
-    data       filesystem_permissions
-    content    filesystem_permissions_label
-    structure  filesystem_permissions_label_visible
-    display    filesystem_permissions_path_style
-    display    filesystem_permissions_toolset_format
-    display    filesystem_permissions_label_visibility_threshold
-    display    filesystem_permissions_list_format
+    data       filesystem_permissions                       filesystem_permissions
+    content    filesystem_permissions_label                 security_boundary_filesystem_permissions_label
+    structure  filesystem_permissions_label_visible         security_boundary_filesystem_permissions_label_visible
+    display    filesystem_permissions_path_style            security_boundary_filesystem_permissions_path_style
+    display    filesystem_permissions_toolset_format        security_boundary_filesystem_permissions_toolset_format
+    display    filesystem_permissions_label_visibility_threshold security_boundary_filesystem_permissions_label_visibility_threshold
+    display    filesystem_permissions_list_format           security_boundary_filesystem_permissions_list_format
   [compound_entry]
-    content    compound_entry_template
+    content    compound_entry_template                      security_boundary_compound_entry_template
   [grouped_tool_heading]
-    content    grouped_tool_heading_template
+    content    grouped_tool_heading_template                security_boundary_grouped_tool_heading_template
   [framing_declaration]
-    content    framing_declaration_variant_template
-    structure  framing_selector
+    content    framing_declaration_variant_template         security_boundary_framing_declaration_variant_template
+    structure  framing_selector                             security_boundary_framing_selector
 closing:
   [section_closing]
-    content    section_closing
-    structure  section_closing_visible
+    content    section_closing                              security_boundary_section_closing
+    structure  section_closing_visible                      security_boundary_section_closing_visible
 ```
 
 ### security_boundary — needs attention (4)
 
-#### `security_boundary_compound_entry_template` · content
+#### `security_boundary_compound_entry_template` → `compound_entry_template` · content
 
 - **Defined as:** Template for rendering a single display entry when tools are shown per-entry. Contains {{PATH}} and {{TOOLS}} placeholders. Used when tool sets differ across entries (heterogeneous format).
 
@@ -211,7 +213,7 @@ closing:
 
 - **Tentative fix:** 1 of its section-mates declare `_label`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `security_boundary_compound_entry_label_template`
 
-#### `security_boundary_grouped_tool_heading_template` · content
+#### `security_boundary_grouped_tool_heading_template` → `grouped_tool_heading_template` · content
 
 - **Defined as:** Header line when all display entries share the same tool set. Contains {{TOOLS}} placeholder. Rendered once above the entry list when uniform_toolset_format is "grouped".
 
@@ -222,7 +224,7 @@ closing:
 
 - **Problem:** description names `uniform_toolset_format`, which exists nowhere
 
-#### `security_boundary_framing_selector` · structure
+#### `security_boundary_framing_selector` → `framing_selector` · structure
 
 - **Defined as:** Posture for the security boundary section. Selects which content variant renders for heading, workspace_path_declaration, and section_preamble simultaneously. All three content families use the same variant key.
 
@@ -237,7 +239,7 @@ closing:
 
 - **Problem:** no data field and no declared positional suffix
 
-#### `security_boundary_filesystem_permissions_path_style` · display
+#### `security_boundary_filesystem_permissions_path_style` → `filesystem_permissions_path_style` · display
 
 - **Defined as:** How filesystem paths render in display entries. Controls whether paths show as relative with ./ prefix, relative bare, or absolute.
 
@@ -250,19 +252,19 @@ closing:
 
 ### security_boundary — conforming (11)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `security_boundary_filesystem_permissions_label` | decorates `filesystem_permissions` |
-| content | `security_boundary_section_closing` | prose, role `_closing` under `section` |
-| content | `security_boundary_framing_section_start_variant` | variant sub-table |
-| content | `security_boundary_framing_declaration_variant_template` | variant sub-table |
-| content | `security_boundary_framing_section_preamble_variant` | variant sub-table |
-| structure | `security_boundary_filesystem_permissions_label_visible` | decorates `filesystem_permissions` |
-| structure | `security_boundary_framing_section_preamble_visible` | prose, role `_preamble` under `framing_section` |
-| structure | `security_boundary_section_closing_visible` | prose, role `_closing` under `section` |
-| display | `security_boundary_filesystem_permissions_toolset_format` | addresses `filesystem_permissions`.toolset |
-| display | `security_boundary_filesystem_permissions_label_visibility_threshold` | decorates `filesystem_permissions` |
-| display | `security_boundary_filesystem_permissions_list_format` | addresses `filesystem_permissions`.list |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `security_boundary_filesystem_permissions_label` | `filesystem_permissions_label` | decorates `filesystem_permissions` |
+| content | `security_boundary_section_closing` | `section_closing` | prose, role `_closing` under `section` |
+| content | `security_boundary_framing_section_start_variant` | `framing_section_start_variant` | variant sub-table |
+| content | `security_boundary_framing_declaration_variant_template` | `framing_declaration_variant_template` | variant sub-table |
+| content | `security_boundary_framing_section_preamble_variant` | `framing_section_preamble_variant` | variant sub-table |
+| structure | `security_boundary_filesystem_permissions_label_visible` | `filesystem_permissions_label_visible` | decorates `filesystem_permissions` |
+| structure | `security_boundary_framing_section_preamble_visible` | `framing_section_preamble_visible` | prose, role `_preamble` under `framing_section` |
+| structure | `security_boundary_section_closing_visible` | `section_closing_visible` | prose, role `_closing` under `section` |
+| display | `security_boundary_filesystem_permissions_toolset_format` | `filesystem_permissions_toolset_format` | addresses `filesystem_permissions`.toolset |
+| display | `security_boundary_filesystem_permissions_label_visibility_threshold` | `filesystem_permissions_label_visibility_threshold` | decorates `filesystem_permissions` |
+| display | `security_boundary_filesystem_permissions_list_format` | `filesystem_permissions_list_format` | addresses `filesystem_permissions`.list |
 
 ## critical_rules
 
@@ -278,58 +280,59 @@ critical_rules
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start
+    content    section_start                                critical_rules_section_start
 preamble:
   [authority_preamble]
-    content    authority_preamble
-    structure  authority_preamble_visible
+    content    authority_preamble                           critical_rules_authority_preamble
+    structure  authority_preamble_visible                   critical_rules_authority_preamble_visible
   [rule_count_awareness_preamble]
-    content    rule_count_awareness_preamble_template
-    structure  rule_count_awareness_preamble_visible
-    structure  rule_count_awareness_preamble_template_auto_threshold
+    content    rule_count_awareness_preamble_template       critical_rules_rule_count_awareness_preamble_template
+    structure  rule_count_awareness_preamble_visible        critical_rules_rule_count_awareness_preamble_visible
+    structure  rule_count_awareness_preamble_template_auto_threshold critical_rules_rule_count_awareness_preamble_template_auto_threshold
 body:
   [workspace_path]
-    data       workspace_path
-    display    workspace_path_format
+    data       workspace_path                               workspace_path
+    display    workspace_path_format                        critical_rules_workspace_path_format
   [has_output_tool]
-    data       has_output_tool
+    data       has_output_tool                              has_output_tool
   [tool_name]
-    data       tool_name
-    display    tool_name_format
-    display    tool_name_repetition
+    data       tool_name                                    tool_name
+    display    tool_name_format                             critical_rules_tool_name_format
+    display    tool_name_repetition                         critical_rules_tool_name_repetition
   [name_needed]
-    data       name_needed
+    data       name_needed                                  name_needed
   [batch_size]
-    data       batch_size
-    display    batch_size_format
+    data       batch_size                                   batch_size
+    display    batch_size_format                            critical_rules_batch_size_format
   [workspace_confinement]
-    content    workspace_confinement_template
-    structure  workspace_confinement_visible
+    content    workspace_confinement_template               critical_rules_workspace_confinement_template
+    structure  workspace_confinement_visible                critical_rules_workspace_confinement_visible
   [output_tool_exclusivity]
-    content    output_tool_exclusivity_template
-    structure  output_tool_exclusivity_visible
+    content    output_tool_exclusivity_template             critical_rules_output_tool_exclusivity_template
+    structure  output_tool_exclusivity_visible              critical_rules_output_tool_exclusivity_visible
   [batch_discipline]
-    content    batch_discipline_template
-    structure  batch_discipline_visible
+    content    batch_discipline_template                    critical_rules_batch_discipline_template
+    structure  batch_discipline_visible                     critical_rules_batch_discipline_visible
   [fail_fast_body]
-    content    fail_fast_body
-    structure  fail_fast_body_visible
+    content    fail_fast_body                               critical_rules_fail_fast_body
+    structure  fail_fast_body_visible                       critical_rules_fail_fast_body_visible
   [input_is_your_only_source_body]
-    content    input_is_your_only_source_body
-    structure  input_is_your_only_source_body_visible
+    content    input_is_your_only_source_body               critical_rules_input_is_your_only_source_body
+    structure  input_is_your_only_source_body_visible       critical_rules_input_is_your_only_source_body_visible
   [no_invention_body]
-    content    no_invention_body
-    structure  no_invention_body_visible
+    content    no_invention_body                            critical_rules_no_invention_body
+    structure  no_invention_body_visible                    critical_rules_no_invention_body_visible
   [discipline_over_helpfulness_body]
-    content    discipline_over_helpfulness_body
-    structure  discipline_over_helpfulness_body_visible
+    content    discipline_over_helpfulness_body             critical_rules_discipline_over_helpfulness_body
+    structure  discipline_over_helpfulness_body_visible     critical_rules_discipline_over_helpfulness_body_visible
 ```
 
 ### critical_rules — needs attention (7)
 
-#### `critical_rules_workspace_confinement_template` · content
+#### `critical_rules_workspace_confinement_template` → `workspace_confinement_template` · content
 
 - **Defined as:** Workspace confinement rule text. Template with {{workspace_path}} placeholder. Declares that nothing outside the workspace exists.
 
@@ -342,7 +345,7 @@ body:
 
 - **Tentative fix:** 4 of its section-mates declare `_body`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `critical_rules_workspace_confinement_body_template`
 
-#### `critical_rules_output_tool_exclusivity_template` · content
+#### `critical_rules_output_tool_exclusivity_template` → `output_tool_exclusivity_template` · content
 
 - **Defined as:** Output tool exclusivity rule text. Template with {{tool_name}} placeholder. Declares that the named tool is the only output mechanism.
 
@@ -355,7 +358,7 @@ body:
 
 - **Tentative fix:** 4 of its section-mates declare `_body`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `critical_rules_output_tool_exclusivity_body_template`
 
-#### `critical_rules_batch_discipline_template` · content
+#### `critical_rules_batch_discipline_template` → `batch_discipline_template` · content
 
 - **Defined as:** Batch discipline rule text. Template with {{batch_size}} and {{tool_name}} placeholders. Requires processing in batches with immediate writes after each batch.
 
@@ -368,7 +371,7 @@ body:
 
 - **Tentative fix:** 4 of its section-mates declare `_body`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `critical_rules_batch_discipline_body_template`
 
-#### `critical_rules_workspace_confinement_visible` · structure
+#### `critical_rules_workspace_confinement_visible` → `workspace_confinement_visible` · structure
 
 - **Defined as:** Whether to render the workspace confinement rule. Declares that nothing outside the workspace path exists. Hooks enforce this regardless — the toggle tests whether the prose helps.
 
@@ -379,7 +382,7 @@ body:
 
 - **Problem:** no data field and no declared positional suffix
 
-#### `critical_rules_output_tool_exclusivity_visible` · structure
+#### `critical_rules_output_tool_exclusivity_visible` → `output_tool_exclusivity_visible` · structure
 
 - **Defined as:** Whether to render the output tool exclusivity rule. Declares that the named tool is the only output mechanism. Conditional on has_output_tool — data gate suppresses when no tool exists.
 
@@ -390,7 +393,7 @@ body:
 
 - **Problem:** no data field and no declared positional suffix
 
-#### `critical_rules_batch_discipline_visible` · structure
+#### `critical_rules_batch_discipline_visible` → `batch_discipline_visible` · structure
 
 - **Defined as:** Whether to render the batch discipline rule. Requires processing in batches of the specified size with immediate writes. Conditional on both has_output_tool and batch_size being present.
 
@@ -401,7 +404,7 @@ body:
 
 - **Problem:** no data field and no declared positional suffix
 
-#### `critical_rules_tool_name_repetition` · display
+#### `critical_rules_tool_name_repetition` → `tool_name_repetition` · display
 
 - **Defined as:** How the tool name is referenced after first mention. 'repeat' uses the full name every time. 'shorthand' defines once then uses "the tool" for subsequent references.
 
@@ -414,26 +417,26 @@ body:
 
 ### critical_rules — conforming (18)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `critical_rules_section_start` | prose, role `_start` under `section` |
-| content | `critical_rules_authority_preamble` | prose, role `_preamble` under `authority` |
-| content | `critical_rules_fail_fast_body` | prose, role `_body` under `fail_fast` |
-| content | `critical_rules_input_is_your_only_source_body` | prose, role `_body` under `input_is_your_only_source` |
-| content | `critical_rules_no_invention_body` | prose, role `_body` under `no_invention` |
-| content | `critical_rules_discipline_over_helpfulness_body` | prose, role `_body` under `discipline_over_helpfulness` |
-| content | `critical_rules_rule_count_awareness_preamble_template` | prose, role `_preamble` under `rule_count_awareness` |
-| structure | `critical_rules_authority_preamble_visible` | prose, role `_preamble` under `authority` |
-| structure | `critical_rules_rule_count_awareness_preamble_visible` | prose, role `_preamble` under `rule_count_awareness` |
-| structure | `critical_rules_rule_count_awareness_preamble_template_auto_threshold` | prose, role `_preamble` under `rule_count_awareness` |
-| structure | `critical_rules_fail_fast_body_visible` | prose, role `_body` under `fail_fast` |
-| structure | `critical_rules_input_is_your_only_source_body_visible` | prose, role `_body` under `input_is_your_only_source` |
-| structure | `critical_rules_no_invention_body_visible` | prose, role `_body` under `no_invention` |
-| structure | `critical_rules_discipline_over_helpfulness_body_visible` | prose, role `_body` under `discipline_over_helpfulness` |
-| display | `critical_rules_workspace_path_format` | data anchor |
-| display | `critical_rules_tool_name_format` | data anchor |
-| display | `critical_rules_batch_size_format` | data anchor |
-| display | `critical_rules_pre_body_entry_separator_override` | preprocessing (pre_*) |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `critical_rules_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `critical_rules_authority_preamble` | `authority_preamble` | prose, role `_preamble` under `authority` |
+| content | `critical_rules_fail_fast_body` | `fail_fast_body` | prose, role `_body` under `fail_fast` |
+| content | `critical_rules_input_is_your_only_source_body` | `input_is_your_only_source_body` | prose, role `_body` under `input_is_your_only_source` |
+| content | `critical_rules_no_invention_body` | `no_invention_body` | prose, role `_body` under `no_invention` |
+| content | `critical_rules_discipline_over_helpfulness_body` | `discipline_over_helpfulness_body` | prose, role `_body` under `discipline_over_helpfulness` |
+| content | `critical_rules_rule_count_awareness_preamble_template` | `rule_count_awareness_preamble_template` | prose, role `_preamble` under `rule_count_awareness` |
+| structure | `critical_rules_authority_preamble_visible` | `authority_preamble_visible` | prose, role `_preamble` under `authority` |
+| structure | `critical_rules_rule_count_awareness_preamble_visible` | `rule_count_awareness_preamble_visible` | prose, role `_preamble` under `rule_count_awareness` |
+| structure | `critical_rules_rule_count_awareness_preamble_template_auto_threshold` | `rule_count_awareness_preamble_template_auto_threshold` | prose, role `_preamble` under `rule_count_awareness` |
+| structure | `critical_rules_fail_fast_body_visible` | `fail_fast_body_visible` | prose, role `_body` under `fail_fast` |
+| structure | `critical_rules_input_is_your_only_source_body_visible` | `input_is_your_only_source_body_visible` | prose, role `_body` under `input_is_your_only_source` |
+| structure | `critical_rules_no_invention_body_visible` | `no_invention_body_visible` | prose, role `_body` under `no_invention` |
+| structure | `critical_rules_discipline_over_helpfulness_body_visible` | `discipline_over_helpfulness_body_visible` | prose, role `_body` under `discipline_over_helpfulness` |
+| display | `critical_rules_workspace_path_format` | `workspace_path_format` | data anchor |
+| display | `critical_rules_tool_name_format` | `tool_name_format` | data anchor |
+| display | `critical_rules_batch_size_format` | `batch_size_format` | data anchor |
+| display | `critical_rules_pre_body_entry_separator_override` | `pre_body_entry_separator_override` | preprocessing (pre_*) |
 
 ## instructions
 
@@ -447,48 +450,49 @@ instructions
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start_variant_template
-    structure  section_start_selector
+    content    section_start_variant_template               instructions_section_start_variant_template
+    structure  section_start_selector                       instructions_section_start_selector
 preamble:
   [highlight_step_count_preamble]
-    content    highlight_step_count_preamble_template
-    structure  highlight_step_count_preamble_visible
+    content    highlight_step_count_preamble_template       instructions_highlight_step_count_preamble_template
+    structure  highlight_step_count_preamble_visible        instructions_highlight_step_count_preamble_visible
   [sequence_integrity_preamble]
-    content    sequence_integrity_preamble
-    structure  sequence_integrity_preamble_visible
+    content    sequence_integrity_preamble                  instructions_sequence_integrity_preamble
+    structure  sequence_integrity_preamble_visible          instructions_sequence_integrity_preamble_visible
   [follow_strictly_preamble]
-    content    follow_strictly_preamble
-    structure  follow_strictly_preamble_visible
+    content    follow_strictly_preamble                     instructions_follow_strictly_preamble
+    structure  follow_strictly_preamble_visible             instructions_follow_strictly_preamble_visible
   [reminder_midpoint_preamble]
-    content    reminder_midpoint_preamble_template
-    structure  reminder_midpoint_preamble_visible
+    content    reminder_midpoint_preamble_template          instructions_reminder_midpoint_preamble_template
+    structure  reminder_midpoint_preamble_visible           instructions_reminder_midpoint_preamble_visible
   [instruction_mode_explanation_preamble]
-    content    instruction_mode_explanation_preamble_variant
-    structure  instruction_mode_explanation_preamble_visible
+    content    instruction_mode_explanation_preamble_variant instructions_instruction_mode_explanation_preamble_variant
+    structure  instruction_mode_explanation_preamble_visible instructions_instruction_mode_explanation_preamble_visible
 body:
   [steps]
-    data       steps
-    content    steps_heading_template
-    content    steps_heading_n_only_template
-    content    steps_mode_label_variant
-    structure  steps_index_tracking
-    display    steps_heading_format
-    display    steps_body_container
-    display    steps_mode_separator
-    display    steps_mode_restrict_to_transition
-    display    steps_scaffolding_lightweight_threshold
-    display    steps_scaffolding_standard_threshold
+    data       steps                                        steps
+    content    steps_heading_template                       instructions_steps_heading_template
+    content    steps_heading_n_only_template                instructions_steps_heading_n_only_template
+    content    steps_mode_label_variant                     instructions_steps_mode_label_variant
+    structure  steps_index_tracking                         instructions_steps_index_tracking
+    display    steps_heading_format                         instructions_steps_heading_format
+    display    steps_body_container                         instructions_steps_body_container
+    display    steps_mode_separator                         instructions_steps_mode_separator
+    display    steps_mode_restrict_to_transition            instructions_steps_mode_restrict_to_transition
+    display    steps_scaffolding_lightweight_threshold      instructions_steps_scaffolding_lightweight_threshold
+    display    steps_scaffolding_standard_threshold         instructions_steps_scaffolding_standard_threshold
 closing:
   [follow_strictly_closing]
-    content    follow_strictly_closing_template
-    structure  follow_strictly_closing_visible
+    content    follow_strictly_closing_template             instructions_follow_strictly_closing_template
+    structure  follow_strictly_closing_visible              instructions_follow_strictly_closing_visible
 ```
 
 ### instructions — needs attention (11)
 
-#### `instructions_highlight_step_count_preamble_template` · content
+#### `instructions_highlight_step_count_preamble_template` → `highlight_step_count_preamble_template` · content
 
 - **Defined as:** Step count statement in the preamble. Template with {{step_count}} placeholder. Tells the agent how many steps to expect.
 
@@ -499,7 +503,7 @@ closing:
 
 - **Problem:** placeholder `{{step_count}}` names neither data nor a declared computed
 
-#### `instructions_reminder_midpoint_preamble_template` · content
+#### `instructions_reminder_midpoint_preamble_template` → `reminder_midpoint_preamble_template` · content
 
 - **Defined as:** Progress reminder at the midpoint. Template with {{midpoint}}, {{midpoint_next}}, and {{step_total}} placeholders. Visibility controlled by instructions_reminder_midpoint_visible.
 
@@ -512,7 +516,7 @@ closing:
 
 - **Problem:** placeholder `{{midpoint_next}}` names neither data nor a declared computed
 
-#### `instructions_follow_strictly_closing_template` · content
+#### `instructions_follow_strictly_closing_template` → `follow_strictly_closing_template` · content
 
 - **Defined as:** Section closer reinforcing completeness. Template with {{step_count}} placeholder. States that the listed steps are the complete task.
 
@@ -523,7 +527,7 @@ closing:
 
 - **Problem:** placeholder `{{step_count}}` names neither data nor a declared computed
 
-#### `instructions_steps_heading_n_only_template` · content
+#### `instructions_steps_heading_n_only_template` → `steps_heading_n_only_template` · content
 
 - **Defined as:** Step heading template with n_only index tracking. Contains {{step_n}} placeholder only. Used when step_index_tracking is "n_only".
 
@@ -534,7 +538,7 @@ closing:
 
 - **Tentative fix:** 4 of its section-mates declare `_preamble`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `instructions_steps_heading_n_only_preamble_template`
 
-#### `instructions_section_start_selector` · structure
+#### `instructions_section_start_selector` → `section_start_selector` · structure
 
 - **Defined as:** Selects which heading variant renders for the instructions section. 'default' uses a plain heading. 'procedure' uses formal procedural language. 'steps_with_count' includes the total step count.
 
@@ -545,7 +549,7 @@ closing:
 
 - **Problem:** control suffix `_selector` — in code, absent from the table
 
-#### `instructions_steps_index_tracking` · structure
+#### `instructions_steps_index_tracking` → `steps_index_tracking` · structure
 
 - **Defined as:** How step numbers render in headers. 'n_only' shows just the step number. 'n_of_m' shows step number and total.
 
@@ -556,7 +560,7 @@ closing:
 
 - **Problem:** control suffix `` — declared plain enum
 
-#### `instructions_steps_body_container` · display
+#### `instructions_steps_body_container` → `steps_body_container` · display
 
 - **Defined as:** Visual container wrapping each step body. 'none' renders directly. 'blockquote' indents in a blockquote. 'bare_with_endmarker' appends an end marker for visual boundary closure.
 
@@ -567,7 +571,7 @@ closing:
 
 - **Problem:** control suffix `_container` — undeclared
 
-#### `instructions_steps_mode_separator` · display
+#### `instructions_steps_mode_separator` → `steps_mode_separator` · display
 
 - **Defined as:** Separator between mode label and step header. Only rendered when both mode label and step header are present. The renderer maps the enum value to the actual separator string.
 
@@ -578,7 +582,7 @@ closing:
 
 - **Problem:** control suffix `_separator` — undeclared
 
-#### `instructions_steps_mode_restrict_to_transition` · display
+#### `instructions_steps_mode_restrict_to_transition` → `steps_mode_restrict_to_transition` · display
 
 - **Defined as:** When true, consecutive steps with the same instruction mode suppress their mode labels. Only steps where the mode changes from the previous step display the label. When false, every step shows its mode label.
 
@@ -589,7 +593,7 @@ closing:
 
 - **Problem:** control suffix `_transition` — undeclared
 
-#### `instructions_steps_scaffolding_lightweight_threshold` · display
+#### `instructions_steps_scaffolding_lightweight_threshold` → `steps_scaffolding_lightweight_threshold` · display
 
 - **Defined as:** Step count threshold for lightweight scaffolding tier activation. When structural_complexity_override is 'auto' and step count is at or below this value, lightweight tier is used.
 
@@ -602,7 +606,7 @@ closing:
 
 - **Problem:** control suffix `_threshold` — bare — needs a threshold type
 
-#### `instructions_steps_scaffolding_standard_threshold` · display
+#### `instructions_steps_scaffolding_standard_threshold` → `steps_scaffolding_standard_threshold` · display
 
 - **Defined as:** Step count threshold for standard scaffolding tier activation. When structural_complexity_override is 'auto' and step count is above lightweight but at or below this value, standard tier is used. Above this threshold, heavy tier activates.
 
@@ -617,22 +621,22 @@ closing:
 
 ### instructions — conforming (14)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `instructions_sequence_integrity_preamble` | prose, role `_preamble` under `sequence_integrity` |
-| content | `instructions_follow_strictly_preamble` | prose, role `_preamble` under `follow_strictly` |
-| content | `instructions_steps_heading_template` | decorates `steps` |
-| content | `instructions_section_start_variant_template` | variant sub-table |
-| content | `instructions_steps_mode_label_variant` | variant sub-table |
-| content | `instructions_instruction_mode_explanation_preamble_variant` | variant sub-table |
-| structure | `instructions_instruction_mode_explanation_preamble_visible` | decorates `instruction_mode` |
-| structure | `instructions_highlight_step_count_preamble_visible` | prose, role `_preamble` under `highlight_step_count` |
-| structure | `instructions_sequence_integrity_preamble_visible` | prose, role `_preamble` under `sequence_integrity` |
-| structure | `instructions_follow_strictly_preamble_visible` | prose, role `_preamble` under `follow_strictly` |
-| structure | `instructions_follow_strictly_closing_visible` | prose, role `_closing` under `follow_strictly` |
-| structure | `instructions_reminder_midpoint_preamble_visible` | prose, role `_preamble` under `reminder_midpoint` |
-| structure | `instructions_pre_scaffolding_tier_override` | preprocessing (pre_*) |
-| display | `instructions_steps_heading_format` | decorates `steps` |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `instructions_sequence_integrity_preamble` | `sequence_integrity_preamble` | prose, role `_preamble` under `sequence_integrity` |
+| content | `instructions_follow_strictly_preamble` | `follow_strictly_preamble` | prose, role `_preamble` under `follow_strictly` |
+| content | `instructions_steps_heading_template` | `steps_heading_template` | decorates `steps` |
+| content | `instructions_section_start_variant_template` | `section_start_variant_template` | variant sub-table |
+| content | `instructions_steps_mode_label_variant` | `steps_mode_label_variant` | variant sub-table |
+| content | `instructions_instruction_mode_explanation_preamble_variant` | `instruction_mode_explanation_preamble_variant` | variant sub-table |
+| structure | `instructions_instruction_mode_explanation_preamble_visible` | `instruction_mode_explanation_preamble_visible` | decorates `instruction_mode` |
+| structure | `instructions_highlight_step_count_preamble_visible` | `highlight_step_count_preamble_visible` | prose, role `_preamble` under `highlight_step_count` |
+| structure | `instructions_sequence_integrity_preamble_visible` | `sequence_integrity_preamble_visible` | prose, role `_preamble` under `sequence_integrity` |
+| structure | `instructions_follow_strictly_preamble_visible` | `follow_strictly_preamble_visible` | prose, role `_preamble` under `follow_strictly` |
+| structure | `instructions_follow_strictly_closing_visible` | `follow_strictly_closing_visible` | prose, role `_closing` under `follow_strictly` |
+| structure | `instructions_reminder_midpoint_preamble_visible` | `reminder_midpoint_preamble_visible` | prose, role `_preamble` under `reminder_midpoint` |
+| structure | `instructions_pre_scaffolding_tier_override` | `pre_scaffolding_tier_override` | preprocessing (pre_*) |
+| display | `instructions_steps_heading_format` | `steps_heading_format` | decorates `steps` |
 
 ## examples
 
@@ -650,35 +654,36 @@ examples
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start
+    content    section_start                                examples_section_start
 preamble:
   [section_preamble]
-    content    section_preamble
-    structure  section_preamble_visible
+    content    section_preamble                             examples_section_preamble
+    structure  section_preamble_visible                     examples_section_preamble_visible
   [group_framing_preamble]
-    content    group_framing_preamble_template
-    structure  group_framing_preamble_visible
+    content    group_framing_preamble_template              examples_group_framing_preamble_template
+    structure  group_framing_preamble_visible               examples_group_framing_preamble_visible
 body:
   [groups]
-    data       groups
-    structure  groups_suppress_lone_heading
-    structure  groups_display_headings_override
-    structure  groups_max_number_override
-    structure  groups_display_headings
-    structure  groups_max_number
-    display    groups_entry_heading_format
-    display    groups_entry_body_container
-    display    groups_entry_separator
-    display    groups_separator
+    data       groups                                       groups
+    structure  groups_suppress_lone_heading                 examples_groups_suppress_lone_heading
+    structure  groups_display_headings_override             examples_groups_display_headings_override
+    structure  groups_max_number_override                   examples_groups_max_number_override
+    structure  groups_display_headings                      examples_groups_display_headings
+    structure  groups_max_number                            examples_groups_max_number
+    display    groups_entry_heading_format                  examples_groups_entry_heading_format
+    display    groups_entry_body_container                  examples_groups_entry_body_container
+    display    groups_entry_separator                       examples_groups_entry_separator
+    display    groups_separator                             examples_groups_separator
   [example_heading]
-    content    example_heading_template
+    content    example_heading_template                     examples_example_heading_template
 ```
 
 ### examples — needs attention (6)
 
-#### `examples_example_heading_template` · content
+#### `examples_example_heading_template` → `example_heading_template` · content
 
 - **Defined as:** Template for rendering individual example entry headings. Contains {{example_heading}} placeholder. Display format controlled by examples_entry_heading_format in display.
 
@@ -689,7 +694,7 @@ body:
 
 - **Problem:** description names `examples_entry_heading_format`, which exists nowhere
 
-#### `examples_groups_suppress_lone_heading` · structure
+#### `examples_groups_suppress_lone_heading` → `groups_suppress_lone_heading` · structure
 
 - **Defined as:** Whether to suppress the group heading when only one example group exists. When true, a single-group agent skips the group heading and promotes entries directly under the section heading.
 
@@ -700,7 +705,7 @@ body:
 
 - **Problem:** control suffix `_heading` — undeclared
 
-#### `examples_groups_display_headings_override` · structure
+#### `examples_groups_display_headings_override` → `groups_display_headings_override` · structure
 
 - **Defined as:** Whether to override the per-group example_display_headings from data. When false, data passes through unchanged. When true, the sibling examples_example_display_headings value is used instead.
 
@@ -711,7 +716,7 @@ body:
 
 - **Problem:** description names `examples_example_display_headings`, which exists nowhere
 
-#### `examples_groups_entry_body_container` · display
+#### `examples_groups_entry_body_container` → `groups_entry_body_container` · display
 
 - **Defined as:** Visual container for example entry content. 'bare_with_endmarker' renders directly with an end marker for boundary closure. 'blockquote' indents. 'none' renders directly.
 
@@ -722,7 +727,7 @@ body:
 
 - **Problem:** control suffix `_container` — undeclared
 
-#### `examples_groups_entry_separator` · display
+#### `examples_groups_entry_separator` → `groups_entry_separator` · display
 
 - **Defined as:** Visual separator between example entries within a group. Used when entry headings are off (per-group data controls this).
 
@@ -733,7 +738,7 @@ body:
 
 - **Problem:** control suffix `_separator` — undeclared
 
-#### `examples_groups_separator` · display
+#### `examples_groups_separator` → `groups_separator` · display
 
 - **Defined as:** Visual separator between example groups when multiple groups exist. 'horizontal_rule' inserts a markdown rule. 'none' uses whitespace only.
 
@@ -746,15 +751,15 @@ body:
 
 ### examples — conforming (7)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `examples_section_start` | prose, role `_start` under `section` |
-| content | `examples_section_preamble` | prose, role `_preamble` under `section` |
-| content | `examples_group_framing_preamble_template` | prose, role `_preamble` under `group_framing` |
-| structure | `examples_section_preamble_visible` | prose, role `_preamble` under `section` |
-| structure | `examples_groups_max_number_override` | addresses `groups`.max_number |
-| structure | `examples_group_framing_preamble_visible` | prose, role `_preamble` under `group_framing` |
-| display | `examples_groups_entry_heading_format` | decorates `groups` |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `examples_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `examples_section_preamble` | `section_preamble` | prose, role `_preamble` under `section` |
+| content | `examples_group_framing_preamble_template` | `group_framing_preamble_template` | prose, role `_preamble` under `group_framing` |
+| structure | `examples_section_preamble_visible` | `section_preamble_visible` | prose, role `_preamble` under `section` |
+| structure | `examples_groups_max_number_override` | `groups_max_number_override` | addresses `groups`.max_number |
+| structure | `examples_group_framing_preamble_visible` | `group_framing_preamble_visible` | prose, role `_preamble` under `group_framing` |
+| display | `examples_groups_entry_heading_format` | `groups_entry_heading_format` | decorates `groups` |
 
 ## constraints
 
@@ -766,49 +771,50 @@ constraints
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start
+    content    section_start                                constraints_section_start
 preamble:
   [constraints_are_not_steps_preamble]
-    content    constraints_are_not_steps_preamble
-    structure  constraints_are_not_steps_preamble_visible
+    content    constraints_are_not_steps_preamble           constraints_constraints_are_not_steps_preamble
+    structure  constraints_are_not_steps_preamble_visible   constraints_constraints_are_not_steps_preamble_visible
   [hierarchy_tier_comparison_preamble]
-    content    hierarchy_tier_comparison_preamble
-    structure  hierarchy_tier_comparison_preamble_visible
+    content    hierarchy_tier_comparison_preamble           constraints_hierarchy_tier_comparison_preamble
+    structure  hierarchy_tier_comparison_preamble_visible   constraints_hierarchy_tier_comparison_preamble_visible
   [hierarchy_three_tier_explanation_preamble]
-    content    hierarchy_three_tier_explanation_preamble
-    structure  hierarchy_three_tier_explanation_preamble_visible
+    content    hierarchy_three_tier_explanation_preamble    constraints_hierarchy_three_tier_explanation_preamble
+    structure  hierarchy_three_tier_explanation_preamble_visible constraints_hierarchy_three_tier_explanation_preamble_visible
   [section_preamble]
-    content    section_preamble_variant
-    structure  section_preamble_visible
-    structure  section_preamble_selector
+    content    section_preamble_variant                     constraints_section_preamble_variant
+    structure  section_preamble_visible                     constraints_section_preamble_visible
+    structure  section_preamble_selector                    constraints_section_preamble_selector
   [no_inferred_constraints_preamble]
-    content    no_inferred_constraints_preamble_variant_template
-    structure  no_inferred_constraints_preamble_visible
-    structure  no_inferred_constraints_preamble_selector
+    content    no_inferred_constraints_preamble_variant_template constraints_no_inferred_constraints_preamble_variant_template
+    structure  no_inferred_constraints_preamble_visible     constraints_no_inferred_constraints_preamble_visible
+    structure  no_inferred_constraints_preamble_selector    constraints_no_inferred_constraints_preamble_selector
 body:
   [rules]
-    data       rules
-    display    rules_format
-    display    rules_format_threshold
-    display    rules_polarity_normalization
-    display    rules_polarity_grouping_threshold
+    data       rules                                        rules
+    display    rules_format                                 constraints_rules_format
+    display    rules_format_threshold                       constraints_rules_format_threshold
+    display    rules_polarity_normalization                 constraints_rules_polarity_normalization
+    display    rules_polarity_grouping_threshold            constraints_rules_polarity_grouping_threshold
   [constraint_count_heading]
-    content    constraint_count_heading_template
-    structure  constraint_count_heading_visible
-    display    constraint_count_heading_visibility_threshold
+    content    constraint_count_heading_template            constraints_constraint_count_heading_template
+    structure  constraint_count_heading_visible             constraints_constraint_count_heading_visible
+    display    constraint_count_heading_visibility_threshold constraints_constraint_count_heading_visibility_threshold
 closing:
   [compliance_reminder_closing]
-    content    compliance_reminder_closing_variant_template
-    structure  compliance_reminder_closing_visible
-    display    compliance_reminder_closing_visibility_threshold
-    structure  compliance_reminder_closing_selector
+    content    compliance_reminder_closing_variant_template constraints_compliance_reminder_closing_variant_template
+    structure  compliance_reminder_closing_visible          constraints_compliance_reminder_closing_visible
+    display    compliance_reminder_closing_visibility_threshold constraints_compliance_reminder_closing_visibility_threshold
+    structure  compliance_reminder_closing_selector         constraints_compliance_reminder_closing_selector
 ```
 
 ### constraints — needs attention (6)
 
-#### `constraints_constraint_count_heading_template` · content
+#### `constraints_constraint_count_heading_template` → `constraint_count_heading_template` · content
 
 - **Defined as:** Template for the constraint count heading. Contains {{constraint_count}} placeholder replaced at render time with the actual number of constraints.
 
@@ -819,7 +825,7 @@ closing:
 
 - **Problem:** placeholder `{{COUNT}}` names neither data nor a declared computed
 
-#### `constraints_section_preamble_selector` · structure
+#### `constraints_section_preamble_selector` → `section_preamble_selector` · structure
 
 - **Defined as:** Selects which preamble variant to use for the constraints section. 'standalone' frames constraints independently. 'references_instructions' and 'references_critical_rules' frame constraints relative to other sections.
 
@@ -830,7 +836,7 @@ closing:
 
 - **Problem:** control suffix `_selector` — in code, absent from the table
 
-#### `constraints_no_inferred_constraints_preamble_selector` · structure
+#### `constraints_no_inferred_constraints_preamble_selector` → `no_inferred_constraints_preamble_selector` · structure
 
 - **Defined as:** Selects how strongly the no-inferred-constraints warning is worded. 'light' is a brief reminder. 'explicit' is a template-based warning that names the constraint count.
 
@@ -841,7 +847,7 @@ closing:
 
 - **Problem:** control suffix `_selector` — in code, absent from the table
 
-#### `constraints_compliance_reminder_closing_selector` · structure
+#### `constraints_compliance_reminder_closing_selector` → `compliance_reminder_closing_selector` · structure
 
 - **Defined as:** Selects the tone of the closing compliance reminder. 'evaluation_warning' frames compliance as tied to evaluation. 'simultaneity' emphasizes that all constraints apply simultaneously.
 
@@ -852,7 +858,7 @@ closing:
 
 - **Problem:** control suffix `_selector` — in code, absent from the table
 
-#### `constraints_rules_polarity_normalization` · display
+#### `constraints_rules_polarity_normalization` → `rules_polarity_normalization` · display
 
 - **Defined as:** How must/must-not phrasing is normalized across constraints. 'preserve_voice' keeps authored phrasing. Other values rewrite constraints to a consistent polarity style.
 
@@ -863,7 +869,7 @@ closing:
 
 - **Problem:** control suffix `_normalization` — undeclared
 
-#### `constraints_rules_polarity_grouping_threshold` · display
+#### `constraints_rules_polarity_grouping_threshold` → `rules_polarity_grouping_threshold` · display
 
 - **Defined as:** Constraint count threshold for activating polarity grouping. When constraint count reaches this value, constraints are split into must and must-not groups for clarity.
 
@@ -878,28 +884,28 @@ closing:
 
 ### constraints — conforming (20)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `constraints_section_start` | prose, role `_start` under `section` |
-| content | `constraints_constraints_are_not_steps_preamble` | prose, role `_preamble` under `constraints_are_not_steps` |
-| content | `constraints_hierarchy_tier_comparison_preamble` | prose, role `_preamble` under `hierarchy_tier_comparison` |
-| content | `constraints_hierarchy_three_tier_explanation_preamble` | prose, role `_preamble` under `hierarchy_three_tier_explanation` |
-| content | `constraints_section_preamble_variant` | variant sub-table |
-| content | `constraints_compliance_reminder_closing_variant_template` | variant sub-table |
-| content | `constraints_no_inferred_constraints_preamble_variant_template` | variant sub-table |
-| structure | `constraints_pre_section_visible` | preprocessing (pre_*) |
-| structure | `constraints_pre_max_entries_rendered` | preprocessing (pre_*) |
-| structure | `constraints_section_preamble_visible` | prose, role `_preamble` under `section` |
-| structure | `constraints_constraints_are_not_steps_preamble_visible` | prose, role `_preamble` under `constraints_are_not_steps` |
-| structure | `constraints_no_inferred_constraints_preamble_visible` | prose, role `_preamble` under `no_inferred_constraints` |
-| structure | `constraints_compliance_reminder_closing_visible` | prose, role `_closing` under `compliance_reminder` |
-| structure | `constraints_constraint_count_heading_visible` | prose, role `_heading` under `constraint_count` |
-| structure | `constraints_hierarchy_tier_comparison_preamble_visible` | prose, role `_preamble` under `hierarchy_tier_comparison` |
-| structure | `constraints_hierarchy_three_tier_explanation_preamble_visible` | prose, role `_preamble` under `hierarchy_three_tier_explanation` |
-| display | `constraints_rules_format` | data anchor |
-| display | `constraints_rules_format_threshold` | data anchor |
-| display | `constraints_compliance_reminder_closing_visibility_threshold` | prose, role `_closing` under `compliance_reminder` |
-| display | `constraints_constraint_count_heading_visibility_threshold` | prose, role `_heading` under `constraint_count` |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `constraints_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `constraints_constraints_are_not_steps_preamble` | `constraints_are_not_steps_preamble` | prose, role `_preamble` under `constraints_are_not_steps` |
+| content | `constraints_hierarchy_tier_comparison_preamble` | `hierarchy_tier_comparison_preamble` | prose, role `_preamble` under `hierarchy_tier_comparison` |
+| content | `constraints_hierarchy_three_tier_explanation_preamble` | `hierarchy_three_tier_explanation_preamble` | prose, role `_preamble` under `hierarchy_three_tier_explanation` |
+| content | `constraints_section_preamble_variant` | `section_preamble_variant` | variant sub-table |
+| content | `constraints_compliance_reminder_closing_variant_template` | `compliance_reminder_closing_variant_template` | variant sub-table |
+| content | `constraints_no_inferred_constraints_preamble_variant_template` | `no_inferred_constraints_preamble_variant_template` | variant sub-table |
+| structure | `constraints_pre_section_visible` | `pre_section_visible` | preprocessing (pre_*) |
+| structure | `constraints_pre_max_entries_rendered` | `pre_max_entries_rendered` | preprocessing (pre_*) |
+| structure | `constraints_section_preamble_visible` | `section_preamble_visible` | prose, role `_preamble` under `section` |
+| structure | `constraints_constraints_are_not_steps_preamble_visible` | `constraints_are_not_steps_preamble_visible` | prose, role `_preamble` under `constraints_are_not_steps` |
+| structure | `constraints_no_inferred_constraints_preamble_visible` | `no_inferred_constraints_preamble_visible` | prose, role `_preamble` under `no_inferred_constraints` |
+| structure | `constraints_compliance_reminder_closing_visible` | `compliance_reminder_closing_visible` | prose, role `_closing` under `compliance_reminder` |
+| structure | `constraints_constraint_count_heading_visible` | `constraint_count_heading_visible` | prose, role `_heading` under `constraint_count` |
+| structure | `constraints_hierarchy_tier_comparison_preamble_visible` | `hierarchy_tier_comparison_preamble_visible` | prose, role `_preamble` under `hierarchy_tier_comparison` |
+| structure | `constraints_hierarchy_three_tier_explanation_preamble_visible` | `hierarchy_three_tier_explanation_preamble_visible` | prose, role `_preamble` under `hierarchy_three_tier_explanation` |
+| display | `constraints_rules_format` | `rules_format` | data anchor |
+| display | `constraints_rules_format_threshold` | `rules_format_threshold` | data anchor |
+| display | `constraints_compliance_reminder_closing_visibility_threshold` | `compliance_reminder_closing_visibility_threshold` | prose, role `_closing` under `compliance_reminder` |
+| display | `constraints_constraint_count_heading_visibility_threshold` | `constraint_count_heading_visibility_threshold` | prose, role `_heading` under `constraint_count` |
 
 ## anti_patterns
 
@@ -911,34 +917,35 @@ anti_patterns
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start
+    content    section_start                                anti_patterns_section_start
 preamble:
   [section_preamble]
-    content    section_preamble
-    structure  section_preamble_visible
+    content    section_preamble                             anti_patterns_section_preamble
+    structure  section_preamble_visible                     anti_patterns_section_preamble_visible
   [constraints_vs_anti_patterns_distinction_preamble]
-    content    constraints_vs_anti_patterns_distinction_preamble
-    structure  constraints_vs_anti_patterns_distinction_preamble_visible
+    content    constraints_vs_anti_patterns_distinction_preamble anti_patterns_constraints_vs_anti_patterns_distinction_preamble
+    structure  constraints_vs_anti_patterns_distinction_preamble_visible anti_patterns_constraints_vs_anti_patterns_distinction_preamble_visible
 body:
   [patterns]
-    data       patterns
-    display    patterns_format
+    data       patterns                                     patterns
+    display    patterns_format                              anti_patterns_patterns_format
 ```
 
 ### anti_patterns — conforming (8)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `anti_patterns_section_start` | prose, role `_start` under `section` |
-| content | `anti_patterns_section_preamble` | prose, role `_preamble` under `section` |
-| content | `anti_patterns_constraints_vs_anti_patterns_distinction_preamble` | prose, role `_preamble` under `constraints_vs_anti_patterns_distinction` |
-| structure | `anti_patterns_pre_section_visible` | preprocessing (pre_*) |
-| structure | `anti_patterns_pre_max_entries_rendered` | preprocessing (pre_*) |
-| structure | `anti_patterns_section_preamble_visible` | prose, role `_preamble` under `section` |
-| structure | `anti_patterns_constraints_vs_anti_patterns_distinction_preamble_visible` | prose, role `_preamble` under `constraints_vs_anti_patterns_distinction` |
-| display | `anti_patterns_patterns_format` | data anchor |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `anti_patterns_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `anti_patterns_section_preamble` | `section_preamble` | prose, role `_preamble` under `section` |
+| content | `anti_patterns_constraints_vs_anti_patterns_distinction_preamble` | `constraints_vs_anti_patterns_distinction_preamble` | prose, role `_preamble` under `constraints_vs_anti_patterns_distinction` |
+| structure | `anti_patterns_pre_section_visible` | `pre_section_visible` | preprocessing (pre_*) |
+| structure | `anti_patterns_pre_max_entries_rendered` | `pre_max_entries_rendered` | preprocessing (pre_*) |
+| structure | `anti_patterns_section_preamble_visible` | `section_preamble_visible` | prose, role `_preamble` under `section` |
+| structure | `anti_patterns_constraints_vs_anti_patterns_distinction_preamble_visible` | `constraints_vs_anti_patterns_distinction_preamble_visible` | prose, role `_preamble` under `constraints_vs_anti_patterns_distinction` |
+| display | `anti_patterns_patterns_format` | `patterns_format` | data anchor |
 
 ## success_criteria
 
@@ -952,37 +959,38 @@ success_criteria
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start
+    content    section_start                                success_criteria_section_start
 body:
   [criteria]
-    data       criteria
-    content    criteria_separator
-    structure  criteria_evidence_type_handling
-    structure  criteria_relationship
-    display    criteria_evidence_format
-    display    criteria_evidence_format_threshold
+    data       criteria                                     criteria
+    content    criteria_separator                           success_criteria_criteria_separator
+    structure  criteria_evidence_type_handling              success_criteria_criteria_evidence_type_handling
+    structure  criteria_relationship                        success_criteria_criteria_relationship
+    display    criteria_evidence_format                     success_criteria_criteria_evidence_format
+    display    criteria_evidence_format_threshold           success_criteria_criteria_evidence_format_threshold
   [verification_guidance_postscript]
-    content    verification_guidance_postscript
-    structure  verification_guidance_postscript_visible
+    content    verification_guidance_postscript             success_criteria_verification_guidance_postscript
+    structure  verification_guidance_postscript_visible     success_criteria_verification_guidance_postscript_visible
   [success_failure_independence_statement_postscript]
-    content    success_failure_independence_statement_postscript
-    structure  success_failure_independence_statement_postscript_visible
+    content    success_failure_independence_statement_postscript success_criteria_success_failure_independence_statement_postscript
+    structure  success_failure_independence_statement_postscript_visible success_criteria_success_failure_independence_statement_postscript_visible
   [definition_declaration]
-    content    definition_declaration_variant_template
-    structure  definition_declaration_selector
+    content    definition_declaration_variant_template      success_criteria_definition_declaration_variant_template
+    structure  definition_declaration_selector              success_criteria_definition_declaration_selector
   [evidence_intro]
-    content    evidence_intro_variant
-    structure  evidence_intro_selector
+    content    evidence_intro_variant                       success_criteria_evidence_intro_variant
+    structure  evidence_intro_selector                      success_criteria_evidence_intro_selector
   [definition_to_evidence_transition]
-    content    definition_to_evidence_transition_variant
-    structure  definition_to_evidence_transition_selector
+    content    definition_to_evidence_transition_variant    success_criteria_definition_to_evidence_transition_variant
+    structure  definition_to_evidence_transition_selector   success_criteria_definition_to_evidence_transition_selector
 ```
 
 ### success_criteria — needs attention (5)
 
-#### `success_criteria_definition_declaration_selector` · structure
+#### `success_criteria_definition_declaration_selector` → `definition_declaration_selector` · structure
 
 - **Defined as:** Selects how the success definition statement renders. 'declarative_assertion' states the definition directly. 'conditional_gate' frames it as an if-and-only-if condition. 'completion_identity' frames it as agent self-recognition.
 
@@ -993,7 +1001,7 @@ body:
 
 - **Problem:** control suffix `_selector` — in code, absent from the table
 
-#### `success_criteria_evidence_intro_selector` · structure
+#### `success_criteria_evidence_intro_selector` → `evidence_intro_selector` · structure
 
 - **Defined as:** Selects how the evidence list introduction renders. 'properties' frames evidence as output properties. 'verification_checklist' frames as items to verify. 'quality_signals' frames as observable truth conditions.
 
@@ -1004,7 +1012,7 @@ body:
 
 - **Problem:** control suffix `_selector` — in code, absent from the table
 
-#### `success_criteria_definition_to_evidence_transition_selector` · structure
+#### `success_criteria_definition_to_evidence_transition_selector` → `definition_to_evidence_transition_selector` · structure
 
 - **Defined as:** Selects the transitional phrase between definition and evidence. 'goal_then_criteria' uses a goal-oriented bridge. 'proof' uses a proof-oriented bridge. 'dual_presentation' uses a confirmation-oriented bridge.
 
@@ -1015,7 +1023,7 @@ body:
 
 - **Problem:** control suffix `_selector` — in code, absent from the table
 
-#### `success_criteria_criteria_evidence_type_handling` · structure
+#### `success_criteria_criteria_evidence_type_handling` → `criteria_evidence_type_handling` · structure
 
 - **Defined as:** How evidence items render relative to their type markers. 'undifferentiated' renders all evidence items uniformly. 'graduated_language' varies language based on evidence type.
 
@@ -1026,7 +1034,7 @@ body:
 
 - **Problem:** control suffix `_handling` — undeclared
 
-#### `success_criteria_criteria_relationship` · structure
+#### `success_criteria_criteria_relationship` → `criteria_relationship` · structure
 
 - **Defined as:** How multiple success criteria relate to each other. 'independent_blocks' renders each criterion as a standalone block. 'numbered_dimensions' renders criteria as numbered evaluation dimensions. Only applies when criteria count exceeds one.
 
@@ -1039,21 +1047,21 @@ body:
 
 ### success_criteria — conforming (13)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `success_criteria_section_start` | prose, role `_start` under `section` |
-| content | `success_criteria_verification_guidance_postscript` | prose, role `_postscript` under `verification_guidance` |
-| content | `success_criteria_success_failure_independence_statement_postscript` | prose, role `_postscript` under `success_failure_independence_statement` |
-| content | `success_criteria_criteria_separator` | decorates `criteria` |
-| content | `success_criteria_definition_declaration_variant_template` | variant sub-table |
-| content | `success_criteria_evidence_intro_variant` | variant sub-table |
-| content | `success_criteria_definition_to_evidence_transition_variant` | variant sub-table |
-| structure | `success_criteria_pre_section_visible` | preprocessing (pre_*) |
-| structure | `success_criteria_pre_max_entries_rendered` | preprocessing (pre_*) |
-| structure | `success_criteria_success_failure_independence_statement_postscript_visible` | prose, role `_postscript` under `success_failure_independence_statement` |
-| structure | `success_criteria_verification_guidance_postscript_visible` | prose, role `_postscript` under `verification_guidance` |
-| display | `success_criteria_criteria_evidence_format_threshold` | addresses `criteria`.evidence |
-| display | `success_criteria_criteria_evidence_format` | addresses `criteria`.evidence |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `success_criteria_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `success_criteria_verification_guidance_postscript` | `verification_guidance_postscript` | prose, role `_postscript` under `verification_guidance` |
+| content | `success_criteria_success_failure_independence_statement_postscript` | `success_failure_independence_statement_postscript` | prose, role `_postscript` under `success_failure_independence_statement` |
+| content | `success_criteria_criteria_separator` | `criteria_separator` | decorates `criteria` |
+| content | `success_criteria_definition_declaration_variant_template` | `definition_declaration_variant_template` | variant sub-table |
+| content | `success_criteria_evidence_intro_variant` | `evidence_intro_variant` | variant sub-table |
+| content | `success_criteria_definition_to_evidence_transition_variant` | `definition_to_evidence_transition_variant` | variant sub-table |
+| structure | `success_criteria_pre_section_visible` | `pre_section_visible` | preprocessing (pre_*) |
+| structure | `success_criteria_pre_max_entries_rendered` | `pre_max_entries_rendered` | preprocessing (pre_*) |
+| structure | `success_criteria_success_failure_independence_statement_postscript_visible` | `success_failure_independence_statement_postscript_visible` | prose, role `_postscript` under `success_failure_independence_statement` |
+| structure | `success_criteria_verification_guidance_postscript_visible` | `verification_guidance_postscript_visible` | prose, role `_postscript` under `verification_guidance` |
+| display | `success_criteria_criteria_evidence_format_threshold` | `criteria_evidence_format_threshold` | addresses `criteria`.evidence |
+| display | `success_criteria_criteria_evidence_format` | `criteria_evidence_format` | addresses `criteria`.evidence |
 
 ## failure_criteria
 
@@ -1067,36 +1075,37 @@ failure_criteria
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start
+    content    section_start                                failure_criteria_section_start
 preamble:
   [any_one_triggers_abort_preamble]
-    content    any_one_triggers_abort_preamble
+    content    any_one_triggers_abort_preamble              failure_criteria_any_one_triggers_abort_preamble
   [abort_stance_preamble]
-    content    abort_stance_preamble_variant
-    structure  abort_stance_preamble_visible
-    structure  abort_stance_selector
+    content    abort_stance_preamble_variant                failure_criteria_abort_stance_preamble_variant
+    structure  abort_stance_preamble_visible                failure_criteria_abort_stance_preamble_visible
+    structure  abort_stance_selector                        failure_criteria_abort_stance_selector
 body:
   [criteria]
-    data       criteria
-    display    criteria_evidence_format
+    data       criteria                                     criteria
+    display    criteria_evidence_format                     failure_criteria_criteria_evidence_format
   [evidence_intro]
-    content    evidence_intro
+    content    evidence_intro                               failure_criteria_evidence_intro
   [cite_definition_and_evidence_postscript]
-    content    cite_definition_and_evidence_postscript
-    structure  cite_definition_and_evidence_postscript_visible
+    content    cite_definition_and_evidence_postscript      failure_criteria_cite_definition_and_evidence_postscript
+    structure  cite_definition_and_evidence_postscript_visible failure_criteria_cite_definition_and_evidence_postscript_visible
   [check_before_and_during_postscript]
-    content    check_before_and_during_postscript
-    structure  check_before_and_during_postscript_visible
+    content    check_before_and_during_postscript           failure_criteria_check_before_and_during_postscript
+    structure  check_before_and_during_postscript_visible   failure_criteria_check_before_and_during_postscript_visible
   [abort_stance_definition_label]
-    content    abort_stance_definition_label_variant
-    structure  abort_stance_selector
+    content    abort_stance_definition_label_variant        failure_criteria_abort_stance_definition_label_variant
+    structure  abort_stance_selector                        failure_criteria_abort_stance_selector
 ```
 
 ### failure_criteria — needs attention (1)
 
-#### `failure_criteria_abort_stance_selector` · structure
+#### `failure_criteria_abort_stance_selector` → `abort_stance_selector` · structure
 
 - **Defined as:** Selects the behavioral posture for abort conditions. 'obligation' frames stopping as a duty (MUST stop). 'permission' frames stopping as the correct action (the right thing to do). Governs both preamble and definition label variants.
 
@@ -1111,21 +1120,21 @@ body:
 
 ### failure_criteria — conforming (13)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `failure_criteria_section_start` | prose, role `_start` under `section` |
-| content | `failure_criteria_any_one_triggers_abort_preamble` | prose, role `_preamble` under `any_one_triggers_abort` |
-| content | `failure_criteria_evidence_intro` | prose, role `_intro` under `evidence` |
-| content | `failure_criteria_cite_definition_and_evidence_postscript` | prose, role `_postscript` under `cite_definition_and_evidence` |
-| content | `failure_criteria_check_before_and_during_postscript` | prose, role `_postscript` under `check_before_and_during` |
-| content | `failure_criteria_abort_stance_preamble_variant` | variant sub-table |
-| content | `failure_criteria_abort_stance_definition_label_variant` | variant sub-table |
-| structure | `failure_criteria_pre_section_visible` | preprocessing (pre_*) |
-| structure | `failure_criteria_pre_max_entries_rendered` | preprocessing (pre_*) |
-| structure | `failure_criteria_abort_stance_preamble_visible` | prose, role `_preamble` under `abort_stance` |
-| structure | `failure_criteria_cite_definition_and_evidence_postscript_visible` | prose, role `_postscript` under `cite_definition_and_evidence` |
-| structure | `failure_criteria_check_before_and_during_postscript_visible` | prose, role `_postscript` under `check_before_and_during` |
-| display | `failure_criteria_criteria_evidence_format` | addresses `criteria`.evidence |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `failure_criteria_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `failure_criteria_any_one_triggers_abort_preamble` | `any_one_triggers_abort_preamble` | prose, role `_preamble` under `any_one_triggers_abort` |
+| content | `failure_criteria_evidence_intro` | `evidence_intro` | prose, role `_intro` under `evidence` |
+| content | `failure_criteria_cite_definition_and_evidence_postscript` | `cite_definition_and_evidence_postscript` | prose, role `_postscript` under `cite_definition_and_evidence` |
+| content | `failure_criteria_check_before_and_during_postscript` | `check_before_and_during_postscript` | prose, role `_postscript` under `check_before_and_during` |
+| content | `failure_criteria_abort_stance_preamble_variant` | `abort_stance_preamble_variant` | variant sub-table |
+| content | `failure_criteria_abort_stance_definition_label_variant` | `abort_stance_definition_label_variant` | variant sub-table |
+| structure | `failure_criteria_pre_section_visible` | `pre_section_visible` | preprocessing (pre_*) |
+| structure | `failure_criteria_pre_max_entries_rendered` | `pre_max_entries_rendered` | preprocessing (pre_*) |
+| structure | `failure_criteria_abort_stance_preamble_visible` | `abort_stance_preamble_visible` | prose, role `_preamble` under `abort_stance` |
+| structure | `failure_criteria_cite_definition_and_evidence_postscript_visible` | `cite_definition_and_evidence_postscript_visible` | prose, role `_postscript` under `cite_definition_and_evidence` |
+| structure | `failure_criteria_check_before_and_during_postscript_visible` | `check_before_and_during_postscript_visible` | prose, role `_postscript` under `check_before_and_during` |
+| display | `failure_criteria_criteria_evidence_format` | `criteria_evidence_format` | addresses `criteria`.evidence |
 
 ## output
 
@@ -1145,38 +1154,39 @@ output
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start
+    content    section_start                                output_section_start
 body:
   [description]
-    data       description
+    data       description                                  description
   [format]
-    data       format
-    content    format_template
+    data       format                                       format
+    content    format_template                              output_format_template
   [name_known]
-    data       name_known
+    data       name_known                                   name_known
   [schema_path]
-    data       schema_path
+    data       schema_path                                  schema_path
   [output_file]
-    data       output_file
+    data       output_file                                  output_file
   [output_directory]
-    data       output_directory
+    data       output_directory                             output_directory
   [name_template]
-    data       name_template
+    data       name_template                                name_template
   [name_instruction]
-    data       name_instruction
+    data       name_instruction                             name_instruction
   [schema_embed]
-    data       schema_embed
-    content    schema_embed_intro
-    structure  schema_embed
+    data       schema_embed                                 schema_embed
+    content    schema_embed_intro                           output_schema_embed_intro
+    structure  schema_embed                                 output_schema_embed
   [output_description]
-    content    output_description_template
+    content    output_description_template                  output_output_description_template
   [schema_reference_label]
-    content    schema_reference_label_template
+    content    schema_reference_label_template              output_schema_reference_label_template
   [directory_location]
-    content    directory_location_variant_template
-    structure  directory_location_selector
+    content    directory_location_variant_template          output_directory_location_variant_template
+    structure  directory_location_selector                  output_directory_location_selector
 ```
 
 **Already identified in the review document**
@@ -1186,7 +1196,7 @@ body:
 
 ### output — needs attention (4)
 
-#### `output_output_description_template` · content
+#### `output_output_description_template` → `output_description_template` · content
 
 - **Defined as:** Template describing what the agent produces. Contains {{DESCRIPTION}} placeholder replaced with the authored output description from the agent definition.
 
@@ -1199,7 +1209,7 @@ body:
 
 - **Tentative fix:** 1 of its section-mates declare `_start`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `output_output_description_start_template`
 
-#### `output_format_template` · content
+#### `output_format_template` → `format_template` · content
 
 - **Defined as:** Template declaring the output format. Contains {{FORMAT}} placeholder replaced with the configured output format value.
 
@@ -1210,7 +1220,7 @@ body:
 
 - **Tentative fix:** 1 of its section-mates declare `_start`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `output_format_start_template`
 
-#### `output_schema_embed` · structure
+#### `output_schema_embed` → `schema_embed` · structure
 
 - **Defined as:** Whether to inline the output schema content directly in the prompt. When true, the full schema is embedded. When false, only a path reference is rendered.
 
@@ -1223,7 +1233,7 @@ body:
 
 - **Problem:** no data field and no declared positional suffix
 
-#### `output_directory_location_selector` · structure
+#### `output_directory_location_selector` → `directory_location_selector` · structure
 
 - **Defined as:** Selects how the output directory location is declared. 'standard' states the directory path. 'with_boundary' adds an explicit boundary constraint that all files must be within the directory.
 
@@ -1238,12 +1248,12 @@ body:
 
 ### output — conforming (4)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `output_section_start` | prose, role `_start` under `section` |
-| content | `output_schema_embed_intro` | decorates `schema_embed` |
-| content | `output_schema_reference_label_template` | prose, role `_label` under `schema_reference` |
-| content | `output_directory_location_variant_template` | variant sub-table |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `output_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `output_schema_embed_intro` | `schema_embed_intro` | decorates `schema_embed` |
+| content | `output_schema_reference_label_template` | `schema_reference_label_template` | prose, role `_label` under `schema_reference` |
+| content | `output_directory_location_variant_template` | `directory_location_variant_template` | variant sub-table |
 
 ## writing_output
 
@@ -1267,17 +1277,17 @@ writing_output
 
 ### writing_output — conforming (9)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `writing_output_section_start` | prose, role `_start` under `section` |
-| content | `writing_output_transition_preamble` | prose, role `_preamble` under `transition` |
-| content | `writing_output_tool_mandate_preamble` | prose, role `_preamble` under `tool_mandate` |
-| content | `writing_output_tool_identity_label_template` | prose, role `_label` under `tool_identity` |
-| content | `writing_output_invocation_preamble` | prose, role `_preamble` under `invocation` |
-| content | `writing_output_heredoc_explanation_postscript` | prose, role `_postscript` under `heredoc_explanation` |
-| structure | `writing_output_transition_preamble_visible` | prose, role `_preamble` under `transition` |
-| structure | `writing_output_tool_mandate_preamble_visible` | prose, role `_preamble` under `tool_mandate` |
-| structure | `writing_output_heredoc_explanation_postscript_visible` | prose, role `_postscript` under `heredoc_explanation` |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `writing_output_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `writing_output_transition_preamble` | `transition_preamble` | prose, role `_preamble` under `transition` |
+| content | `writing_output_tool_mandate_preamble` | `tool_mandate_preamble` | prose, role `_preamble` under `tool_mandate` |
+| content | `writing_output_tool_identity_label_template` | `tool_identity_label_template` | prose, role `_label` under `tool_identity` |
+| content | `writing_output_invocation_preamble` | `invocation_preamble` | prose, role `_preamble` under `invocation` |
+| content | `writing_output_heredoc_explanation_postscript` | `heredoc_explanation_postscript` | prose, role `_postscript` under `heredoc_explanation` |
+| structure | `writing_output_transition_preamble_visible` | `transition_preamble_visible` | prose, role `_preamble` under `transition` |
+| structure | `writing_output_tool_mandate_preamble_visible` | `tool_mandate_preamble_visible` | prose, role `_preamble` under `tool_mandate` |
+| structure | `writing_output_heredoc_explanation_postscript_visible` | `heredoc_explanation_postscript_visible` | prose, role `_postscript` under `heredoc_explanation` |
 
 ## return_format
 
@@ -1293,53 +1303,54 @@ return_format
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start
+    content    section_start                                return_format_section_start
 preamble:
   [files_vs_status_explanation_preamble]
-    content    files_vs_status_explanation_preamble
-    structure  files_vs_status_explanation_preamble_visible
+    content    files_vs_status_explanation_preamble         return_format_files_vs_status_explanation_preamble
+    structure  files_vs_status_explanation_preamble_visible return_format_files_vs_status_explanation_preamble_visible
   [token_must_be_first_word_preamble]
-    content    token_must_be_first_word_preamble
-    structure  token_must_be_first_word_preamble_visible
+    content    token_must_be_first_word_preamble            return_format_token_must_be_first_word_preamble
+    structure  token_must_be_first_word_preamble_visible    return_format_token_must_be_first_word_preamble_visible
   [token_must_be_first_word_tokens_three_preamble]
-    content    token_must_be_first_word_tokens_three_preamble
+    content    token_must_be_first_word_tokens_three_preamble return_format_token_must_be_first_word_tokens_three_preamble
   [token_must_be_first_word_tokens_two_preamble]
-    content    token_must_be_first_word_tokens_two_preamble
+    content    token_must_be_first_word_tokens_two_preamble return_format_token_must_be_first_word_tokens_two_preamble
   [abort_vs_failure_distinction_preamble]
-    content    abort_vs_failure_distinction_preamble
-    structure  abort_vs_failure_distinction_preamble_visible
+    content    abort_vs_failure_distinction_preamble        return_format_abort_vs_failure_distinction_preamble
+    structure  abort_vs_failure_distinction_preamble_visible return_format_abort_vs_failure_distinction_preamble_visible
   [honest_failure_over_dubious_success_preamble]
-    content    honest_failure_over_dubious_success_preamble
-    structure  honest_failure_over_dubious_success_preamble_visible
+    content    honest_failure_over_dubious_success_preamble return_format_honest_failure_over_dubious_success_preamble
+    structure  honest_failure_over_dubious_success_preamble_visible return_format_honest_failure_over_dubious_success_preamble_visible
   [failure_cross_reference_preamble]
-    content    failure_cross_reference_preamble
-    structure  failure_cross_reference_preamble_visible
+    content    failure_cross_reference_preamble             return_format_failure_cross_reference_preamble
+    structure  failure_cross_reference_preamble_visible     return_format_failure_cross_reference_preamble_visible
 body:
   [mode]
-    data       mode
+    data       mode                                         mode
   [return_schema]
-    data       return_schema
+    data       return_schema                                return_schema
   [status_instruction]
-    data       status_instruction
+    data       status_instruction                           status_instruction
   [metrics_instruction]
-    data       metrics_instruction
+    data       metrics_instruction                          metrics_instruction
   [output_instruction]
-    data       output_instruction
+    data       output_instruction                           output_instruction
   [report_completion_label]
-    content    report_completion_label
+    content    report_completion_label                      return_format_report_completion_label
   [report_all_metrics_postscript]
-    content    report_all_metrics_postscript
-    structure  report_all_metrics_postscript_visible
+    content    report_all_metrics_postscript                return_format_report_all_metrics_postscript
+    structure  report_all_metrics_postscript_visible        return_format_report_all_metrics_postscript_visible
   [track_metrics_as_you_work_postscript]
-    content    track_metrics_as_you_work_postscript
-    structure  track_metrics_as_you_work_postscript_visible
+    content    track_metrics_as_you_work_postscript         return_format_track_metrics_as_you_work_postscript
+    structure  track_metrics_as_you_work_postscript_visible return_format_track_metrics_as_you_work_postscript_visible
   [track_metrics_as_you_work_antidrift_postscript]
-    content    track_metrics_as_you_work_antidrift_postscript
+    content    track_metrics_as_you_work_antidrift_postscript return_format_track_metrics_as_you_work_antidrift_postscript
   [do_not_fabricate_metrics_postscript]
-    content    do_not_fabricate_metrics_postscript
-    structure  do_not_fabricate_metrics_postscript_visible
+    content    do_not_fabricate_metrics_postscript          return_format_do_not_fabricate_metrics_postscript
+    structure  do_not_fabricate_metrics_postscript_visible  return_format_do_not_fabricate_metrics_postscript_visible
 ```
 
 **Already identified in the review document**
@@ -1349,29 +1360,29 @@ body:
 
 ### return_format — conforming (21)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `return_format_section_start` | prose, role `_start` under `section` |
-| content | `return_format_files_vs_status_explanation_preamble` | prose, role `_preamble` under `files_vs_status_explanation` |
-| content | `return_format_token_must_be_first_word_preamble` | prose, role `_preamble` under `token_must_be_first_word` |
-| content | `return_format_token_must_be_first_word_tokens_three_preamble` | prose, role `_preamble` under `token_must_be_first_word_tokens_three` |
-| content | `return_format_token_must_be_first_word_tokens_two_preamble` | prose, role `_preamble` under `token_must_be_first_word_tokens_two` |
-| content | `return_format_report_completion_label` | prose, role `_label` under `report_completion` |
-| content | `return_format_report_all_metrics_postscript` | prose, role `_postscript` under `report_all_metrics` |
-| content | `return_format_abort_vs_failure_distinction_preamble` | prose, role `_preamble` under `abort_vs_failure_distinction` |
-| content | `return_format_honest_failure_over_dubious_success_preamble` | prose, role `_preamble` under `honest_failure_over_dubious_success` |
-| content | `return_format_track_metrics_as_you_work_postscript` | prose, role `_postscript` under `track_metrics_as_you_work` |
-| content | `return_format_track_metrics_as_you_work_antidrift_postscript` | prose, role `_postscript` under `track_metrics_as_you_work_antidrift` |
-| content | `return_format_do_not_fabricate_metrics_postscript` | prose, role `_postscript` under `do_not_fabricate_metrics` |
-| content | `return_format_failure_cross_reference_preamble` | prose, role `_preamble` under `failure_cross_reference` |
-| structure | `return_format_files_vs_status_explanation_preamble_visible` | prose, role `_preamble` under `files_vs_status_explanation` |
-| structure | `return_format_token_must_be_first_word_preamble_visible` | prose, role `_preamble` under `token_must_be_first_word` |
-| structure | `return_format_report_all_metrics_postscript_visible` | prose, role `_postscript` under `report_all_metrics` |
-| structure | `return_format_abort_vs_failure_distinction_preamble_visible` | prose, role `_preamble` under `abort_vs_failure_distinction` |
-| structure | `return_format_honest_failure_over_dubious_success_preamble_visible` | prose, role `_preamble` under `honest_failure_over_dubious_success` |
-| structure | `return_format_track_metrics_as_you_work_postscript_visible` | prose, role `_postscript` under `track_metrics_as_you_work` |
-| structure | `return_format_do_not_fabricate_metrics_postscript_visible` | prose, role `_postscript` under `do_not_fabricate_metrics` |
-| structure | `return_format_failure_cross_reference_preamble_visible` | prose, role `_preamble` under `failure_cross_reference` |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `return_format_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `return_format_files_vs_status_explanation_preamble` | `files_vs_status_explanation_preamble` | prose, role `_preamble` under `files_vs_status_explanation` |
+| content | `return_format_token_must_be_first_word_preamble` | `token_must_be_first_word_preamble` | prose, role `_preamble` under `token_must_be_first_word` |
+| content | `return_format_token_must_be_first_word_tokens_three_preamble` | `token_must_be_first_word_tokens_three_preamble` | prose, role `_preamble` under `token_must_be_first_word_tokens_three` |
+| content | `return_format_token_must_be_first_word_tokens_two_preamble` | `token_must_be_first_word_tokens_two_preamble` | prose, role `_preamble` under `token_must_be_first_word_tokens_two` |
+| content | `return_format_report_completion_label` | `report_completion_label` | prose, role `_label` under `report_completion` |
+| content | `return_format_report_all_metrics_postscript` | `report_all_metrics_postscript` | prose, role `_postscript` under `report_all_metrics` |
+| content | `return_format_abort_vs_failure_distinction_preamble` | `abort_vs_failure_distinction_preamble` | prose, role `_preamble` under `abort_vs_failure_distinction` |
+| content | `return_format_honest_failure_over_dubious_success_preamble` | `honest_failure_over_dubious_success_preamble` | prose, role `_preamble` under `honest_failure_over_dubious_success` |
+| content | `return_format_track_metrics_as_you_work_postscript` | `track_metrics_as_you_work_postscript` | prose, role `_postscript` under `track_metrics_as_you_work` |
+| content | `return_format_track_metrics_as_you_work_antidrift_postscript` | `track_metrics_as_you_work_antidrift_postscript` | prose, role `_postscript` under `track_metrics_as_you_work_antidrift` |
+| content | `return_format_do_not_fabricate_metrics_postscript` | `do_not_fabricate_metrics_postscript` | prose, role `_postscript` under `do_not_fabricate_metrics` |
+| content | `return_format_failure_cross_reference_preamble` | `failure_cross_reference_preamble` | prose, role `_preamble` under `failure_cross_reference` |
+| structure | `return_format_files_vs_status_explanation_preamble_visible` | `files_vs_status_explanation_preamble_visible` | prose, role `_preamble` under `files_vs_status_explanation` |
+| structure | `return_format_token_must_be_first_word_preamble_visible` | `token_must_be_first_word_preamble_visible` | prose, role `_preamble` under `token_must_be_first_word` |
+| structure | `return_format_report_all_metrics_postscript_visible` | `report_all_metrics_postscript_visible` | prose, role `_postscript` under `report_all_metrics` |
+| structure | `return_format_abort_vs_failure_distinction_preamble_visible` | `abort_vs_failure_distinction_preamble_visible` | prose, role `_preamble` under `abort_vs_failure_distinction` |
+| structure | `return_format_honest_failure_over_dubious_success_preamble_visible` | `honest_failure_over_dubious_success_preamble_visible` | prose, role `_preamble` under `honest_failure_over_dubious_success` |
+| structure | `return_format_track_metrics_as_you_work_postscript_visible` | `track_metrics_as_you_work_postscript_visible` | prose, role `_postscript` under `track_metrics_as_you_work` |
+| structure | `return_format_do_not_fabricate_metrics_postscript_visible` | `do_not_fabricate_metrics_postscript_visible` | prose, role `_postscript` under `do_not_fabricate_metrics` |
+| structure | `return_format_failure_cross_reference_preamble_visible` | `failure_cross_reference_preamble_visible` | prose, role `_preamble` under `failure_cross_reference` |
 
 ## input
 
@@ -1397,55 +1408,56 @@ input
 **Bundles produced**
 
 ```
+    axis       universal (bundler)                          source (files)
 heading:
   [section_start]
-    content    section_start
+    content    section_start                                input_section_start
 preamble:
   [section_preamble]
-    content    section_preamble
-    structure  section_preamble_visible
+    content    section_preamble                             input_section_preamble
+    structure  section_preamble_visible                     input_section_preamble_visible
 body:
   [description]
-    data       description
-    content    description_format_template
+    data       description                                  description
+    content    description_format_template                  input_description_format_template
   [format]
-    data       format
+    data       format                                       format
   [delivery]
-    data       delivery
+    data       delivery                                     delivery
   [input_schema]
-    data       input_schema
+    data       input_schema                                 input_schema
   [parameters]
-    data       parameters
-    content    parameters_transition
-    content    parameters_heading
-    content    parameters_entry_template
-    structure  parameters_transition_visible
-    structure  parameters_heading_visible
-    structure  parameters_heading_auto_threshold
-    display    parameters_format
-    display    parameters_format_threshold
+    data       parameters                                   parameters
+    content    parameters_transition                        input_parameters_transition
+    content    parameters_heading                           input_parameters_heading
+    content    parameters_entry_template                    input_parameters_entry_template
+    structure  parameters_transition_visible                input_parameters_transition_visible
+    structure  parameters_heading_visible                   input_parameters_heading_visible
+    structure  parameters_heading_auto_threshold            input_parameters_heading_auto_threshold
+    display    parameters_format                            input_parameters_format
+    display    parameters_format_threshold                  input_parameters_format_threshold
   [context_required]
-    data       context_required
-    content    context_required_heading
-    content    context_required_intro
-    content    context_required_entry_template
-    structure  context_required_intro_visible
-    display    context_required_format
+    data       context_required                             context_required
+    content    context_required_heading                     input_context_required_heading
+    content    context_required_intro                       input_context_required_intro
+    content    context_required_entry_template              input_context_required_entry_template
+    structure  context_required_intro_visible               input_context_required_intro_visible
+    display    context_required_format                      input_context_required_format
   [context_available]
-    data       context_available
-    content    context_available_heading
-    display    context_available_format
+    data       context_available                            context_available
+    content    context_available_heading                    input_context_available_heading
+    display    context_available_format                     input_context_available_format
   [input_completeness_postscript]
-    content    input_completeness_postscript
-    structure  input_completeness_postscript_visible
+    content    input_completeness_postscript                input_input_completeness_postscript
+    structure  input_completeness_postscript_visible        input_input_completeness_postscript_visible
   [schema_label]
-    content    schema_label_template
-    structure  schema_label_visible
+    content    schema_label_template                        input_schema_label_template
+    structure  schema_label_visible                         input_schema_label_visible
 ```
 
 ### input — needs attention (3)
 
-#### `input_description_format_template` · content
+#### `input_description_format_template` → `description_format_template` · content
 
 - **Defined as:** Integrated description and format declaration. Template with {{format}} and {{description}} placeholders. Presents what the agent receives and in what shape as a single sentence.
 
@@ -1456,7 +1468,7 @@ body:
 
 - **Tentative fix:** 3 of its section-mates declare `_heading`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `input_description_format_heading_template`
 
-#### `input_context_required_entry_template` · content
+#### `input_context_required_entry_template` → `context_required_entry_template` · content
 
 - **Defined as:** Template for rendering a single context entry. Contains {{context_label}} and {{context_path}} placeholders. Label-first presentation with path as the action target.
 
@@ -1467,7 +1479,7 @@ body:
 
 - **Tentative fix:** 3 of its section-mates declare `_heading`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `input_context_required_entry_heading_template`
 
-#### `input_parameters_entry_template` · content
+#### `input_parameters_entry_template` → `parameters_entry_template` · content
 
 - **Defined as:** Template for rendering a single parameter entry. Contains {{param_name}}, {{param_type}}, and {{param_description}} placeholders. Code-formatted parameter name signals literal identifier.
 
@@ -1480,28 +1492,28 @@ body:
 
 ### input — conforming (20)
 
-| axis | field | addresses |
-|---|---|---|
-| content | `input_section_start` | prose, role `_start` under `section` |
-| content | `input_section_preamble` | prose, role `_preamble` under `section` |
-| content | `input_context_required_heading` | decorates `context_required` |
-| content | `input_context_required_intro` | decorates `context_required` |
-| content | `input_context_available_heading` | decorates `context_available` |
-| content | `input_parameters_transition` | decorates `parameters` |
-| content | `input_parameters_heading` | decorates `parameters` |
-| content | `input_input_completeness_postscript` | prose, role `_postscript` under `input_completeness` |
-| content | `input_schema_label_template` | prose, role `_label` under `schema` |
-| structure | `input_section_preamble_visible` | prose, role `_preamble` under `section` |
-| structure | `input_context_required_intro_visible` | decorates `context_required` |
-| structure | `input_parameters_transition_visible` | decorates `parameters` |
-| structure | `input_input_completeness_postscript_visible` | prose, role `_postscript` under `input_completeness` |
-| structure | `input_schema_label_visible` | prose, role `_label` under `schema` |
-| structure | `input_parameters_heading_visible` | decorates `parameters` |
-| structure | `input_parameters_heading_auto_threshold` | decorates `parameters` |
-| display | `input_context_required_format` | data anchor |
-| display | `input_context_available_format` | data anchor |
-| display | `input_parameters_format` | data anchor |
-| display | `input_parameters_format_threshold` | data anchor |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `input_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `input_section_preamble` | `section_preamble` | prose, role `_preamble` under `section` |
+| content | `input_context_required_heading` | `context_required_heading` | decorates `context_required` |
+| content | `input_context_required_intro` | `context_required_intro` | decorates `context_required` |
+| content | `input_context_available_heading` | `context_available_heading` | decorates `context_available` |
+| content | `input_parameters_transition` | `parameters_transition` | decorates `parameters` |
+| content | `input_parameters_heading` | `parameters_heading` | decorates `parameters` |
+| content | `input_input_completeness_postscript` | `input_completeness_postscript` | prose, role `_postscript` under `input_completeness` |
+| content | `input_schema_label_template` | `schema_label_template` | prose, role `_label` under `schema` |
+| structure | `input_section_preamble_visible` | `section_preamble_visible` | prose, role `_preamble` under `section` |
+| structure | `input_context_required_intro_visible` | `context_required_intro_visible` | decorates `context_required` |
+| structure | `input_parameters_transition_visible` | `parameters_transition_visible` | decorates `parameters` |
+| structure | `input_input_completeness_postscript_visible` | `input_completeness_postscript_visible` | prose, role `_postscript` under `input_completeness` |
+| structure | `input_schema_label_visible` | `schema_label_visible` | prose, role `_label` under `schema` |
+| structure | `input_parameters_heading_visible` | `parameters_heading_visible` | decorates `parameters` |
+| structure | `input_parameters_heading_auto_threshold` | `parameters_heading_auto_threshold` | decorates `parameters` |
+| display | `input_context_required_format` | `context_required_format` | data anchor |
+| display | `input_context_available_format` | `context_available_format` | data anchor |
+| display | `input_parameters_format` | `parameters_format` | data anchor |
+| display | `input_parameters_format_threshold` | `parameters_format_threshold` | data anchor |
 
 ## section_order
 
@@ -1509,7 +1521,7 @@ _no data model for this section_
 
 ### section_order — needs attention (1)
 
-#### `section_order_order` · structure
+#### `section_order_order` → `order` · structure
 
 - **Currently addresses:** global config
 - **Value:** `['identity', 'security_boundary', 'critical_rules', 'input', 'instruc…`
@@ -1522,7 +1534,7 @@ _no data model for this section_
 
 ### global_defaults — needs attention (1)
 
-#### `global_defaults_inter_section_separator` · display
+#### `global_defaults_inter_section_separator` → `inter_section_separator` · display
 
 - **Defined as:** Default separator rendered between adjacent sections in the agent prompt. Applies unless a specific section overrides it with pre_section_divider_override.
 
@@ -1533,6 +1545,6 @@ _no data model for this section_
 
 ### global_defaults — conforming (1)
 
-| axis | field | addresses |
-|---|---|---|
-| display | `global_defaults_intra_section_separator` | global config |
+| axis | source | universal | addresses |
+|---|---|---|---|
+| display | `global_defaults_intra_section_separator` | `intra_section_separator` | global config |

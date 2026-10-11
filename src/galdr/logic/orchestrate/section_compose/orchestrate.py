@@ -19,7 +19,7 @@ import gate_output_structure_input
 
 from galdr.logic.impure.gate_validate.simple import validate_input
 from galdr.logic.pure.section_compose.assembled import compose_section
-from galdr.logic.pure.section_compose.simple import field_view, local_field_view
+from galdr.logic.pure.section_compose.simple import field_view, local_field_view, source_name
 from galdr.structure.gen.anthropic_render import AgentAnthropicRender
 from galdr.structure.gen.output_content import AgentOutputContent
 from galdr.structure.gen.output_display import AgentOutputDisplay
@@ -46,32 +46,45 @@ def load_all_inputs(
     )
 
 
-def format_preprocessing_lines(pre_fields: PreprocessingFields) -> list[str]:
-    """Render extracted preprocessing fields as report lines.
+def format_preprocessing_lines(section_name: str, pre_fields: PreprocessingFields) -> list[str]:
+    """Render extracted preprocessing fields as report lines, both names shown.
 
     Omits fields at their default values so the report only shows what
     was actually extracted for this section.
     """
     lines: list[str] = []
     if pre_fields.section_visible is not True:
-        lines.append(f"  pre_section_visible = {pre_fields.section_visible!r}")
+        lines.append(f"  pre_section_visible = {pre_fields.section_visible!r}"
+                     f"   [{section_name}_pre_section_visible]")
     if pre_fields.max_entries_rendered is not None:
-        lines.append(f"  pre_max_entries_rendered = {pre_fields.max_entries_rendered!r}")
+        lines.append(f"  pre_max_entries_rendered = {pre_fields.max_entries_rendered!r}"
+                     f"   [{section_name}_pre_max_entries_rendered]")
     if pre_fields.field_ordering is not None:
-        lines.append(f"  pre_field_ordering = {pre_fields.field_ordering!r}")
+        lines.append(f"  pre_field_ordering = {pre_fields.field_ordering!r}"
+                     f"   [{section_name}_pre_field_ordering]")
     if pre_fields.scaffolding_tier_override is not None:
-        lines.append(f"  pre_scaffolding_tier_override = {pre_fields.scaffolding_tier_override!r}")
+        lines.append(f"  pre_scaffolding_tier_override = {pre_fields.scaffolding_tier_override!r}"
+                     f"   [{section_name}_pre_scaffolding_tier_override]")
     return lines
 
 
-def format_slot_lines(slot_name: str, entries: list[tuple[str, str]]) -> list[str]:
-    """Render one slot's entries as verbose report lines."""
+def format_slot_lines(
+    section_name: str, slot_name: str, entries: list[tuple[str, str]],
+) -> list[str]:
+    """Render one slot's entries with both names side by side.
+
+    The universal name is what the engine works on; the source name is what
+    the files say. Showing both makes the abstraction itself visible — many
+    section-specific names collapsing onto one shared vocabulary.
+    """
     lines = [f"### {slot_name} ({len(entries)} entries)"]
     if not entries:
         lines.append("  (empty)")
         return lines
+    lines.append(f"  {'axis':<10} {'universal (engine)':<44} source (files)")
     for axis, field_name in entries:
-        lines.append(f"  {axis}: {field_name}")
+        source = source_name(section_name, axis, field_name)
+        lines.append(f"  {axis:<10} {field_name:<44} {source}")
     return lines
 
 
@@ -82,7 +95,7 @@ def format_section_report(
 ) -> str:
     """Build a full per-section report block: preprocessor + four slots."""
     lines = [f"## {section_name}", ""]
-    preprocessing_lines = format_preprocessing_lines(pre_fields)
+    preprocessing_lines = format_preprocessing_lines(section_name, pre_fields)
     if preprocessing_lines:
         lines.append("**preprocessor (pre_* extracted):**")
         lines.extend(preprocessing_lines)
@@ -90,7 +103,7 @@ def format_section_report(
         lines.append("**preprocessor:** (none)")
     lines.append("")
     for slot_name in ("heading", "preamble", "body", "closing"):
-        lines.extend(format_slot_lines(slot_name, slots[slot_name]))
+        lines.extend(format_slot_lines(section_name, slot_name, slots[slot_name]))
         lines.append("")
     return "\n".join(lines)
 

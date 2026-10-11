@@ -48,7 +48,7 @@ from galdr.logic.pure.section_compose.primitive import (
     strip_section_domain,
     strip_structure_control_suffix,
 )
-from galdr.logic.pure.section_compose.simple import classify_content_slot
+from galdr.logic.pure.section_compose.simple import classify_content_slot, source_name
 from galdr.structure.gen.output_content import AgentOutputContent
 
 DEFAULT_DATA_PATH = Path.home() / "ai" / "spaces" / "bragi" / "definitions" / "agents" / "agent-builder" / "anthropic_render.toml"
@@ -146,8 +146,15 @@ def bundle_section(section_name, data_section, content_section, structure_sectio
 
 
 def format_section_block(section_name, bundles, leftover):
+    """One section's bundles, each member shown by both names.
+
+    Left: the universal name the bundler matched on. Right: the source name
+    in the files. The trunk in brackets is always universal — it is what
+    every member of the bundle was matched against.
+    """
     lines = [f"## {section_name}", ""]
     lines.append("```")
+    lines.append(f"    {'axis':<10} {'universal (bundler)':<44} source (files)")
     for slot_name in ("heading", "preamble", "body", "closing"):
         slot_bundles = bundles[slot_name]
         if not slot_bundles:
@@ -157,11 +164,12 @@ def format_section_block(section_name, bundles, leftover):
         for trunk, bundle in slot_bundles.items():
             lines.append(f"  [{trunk}]")
             for axis, name in bundle:
-                lines.append(f"    {axis}: {name}")
+                source = source_name(section_name, axis, name)
+                lines.append(f"    {axis:<10} {name:<44} {source}")
     if leftover:
         lines.append(f"LEFTOVER ({len(leftover)}):")
         for axis, name in leftover:
-            lines.append(f"  {axis}: {name}")
+            lines.append(f"    {axis:<10} {name:<44} {source_name(section_name, axis, name)}")
     lines.append("```")
     lines.append("")
     return "\n".join(lines)

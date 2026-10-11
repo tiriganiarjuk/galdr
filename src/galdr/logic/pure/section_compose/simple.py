@@ -50,6 +50,17 @@ def local_field_view(section_name: str, section: BaseModel | None) -> FieldView:
     }
 
 
+def source_name(section_name: str, axis: str, name: str) -> str:
+    """The full name a short universal name came from — the boundary in reverse.
+
+    For reports, so a reader sees both the source namespace and the universal
+    name the engine works on. Data names were never prefixed.
+    """
+    if axis == "data":
+        return name
+    return f"{section_name}_{name}"
+
+
 def classify_content_slot(name: str) -> str:
     """Classify a content field into a buffer slot by positional suffix.
 
