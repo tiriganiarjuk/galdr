@@ -31,12 +31,12 @@ a renamed tree and it prefixes again. Applying a map is idempotent: names it
 cannot find are already renamed.
 
 Why the domain prefix exists. The section prefix was in the names from the
-start — every definition file is `{section}_{key}` — and was cut from the keys
-on the assumption that shorter names are easier to work with. That removed the
-namespacing that had been guiding the design, and with it the only word in a
-name that says where a control lives. A control that governs something outside
-its own trunk then has nothing pointing at what it governs. The prefix is part
-of the name. It is not to be dropped for brevity.
+start — every definition file is `{section}_{key}`. The engine works on the
+short name, and that is correct; the keys were shortened too early, at
+authoring time instead of at the engine boundary. That gave the engine nothing
+it lacked and took the namespace away from everyone reading the files — the
+only word in a name that says where a control lives. So the files carry full
+names and the engine's boundary (local_field_view) strips the prefix once.
 """
 import re
 import sys
