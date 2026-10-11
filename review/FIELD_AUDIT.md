@@ -15,6 +15,76 @@ whether the name declares it.
 
 **221 fields, 56 needing attention.**
 
+## The universal vocabulary
+
+Every name below is the short name the engine works on. **Shared** names
+mean the same thing in every section that has them — they are the
+abstraction that lets one engine process all sections. **Section-only**
+names exist in one section; listed by the suffix that ends them, because
+the suffix is the part of the grammar they share even when the subject
+does not.
+
+**200 distinct universal names: 6 shared, 194 section-only.**
+
+### Shared across sections
+
+| universal | axis | sections | in |
+|---|---|---|---|
+| `section_start` | content | 10 | critical_rules, examples, constraints, anti_patterns, success_criteria, failure_criteria, output, writing_output, return_format, input |
+| `pre_max_entries_rendered` | structure | 4 | constraints, anti_patterns, success_criteria, failure_criteria |
+| `pre_section_visible` | structure | 4 | constraints, anti_patterns, success_criteria, failure_criteria |
+| `section_preamble_visible` | structure | 4 | examples, constraints, anti_patterns, input |
+| `section_preamble` | content | 3 | examples, anti_patterns, input |
+| `criteria_evidence_format` | display | 2 | success_criteria, failure_criteria |
+
+### Section-only, grouped by terminal suffix
+
+| suffix | axis | count | names |
+|---|---|---|---|
+| `_visible` | structure | 50 | `abort_stance_preamble_visible` (failure_criteria), `abort_vs_failure_distinction_preamble_visible` (return_format), `authority_preamble_visible` (critical_rules), `batch_discipline_visible` (critical_rules), `check_before_and_during_postscript_visible` (failure_criteria), `cite_definition_and_evidence_postscript_visible` (failure_criteria), `compliance_reminder_closing_visible` (constraints), `constraint_count_heading_visible` (constraints), `constraints_are_not_steps_preamble_visible` (constraints), `constraints_vs_anti_patterns_distinction_preamble_visible` (anti_patterns), `context_required_intro_visible` (input), `discipline_over_helpfulness_body_visible` (critical_rules), `do_not_fabricate_metrics_postscript_visible` (return_format), `fail_fast_body_visible` (critical_rules), `failure_cross_reference_preamble_visible` (return_format), `files_vs_status_explanation_preamble_visible` (return_format), `filesystem_permissions_label_visible` (security_boundary), `follow_strictly_closing_visible` (instructions), `follow_strictly_preamble_visible` (instructions), `framing_section_preamble_visible` (security_boundary), `group_framing_preamble_visible` (examples), `heredoc_explanation_postscript_visible` (writing_output), `hierarchy_three_tier_explanation_preamble_visible` (constraints), `hierarchy_tier_comparison_preamble_visible` (constraints), `highlight_step_count_preamble_visible` (instructions), `honest_failure_over_dubious_success_preamble_visible` (return_format), `identity_reminder_closing_visible` (identity), `input_completeness_postscript_visible` (input), `input_is_your_only_source_body_visible` (critical_rules), `instruction_mode_explanation_preamble_visible` (instructions), `no_inferred_constraints_preamble_visible` (constraints), `no_invention_body_visible` (critical_rules), `output_tool_exclusivity_visible` (critical_rules), `parameters_heading_visible` (input), `parameters_transition_visible` (input), `reminder_midpoint_preamble_visible` (instructions), `report_all_metrics_postscript_visible` (return_format), `role_expertise_postscript_visible` (identity), `role_identity_postscript_visible` (identity), `rule_count_awareness_preamble_visible` (critical_rules), `schema_label_visible` (input), `section_closing_visible` (security_boundary), `sequence_integrity_preamble_visible` (instructions), `success_failure_independence_statement_postscript_visible` (success_criteria), `token_must_be_first_word_preamble_visible` (return_format), `tool_mandate_preamble_visible` (writing_output), `track_metrics_as_you_work_postscript_visible` (return_format), `transition_preamble_visible` (writing_output), `verification_guidance_postscript_visible` (success_criteria), `workspace_confinement_visible` (critical_rules) |
+| `_preamble` | content | 27 | `abort_stance_preamble_variant` (failure_criteria), `abort_vs_failure_distinction_preamble` (return_format), `any_one_triggers_abort_preamble` (failure_criteria), `authority_preamble` (critical_rules), `constraints_are_not_steps_preamble` (constraints), `constraints_vs_anti_patterns_distinction_preamble` (anti_patterns), `failure_cross_reference_preamble` (return_format), `files_vs_status_explanation_preamble` (return_format), `follow_strictly_preamble` (instructions), `framing_section_preamble_variant` (security_boundary), `group_framing_preamble_template` (examples), `hierarchy_three_tier_explanation_preamble` (constraints), `hierarchy_tier_comparison_preamble` (constraints), `highlight_step_count_preamble_template` (instructions), `honest_failure_over_dubious_success_preamble` (return_format), `instruction_mode_explanation_preamble_variant` (instructions), `invocation_preamble` (writing_output), `no_inferred_constraints_preamble_variant_template` (constraints), `reminder_midpoint_preamble_template` (instructions), `rule_count_awareness_preamble_template` (critical_rules), `section_preamble_variant` (constraints), `sequence_integrity_preamble` (instructions), `token_must_be_first_word_preamble` (return_format), `token_must_be_first_word_tokens_three_preamble` (return_format), `token_must_be_first_word_tokens_two_preamble` (return_format), `tool_mandate_preamble` (writing_output), `transition_preamble` (writing_output) |
+| `_format` | display | 13 | `batch_size_format` (critical_rules), `context_available_format` (input), `context_required_format` (input), `filesystem_permissions_list_format` (security_boundary), `filesystem_permissions_toolset_format` (security_boundary), `groups_entry_heading_format` (examples), `parameters_format` (input), `patterns_format` (anti_patterns), `role_expertise_format` (identity), `rules_format` (constraints), `steps_heading_format` (instructions), `tool_name_format` (critical_rules), `workspace_path_format` (critical_rules) |
+| `_postscript` | content | 12 | `check_before_and_during_postscript` (failure_criteria), `cite_definition_and_evidence_postscript` (failure_criteria), `do_not_fabricate_metrics_postscript` (return_format), `heredoc_explanation_postscript` (writing_output), `input_completeness_postscript` (input), `report_all_metrics_postscript` (return_format), `role_expertise_postscript` (identity), `role_identity_postscript_template` (identity), `success_failure_independence_statement_postscript` (success_criteria), `track_metrics_as_you_work_antidrift_postscript` (return_format), `track_metrics_as_you_work_postscript` (return_format), `verification_guidance_postscript` (success_criteria) |
+| `_selector` | structure | 10 | `abort_stance_selector` (failure_criteria), `compliance_reminder_closing_selector` (constraints), `definition_declaration_selector` (success_criteria), `definition_to_evidence_transition_selector` (success_criteria), `directory_location_selector` (output), `evidence_intro_selector` (success_criteria), `framing_selector` (security_boundary), `no_inferred_constraints_preamble_selector` (constraints), `section_preamble_selector` (constraints), `section_start_selector` (instructions) |
+| `_label` | content | 8 | `abort_stance_definition_label_variant` (failure_criteria), `filesystem_permissions_label` (security_boundary), `report_completion_label` (return_format), `role_expertise_label` (identity), `schema_label_template` (input), `schema_reference_label_template` (output), `steps_mode_label_variant` (instructions), `tool_identity_label_template` (writing_output) |
+| `_heading` | content | 7 | `constraint_count_heading_template` (constraints), `context_available_heading` (input), `context_required_heading` (input), `example_heading_template` (examples), `grouped_tool_heading_template` (security_boundary), `parameters_heading` (input), `steps_heading_template` (instructions) |
+| `_separator` | display | 5 | `groups_entry_separator` (examples), `groups_separator` (examples), `inter_section_separator` (global_defaults), `intra_section_separator` (global_defaults), `steps_mode_separator` (instructions) |
+| `_body` | content | 4 | `discipline_over_helpfulness_body` (critical_rules), `fail_fast_body` (critical_rules), `input_is_your_only_source_body` (critical_rules), `no_invention_body` (critical_rules) |
+| `_closing` | content | 4 | `compliance_reminder_closing_variant_template` (constraints), `follow_strictly_closing_template` (instructions), `identity_reminder_closing_template` (identity), `section_closing` (security_boundary) |
+| `_intro` | content | 4 | `context_required_intro` (input), `evidence_intro_variant` (success_criteria), `evidence_intro` (failure_criteria), `schema_embed_intro` (output) |
+| `_format_threshold` | display | 4 | `criteria_evidence_format_threshold` (success_criteria), `parameters_format_threshold` (input), `role_expertise_format_threshold` (identity), `rules_format_threshold` (constraints) |
+| `_entry_template` | content | 3 | `compound_entry_template` (security_boundary), `context_required_entry_template` (input), `parameters_entry_template` (input) |
+| `_start` | content | 3 | `framing_section_start_variant` (security_boundary), `section_start_template` (identity), `section_start_variant_template` (instructions) |
+| `_threshold` | display | 3 | `rules_polarity_grouping_threshold` (constraints), `steps_scaffolding_lightweight_threshold` (instructions), `steps_scaffolding_standard_threshold` (instructions) |
+| `_visibility_threshold` | display | 3 | `compliance_reminder_closing_visibility_threshold` (constraints), `constraint_count_heading_visibility_threshold` (constraints), `filesystem_permissions_label_visibility_threshold` (security_boundary) |
+| `_override` | structure | 3 | `groups_display_headings_override` (examples), `groups_max_number_override` (examples), `pre_scaffolding_tier_override` (instructions) |
+| `_declaration` | content | 2 | `definition_declaration_variant_template` (success_criteria), `framing_declaration_variant_template` (security_boundary) |
+| `_format` | content | 2 | `description_format_template` (input), `format_template` (output) |
+| `_transition` | content | 2 | `definition_to_evidence_transition_variant` (success_criteria), `parameters_transition` (input) |
+| `_container` | display | 2 | `groups_entry_body_container` (examples), `steps_body_container` (instructions) |
+| `_auto_threshold` | structure | 2 | `parameters_heading_auto_threshold` (input), `rule_count_awareness_preamble_template_auto_threshold` (critical_rules) |
+| `_confinement` | content | 1 | `workspace_confinement_template` (critical_rules) |
+| `_description` | content | 1 | `output_description_template` (output) |
+| `_discipline` | content | 1 | `batch_discipline_template` (critical_rules) |
+| `_exclusivity` | content | 1 | `output_tool_exclusivity_template` (critical_rules) |
+| `_identity` | content | 1 | `role_identity_template` (identity) |
+| `_location` | content | 1 | `directory_location_variant_template` (output) |
+| `_only` | content | 1 | `steps_heading_n_only_template` (instructions) |
+| `_responsibility` | content | 1 | `role_responsibility_template` (identity) |
+| `_separator` | content | 1 | `criteria_separator` (success_criteria) |
+| `_normalization` | display | 1 | `rules_polarity_normalization` (constraints) |
+| `_override` | display | 1 | `pre_body_entry_separator_override` (critical_rules) |
+| `_repetition` | display | 1 | `tool_name_repetition` (critical_rules) |
+| `_style` | display | 1 | `filesystem_permissions_path_style` (security_boundary) |
+| `_transition` | display | 1 | `steps_mode_restrict_to_transition` (instructions) |
+| `_embed` | structure | 1 | `schema_embed` (output) |
+| `_handling` | structure | 1 | `criteria_evidence_type_handling` (success_criteria) |
+| `_heading` | structure | 1 | `groups_suppress_lone_heading` (examples) |
+| `_order` | structure | 1 | `order` (section_order) |
+| `_ordering` | structure | 1 | `pre_field_ordering` (identity) |
+| `_relationship` | structure | 1 | `criteria_relationship` (success_criteria) |
+| `_tracking` | structure | 1 | `steps_index_tracking` (instructions) |
+
 ## identity
 
 ```
