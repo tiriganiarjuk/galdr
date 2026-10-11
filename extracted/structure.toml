@@ -1,5 +1,5 @@
 [section_order]
-order = [
+section_order_order = [
     "identity",
     "security_boundary",
     "critical_rules",
@@ -16,210 +16,210 @@ order = [
 ]
 
 [identity]
-pre_field_ordering = "identity_first"
+identity_pre_field_ordering = "identity_first"
 
-role_identity_postscript_visible = true
-role_expertise_postscript_visible = true
-identity_reminder_closing_visible = false
+identity_role_identity_postscript_visible = true
+identity_role_expertise_postscript_visible = true
+identity_identity_reminder_closing_visible = false
 
 
 [security_boundary]
 
 # Whether to render a label line before display entries
-filesystem_permissions_label_visible = true
+security_boundary_filesystem_permissions_label_visible = true
 
 # Whether to render a preamble between heading and entries
-framing_section_preamble_visible = true
+security_boundary_framing_section_preamble_visible = true
 
 # Whether to render a closing after entries
-section_closing_visible = false
+security_boundary_section_closing_visible = false
 
 
 # Framing paradigm: selects which content posture the section uses
-framing_selector = "territory"  # "territory" | "environmental" | "cage" — governs: framing_section_start_variant, framing_section_preamble_variant, framing_declaration_variant_template
+security_boundary_framing_selector = "territory"  # "territory" | "environmental" | "cage" — governs: security_boundary_framing_section_start_variant, security_boundary_framing_section_preamble_variant, security_boundary_framing_declaration_variant_template
 
 [critical_rules]
 # Prelude
-authority_preamble_visible = true
-rule_count_awareness_preamble_visible = "auto"       # "auto" | "always" | "never"
-rule_count_awareness_preamble_template_auto_threshold = 5
+critical_rules_authority_preamble_visible = true
+critical_rules_rule_count_awareness_preamble_visible = "auto"       # "auto" | "always" | "never"
+critical_rules_rule_count_awareness_preamble_template_auto_threshold = 5
 
 # Universal rules
-workspace_confinement_visible = true
-fail_fast_body_visible = true
-input_is_your_only_source_body_visible = true
-no_invention_body_visible = true
+critical_rules_workspace_confinement_visible = true
+critical_rules_fail_fast_body_visible = true
+critical_rules_input_is_your_only_source_body_visible = true
+critical_rules_no_invention_body_visible = true
 
 # Output tool rules (conditional on has_output_tool)
-output_tool_exclusivity_visible = true
-batch_discipline_visible = true                    # also requires batch_size
+critical_rules_output_tool_exclusivity_visible = true
+critical_rules_batch_discipline_visible = true                    # also requires batch_size
 # Experimental
-discipline_over_helpfulness_body_visible = false
+critical_rules_discipline_over_helpfulness_body_visible = false
 
 [instructions]
 # Heading
-section_start_selector = "default"                   # "default" | "procedure" | "steps_with_count"
+instructions_section_start_selector = "default"                   # "default" | "procedure" | "steps_with_count"
 
 # Mode explanation
-instruction_mode_explanation_preamble_visible = "auto" # "auto" (render when mixed modes) | "always" | "never"
+instructions_instruction_mode_explanation_preamble_visible = "auto" # "auto" (render when mixed modes) | "always" | "never"
 
 # Preamble components
-highlight_step_count_preamble_visible = true
-sequence_integrity_preamble_visible = true
-follow_strictly_preamble_visible = true
+instructions_highlight_step_count_preamble_visible = true
+instructions_sequence_integrity_preamble_visible = true
+instructions_follow_strictly_preamble_visible = true
 
 # Step structure
-steps_index_tracking = "n_of_m"  # "n_only" | "n_of_m"
+instructions_steps_index_tracking = "n_of_m"  # "n_only" | "n_of_m"
 
 # Closing
-follow_strictly_closing_visible = true
+instructions_follow_strictly_closing_visible = true
 
 # Progress
-reminder_midpoint_preamble_visible = false
+instructions_reminder_midpoint_preamble_visible = false
 
 # Scaffolding tier override (null = auto from step count)
-pre_scaffolding_tier_override = "auto"  # "auto" | "lightweight" | "standard" | "heavy"
+instructions_pre_scaffolding_tier_override = "auto"  # "auto" | "lightweight" | "standard" | "heavy"
 
 [examples]
-section_preamble_visible = true
+examples_section_preamble_visible = true
 
 # Group heading suppression for single-group agents
-groups_suppress_lone_heading = true
+examples_groups_suppress_lone_heading = true
 
 # Override for per-group display_headings from data
-groups_display_headings_override = false
+examples_groups_display_headings_override = false
 
 # Override for per-group max_number from data
-groups_max_number_override = false
+examples_groups_max_number_override = false
 
 # Whether a framing preamble renders between the group heading and first entry
-group_framing_preamble_visible = false
+examples_group_framing_preamble_visible = false
 
 [constraints]
 # Visibility / activation
-pre_section_visible = true
+constraints_pre_section_visible = true
 
 # Maximum entries to render (0 = render all)
-pre_max_entries_rendered = 0
+constraints_pre_max_entries_rendered = 0
 
-section_preamble_visible = true
-constraints_are_not_steps_preamble_visible = true
-no_inferred_constraints_preamble_visible = true
-compliance_reminder_closing_visible = true
-constraint_count_heading_visible = true
-hierarchy_tier_comparison_preamble_visible = true
-hierarchy_three_tier_explanation_preamble_visible = true
+constraints_section_preamble_visible = true
+constraints_constraints_are_not_steps_preamble_visible = true
+constraints_no_inferred_constraints_preamble_visible = true
+constraints_compliance_reminder_closing_visible = true
+constraints_constraint_count_heading_visible = true
+constraints_hierarchy_tier_comparison_preamble_visible = true
+constraints_hierarchy_three_tier_explanation_preamble_visible = true
 
 # Variant selectors (conditional on their _visible gates above)
-section_preamble_selector = "standalone"       # "standalone" | "references_instructions" | "references_critical_rules"
-no_inferred_constraints_preamble_selector = "light"     # "light" | "explicit"
-compliance_reminder_closing_selector = "evaluation_warning"  # "evaluation_warning" | "simultaneity"
+constraints_section_preamble_selector = "standalone"       # "standalone" | "references_instructions" | "references_critical_rules"
+constraints_no_inferred_constraints_preamble_selector = "light"     # "light" | "explicit"
+constraints_compliance_reminder_closing_selector = "evaluation_warning"  # "evaluation_warning" | "simultaneity"
 
 [anti_patterns]
 # Whether to render the section at all
-pre_section_visible = true
+anti_patterns_pre_section_visible = true
 
 # Maximum entries to render (0 = render all)
-pre_max_entries_rendered = 0
+anti_patterns_pre_max_entries_rendered = 0
 
 # Whether to include a preamble line before the pattern list
-section_preamble_visible = true
+anti_patterns_section_preamble_visible = true
 
 # Whether to include authority positioning prose
-constraints_vs_anti_patterns_distinction_preamble_visible = true
+anti_patterns_constraints_vs_anti_patterns_distinction_preamble_visible = true
 
 [success_criteria]
 # Master visibility toggle
-pre_section_visible = true
+success_criteria_pre_section_visible = true
 
 # Maximum entries to render (0 = render all)
-pre_max_entries_rendered = 0
+success_criteria_pre_max_entries_rendered = 0
 
 # Definition framing paradigm
-definition_declaration_selector = "declarative_assertion"
+success_criteria_definition_declaration_selector = "declarative_assertion"
 
 # Evidence list framing paradigm
-evidence_intro_selector = "properties"
+success_criteria_evidence_intro_selector = "properties"
 
 # Hierarchy connector paradigm
-definition_to_evidence_transition_selector = "goal_then_criteria"
+success_criteria_definition_to_evidence_transition_selector = "goal_then_criteria"
 
 # Evidence type handling
-criteria_evidence_type_handling = "undifferentiated"
+success_criteria_criteria_evidence_type_handling = "undifferentiated"
 
 # Whether to include explicit statement that success != not-failing
-success_failure_independence_statement_postscript_visible = true
+success_criteria_success_failure_independence_statement_postscript_visible = true
 
 # Whether to include verification guidance suffix for mixed evidence lists
-verification_guidance_postscript_visible = false
+success_criteria_verification_guidance_postscript_visible = false
 
 # Multi-criteria relationship paradigm
-criteria_relationship = "independent_blocks"
+success_criteria_criteria_relationship = "independent_blocks"
 
 [failure_criteria]
 # Master visibility toggle
-pre_section_visible = true
+failure_criteria_pre_section_visible = true
 
 # Maximum entries to render (0 = render all)
-pre_max_entries_rendered = 0
+failure_criteria_pre_max_entries_rendered = 0
 
 # Whether to render the behavioral preamble
-abort_stance_preamble_visible = true
+failure_criteria_abort_stance_preamble_visible = true
 
 # Whether to include hierarchy framing
-cite_definition_and_evidence_postscript_visible = false
+failure_criteria_cite_definition_and_evidence_postscript_visible = false
 
 # Whether to include the generic temporal instruction
-check_before_and_during_postscript_visible = false
+failure_criteria_check_before_and_during_postscript_visible = false
 
 # Abort behavioral posture (both selectors use same value — they switch together)
-abort_stance_selector = "obligation"  # "obligation" | "permission"
+failure_criteria_abort_stance_selector = "obligation"  # "obligation" | "permission"
 
 [input]
-section_preamble_visible = true
-context_required_intro_visible = true
-parameters_transition_visible = true
-input_completeness_postscript_visible = false
-schema_label_visible = true
-parameters_heading_visible = "auto"
-parameters_heading_auto_threshold = 2
+input_section_preamble_visible = true
+input_context_required_intro_visible = true
+input_parameters_transition_visible = true
+input_input_completeness_postscript_visible = false
+input_schema_label_visible = true
+input_parameters_heading_visible = "auto"
+input_parameters_heading_auto_threshold = 2
 
 [output]
 # Variant selectors
-schema_embed = false
-directory_location_selector = "standard"    # "standard" | "with_boundary"
+output_schema_embed = false
+output_directory_location_selector = "standard"    # "standard" | "with_boundary"
 
 [writing_output]
 # Transition sentence connecting from instructions to this section
-transition_preamble_visible = true
+writing_output_transition_preamble_visible = true
 
 # Tool exclusivity mandate prose
-tool_mandate_preamble_visible = true
+writing_output_tool_mandate_preamble_visible = true
 
 # Heredoc syntax explanation
-heredoc_explanation_postscript_visible = false
+writing_output_heredoc_explanation_postscript_visible = false
 
 [return_format]
 # Two-channel model
-files_vs_status_explanation_preamble_visible = true
+return_format_files_vs_status_explanation_preamble_visible = true
 
 # Protocol preamble
-token_must_be_first_word_preamble_visible = true
+return_format_token_must_be_first_word_preamble_visible = true
 
 # Metrics obligation
-report_all_metrics_postscript_visible = true
+return_format_report_all_metrics_postscript_visible = true
 
 # ABORT vs FAILURE semantic distinction
-abort_vs_failure_distinction_preamble_visible = true
+return_format_abort_vs_failure_distinction_preamble_visible = true
 
 # Failure honesty
-honest_failure_over_dubious_success_preamble_visible = true
+return_format_honest_failure_over_dubious_success_preamble_visible = true
 
 # Retroactive orientation
-track_metrics_as_you_work_postscript_visible = true
+return_format_track_metrics_as_you_work_postscript_visible = true
 
 # Accuracy clause
-do_not_fabricate_metrics_postscript_visible = true
+return_format_do_not_fabricate_metrics_postscript_visible = true
 
 # Cross-reference to failure_criteria section
-failure_cross_reference_preamble_visible = false
+return_format_failure_cross_reference_preamble_visible = false

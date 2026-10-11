@@ -116,7 +116,7 @@ def compose_one_section(
     structure_section = getattr(structure_model, section_name, None)
     display_section = getattr(display_model, section_name, None)
     pre_fields, slots = compose_section(
-        data_section, structure_section, content_section, display_section,
+        section_name, data_section, structure_section, content_section, display_section,
     )
     return format_section_report(section_name, pre_fields, slots)
 
@@ -128,7 +128,7 @@ def compose_all_sections(
     display_model: AgentOutputDisplay,
 ) -> list[str]:
     """Run stage 1 across every section in order; return one block per section."""
-    section_order = [item.value for item in structure_model.section_order.order.root]
+    section_order = [item.value for item in structure_model.section_order.section_order_order.root]
     return [
         compose_one_section(name, data_model, content_model, structure_model, display_model)
         for name in section_order

@@ -48,7 +48,10 @@ sys.path.insert(0, str(Path.home() / "ai" / "tools" / "lib"))
 
 from galdr.logic.orchestrate.section_compose.orchestrate import load_all_inputs  # noqa: E402
 from galdr.logic.pure.section_compose.composed import sort_into_slots  # noqa: E402
-from galdr.logic.pure.section_compose.primitive import extract_trunk  # noqa: E402
+from galdr.logic.pure.section_compose.primitive import (  # noqa: E402
+    extract_trunk,
+    strip_section_domain,
+)
 from galdr.structure.gen.output_content import AgentOutputContent  # noqa: E402
 
 DEFAULT_DATA_PATH = Path.home() / "ai" / "spaces" / "bragi" / "definitions" / "agents" / "agent-builder" / "anthropic_render.toml"
@@ -78,7 +81,7 @@ def run_probe(
         dd = getattr(display, section_name, None)
         if ds is None or cs is None or ss is None:
             continue
-        slots = sort_into_slots(cs, ds, ss, dd)
+        slots = sort_into_slots(section_name, cs, ds, ss, dd)
 
         for slot_name, entries in slots.items():
             if not entries:
@@ -98,7 +101,7 @@ def run_probe(
                     ("display", display_fields),
                 ):
                     for _, fname in axis_fields:
-                        ftrunk = extract_trunk(fname)
+                        ftrunk = extract_trunk(strip_section_domain(section_name, fname))
                         if ftrunk.startswith(trunk + "_") or ftrunk == trunk:
                             matched.add((axis_name, fname))
 
@@ -107,7 +110,7 @@ def run_probe(
             for _, cname in content_fields:
                 if ("content", cname) in matched:
                     continue
-                ctrunk = extract_trunk(cname)
+                ctrunk = extract_trunk(strip_section_domain(section_name, cname))
                 matched.add(("content", cname))
                 for axis_name, axis_fields in (
                     ("structure", structure_fields),
@@ -116,7 +119,7 @@ def run_probe(
                     for _, fname in axis_fields:
                         if (axis_name, fname) in matched:
                             continue
-                        ftrunk = extract_trunk(fname)
+                        ftrunk = extract_trunk(strip_section_domain(section_name, fname))
                         if (
                             ftrunk.startswith(ctrunk + "_")
                             or ftrunk == ctrunk

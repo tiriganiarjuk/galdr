@@ -63,8 +63,22 @@ def extract_trunk(name: str) -> str:
     return strip_modifiers(strip_display_control_suffix(strip_structure_control_suffix(name)))
 
 
+def strip_section_domain(section_name: str, name: str) -> str:
+    """Strip the `{section}_` domain prefix from a control-surface field name.
+
+    Every control field carries its section as a prefix, because a name read
+    in isolation must say where it lives. Tests on the START of a name — the
+    `pre_` marker — have to look past the domain, so they strip it first.
+    Tests on the end (slot and control suffixes) are unaffected by it.
+    """
+    return name.removeprefix(f"{section_name}_")
+
+
 def is_preprocessing_field(name: str) -> bool:
-    """True if a field name starts with the `pre_` prefix.
+    """True if a domain-stripped field name starts with the `pre_` prefix.
+
+    Pass the name through strip_section_domain first — on the full name the
+    marker sits after the section prefix, not at the start.
 
     Pre-processing fields are consumed before slot sorting — they
     control section-level behavior (skip section, truncate list,

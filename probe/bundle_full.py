@@ -45,6 +45,7 @@ from galdr.logic.pure.section_compose.primitive import (
     is_preprocessing_field,
     strip_display_control_suffix,
     strip_modifiers,
+    strip_section_domain,
     strip_structure_control_suffix,
 )
 from galdr.logic.pure.section_compose.simple import classify_content_slot
@@ -56,36 +57,43 @@ DEFAULT_STRUCTURE_PATH = REPO_ROOT / "extracted" / "structure.toml"
 DEFAULT_DISPLAY_PATH = REPO_ROOT / "extracted" / "display.toml"
 
 
-def stripped_for_axis(axis, name):
+def stripped_for_axis(section_name, axis, name):
+    """The trunk a field links on: domain prefix off, then its suffixes.
+
+    Control-surface names carry their section as a prefix; data names do
+    not. Stripping the domain is the same operation as stripping a suffix,
+    and it has to happen before any trunk comparison against data.
+    """
+    if axis == "data":
+        return name
+    local = strip_section_domain(section_name, name)
     if axis == "content":
-        return strip_modifiers(name)
+        return strip_modifiers(local)
     if axis == "structure":
-        return strip_modifiers(strip_structure_control_suffix(name))
-    if axis == "display":
-        return strip_modifiers(strip_display_control_suffix(name))
-    return name
+        return strip_modifiers(strip_structure_control_suffix(local))
+    return strip_modifiers(strip_display_control_suffix(local))
 
 
 def matches_trunk(stripped, trunk):
     return stripped == trunk or stripped.startswith(trunk + "_")
 
 
-def pull_into_bundle(trunk, bundle, sources):
+def pull_into_bundle(section_name, trunk, bundle, sources):
     for axis in ("content", "structure", "display"):
         for name in list(sources[axis]):
             if axis == "structure" and name.endswith("_selector"):
                 continue  # selectors handled in phase 3
-            stripped = stripped_for_axis(axis, name)
+            stripped = stripped_for_axis(section_name, axis, name)
             if matches_trunk(stripped, trunk):
                 bundle.append((axis, name))
                 sources[axis].remove(name)
 
 
-def distribute_selectors(bundles, sources):
+def distribute_selectors(section_name, bundles, sources):
     for name in list(sources["structure"]):
         if not name.endswith("_selector"):
             continue
-        selector_trunk = name.removesuffix("_selector")
+        selector_trunk = strip_section_domain(section_name, name).removesuffix("_selector")
         placed = False
         for slot_bundles in bundles.values():
             for bundle_trunk, bundle in slot_bundles.items():
@@ -96,23 +104,23 @@ def distribute_selectors(bundles, sources):
             sources["structure"].remove(name)
 
 
-def bundle_section(data_section, content_section, structure_section, display_section):
+def control_fields(section_name, section):
+    """A control section's field names, pre_* fields excluded."""
+    if section is None:
+        return []
+    return [
+        n for n in type(section).model_fields
+        if not is_preprocessing_field(strip_section_domain(section_name, n))
+    ]
+
+
+def bundle_section(section_name, data_section, content_section, structure_section, display_section):
     bundles = {"heading": {}, "preamble": {}, "body": {}, "closing": {}}
     sources = {
-        "data": list(data_section.model_fields.keys()),
-        "content": list(content_section.model_fields.keys()),
-        "structure": [
-            n for n in structure_section.model_fields.keys()
-            if not is_preprocessing_field(n)
-        ],
-        "display": (
-            [
-                n for n in display_section.model_fields.keys()
-                if not is_preprocessing_field(n)
-            ]
-            if display_section is not None
-            else []
-        ),
+        "data": list(type(data_section).model_fields),
+        "content": list(type(content_section).model_fields),
+        "structure": control_fields(section_name, structure_section),
+        "display": control_fields(section_name, display_section),
     }
 
     # Phase 1: data drives
@@ -120,20 +128,20 @@ def bundle_section(data_section, content_section, structure_section, display_sec
         trunk = data_name
         bundle = [("data", data_name)]
         sources["data"].remove(data_name)
-        pull_into_bundle(trunk, bundle, sources)
+        pull_into_bundle(section_name, trunk, bundle, sources)
         bundles["body"][trunk] = bundle
 
-    # Phase 2: content drives
+    # Phase 2: content drives — trunks are domain-free, like data trunks
     for content_name in list(sources["content"]):
         slot = classify_content_slot(content_name)
-        trunk = strip_modifiers(content_name)
+        trunk = stripped_for_axis(section_name, "content", content_name)
         bundle = [("content", content_name)]
         sources["content"].remove(content_name)
-        pull_into_bundle(trunk, bundle, sources)
+        pull_into_bundle(section_name, trunk, bundle, sources)
         bundles[slot][trunk] = bundle
 
     # Phase 3: selectors
-    distribute_selectors(bundles, sources)
+    distribute_selectors(section_name, bundles, sources)
 
     leftover = [("structure", n) for n in sources["structure"]] + [
         ("display", n) for n in sources["display"]
@@ -178,7 +186,7 @@ def run_probe():
             output_lines.append(f"## {section_name}\n\n_skipped_\n")
             continue
         bundles, leftover = bundle_section(
-            data_section, content_section, structure_section, display_section,
+            section_name, data_section, content_section, structure_section, display_section,
         )
         output_lines.append(format_section_block(section_name, bundles, leftover))
         total_leftover += len(leftover)

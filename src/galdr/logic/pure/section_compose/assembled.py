@@ -24,6 +24,7 @@ from galdr.structure.model.preprocessing_fields import PreprocessingFields
 
 
 def compose_section(
+    section_name: str,
     data_section: BaseModel,
     structure_section: BaseModel,
     content_section: BaseModel,
@@ -40,6 +41,8 @@ def compose_section(
     ongoing, so we don't commit to a Pydantic model until we know what
     a bundle actually contains.
     """
-    pre_fields = extract_preprocessing_fields(structure_section)
-    slots = sort_into_slots(content_section, data_section, structure_section, display_section)
+    pre_fields = extract_preprocessing_fields(section_name, structure_section)
+    slots = sort_into_slots(
+        section_name, content_section, data_section, structure_section, display_section,
+    )
     return pre_fields, slots

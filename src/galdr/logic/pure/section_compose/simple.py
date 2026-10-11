@@ -18,6 +18,7 @@ from galdr.logic.pure.section_compose.primitive import (
     has_start_suffix,
     is_preprocessing_field,
     strip_display_control_suffix,
+    strip_section_domain,
 )
 
 
@@ -35,18 +36,19 @@ def classify_content_slot(name: str) -> str:
 
 
 def place_display_fields_into_slots(
+    section_name: str,
     display_section: BaseModel,
     slots: dict[str, list[tuple[str, str]]],
 ) -> dict[str, list[tuple[str, str]]]:
     """Sort display-axis fields into slots by stripped trunk.
 
-    Pre-processing fields (pre_ prefix) are consumed elsewhere and
-    skipped. Remaining fields have their display control suffix
-    stripped, then the trunk is classified by positional suffix.
+    Pre-processing fields (pre_ after the section prefix) are consumed
+    elsewhere and skipped. Remaining fields have their display control
+    suffix stripped, then the trunk is classified by positional suffix.
     Returns the updated slots map.
     """
-    for name in display_section.model_fields:
-        if is_preprocessing_field(name):
+    for name in type(display_section).model_fields:
+        if is_preprocessing_field(strip_section_domain(section_name, name)):
             continue
         trunk = strip_display_control_suffix(name)
         slots[classify_content_slot(trunk)].append(("display", name))

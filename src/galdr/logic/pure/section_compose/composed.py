@@ -18,6 +18,7 @@ from pydantic import BaseModel
 
 from galdr.logic.pure.section_compose.primitive import (
     is_preprocessing_field,
+    strip_section_domain,
     strip_structure_control_suffix,
 )
 from galdr.logic.pure.section_compose.simple import (
@@ -50,6 +51,7 @@ def place_structure_field(
 
 
 def sort_into_slots(
+    section_name: str,
     content_section: BaseModel,
     data_section: BaseModel,
     structure_section: BaseModel,
@@ -70,28 +72,30 @@ def sort_into_slots(
         slots["body"].append(("data", name))
     for name in content_section.model_fields:
         slots[classify_content_slot(name)].append(("content", name))
-    for name in structure_section.model_fields:
-        if is_preprocessing_field(name):
+    for name in type(structure_section).model_fields:
+        if is_preprocessing_field(strip_section_domain(section_name, name)):
             continue
         for slot_name, entry in place_structure_field(name, slots):
             slots[slot_name].append(entry)
     if display_section is not None:
-        slots = place_display_fields_into_slots(display_section, slots)
+        slots = place_display_fields_into_slots(section_name, display_section, slots)
     return slots
 
 
-def extract_preprocessing_fields(structure_section: BaseModel) -> PreprocessingFields:
+def extract_preprocessing_fields(
+    section_name: str, structure_section: BaseModel,
+) -> PreprocessingFields:
     """Extract pre-processing fields from a structure section into a typed model.
 
-    Pre-processing fields (pre_ prefix) are consumed before slot sorting.
-    Not every section has every field — missing fields fall back to defaults
-    on PreprocessingFields. Boolean/Integer wrappers unwrap via .root; enum
-    wrappers unwrap via .value to their string form.
+    Pre-processing fields (pre_ after the section prefix) are consumed before
+    slot sorting. Not every section has every field — missing fields fall
+    back to defaults on PreprocessingFields. Boolean/Integer wrappers unwrap
+    via .root; enum wrappers unwrap via .value to their string form.
     """
-    visible = getattr(structure_section, "pre_section_visible", None)
-    max_entries = getattr(structure_section, "pre_max_entries_rendered", None)
-    ordering = getattr(structure_section, "pre_field_ordering", None)
-    tier = getattr(structure_section, "pre_scaffolding_tier_override", None)
+    visible = getattr(structure_section, f"{section_name}_pre_section_visible", None)
+    max_entries = getattr(structure_section, f"{section_name}_pre_max_entries_rendered", None)
+    ordering = getattr(structure_section, f"{section_name}_pre_field_ordering", None)
+    tier = getattr(structure_section, f"{section_name}_pre_scaffolding_tier_override", None)
     return PreprocessingFields(
         section_visible=visible.root if visible is not None else True,
         max_entries_rendered=max_entries.root if max_entries is not None else None,

@@ -1,110 +1,110 @@
 [global_defaults]
 # Separator between adjacent sections (default for all sections unless overridden)
-inter_section_separator = "horizontal_rule"
+global_defaults_inter_section_separator = "horizontal_rule"
 
 # Separator between output points within a section (default for all sections)
-intra_section_separator = "double_newline"
+global_defaults_intra_section_separator = "double_newline"
 
 [identity]
-role_expertise_format = ["bulleted", "inline"]
-role_expertise_format_threshold = 3
+identity_role_expertise_format = ["bulleted", "inline"]
+identity_role_expertise_format_threshold = 3
 
 [security_boundary]
 # Path style: "relative_dotslash" | "relative_bare" | "absolute"
-filesystem_permissions_path_style = "relative_dotslash"
+security_boundary_filesystem_permissions_path_style = "relative_dotslash"
 
 # Tool display format: "grouped" | "per_entry_list" | "per_entry_prose"
-filesystem_permissions_toolset_format = "per_entry_list"
+security_boundary_filesystem_permissions_toolset_format = "per_entry_list"
 
 # Entry count threshold for switching from no-intro to intro-present
-filesystem_permissions_label_visibility_threshold = 4
+security_boundary_filesystem_permissions_label_visibility_threshold = 4
 
 # Entry list marker style (applied by display layer)
-filesystem_permissions_list_format = "bullet"
+security_boundary_filesystem_permissions_list_format = "bullet"
 
 [critical_rules]
 # Path display format: "backtick" wraps {{workspace_path}} in backticks, "plain" leaves as-is
-workspace_path_format = "backtick"
+critical_rules_workspace_path_format = "backtick"
 
 # Tool name display format: "backtick" wraps {{tool_name}} in backticks, "plain" leaves as-is
-tool_name_format = "backtick"
+critical_rules_tool_name_format = "backtick"
 
 # Tool name repetition: "repeat" uses full name at every mention, "shorthand" defines once then uses "the tool"
-tool_name_repetition = "repeat"
+critical_rules_tool_name_repetition = "repeat"
 
 # Batch size display format: "bold" wraps in **, "metadata" renders as "Batch size = N", "plain" inline
-batch_size_format = "plain"
+critical_rules_batch_size_format = "plain"
 
 # Rule separator: string inserted between rules. Newline for density, double-newline for visual separation
-pre_body_entry_separator_override = "double_newline"
+critical_rules_pre_body_entry_separator_override = "double_newline"
 
 [instructions]
 # Step header formatting
-steps_heading_format = "bold"  # "bold" | "h3"
+instructions_steps_heading_format = "bold"  # "bold" | "h3"
 
 # Step body visual container
-steps_body_container = "none"  # "none" | "blockquote"
+instructions_steps_body_container = "none"  # "none" | "blockquote"
 
 # Mode label separator (between mode label and step header)
-steps_mode_separator = "dash"
+instructions_steps_mode_separator = "dash"
 
 # Suppress consecutive same-mode labels
-steps_mode_restrict_to_transition = false
+instructions_steps_mode_restrict_to_transition = false
 
 # Scaffolding tier thresholds
-steps_scaffolding_lightweight_threshold = 3
-steps_scaffolding_standard_threshold = 7
+instructions_steps_scaffolding_lightweight_threshold = 3
+instructions_steps_scaffolding_standard_threshold = 7
 
 [examples]
 # Entry heading format — bold text vs H4
 # Bold preserves boundaries without visual density for groups with 5+ entries
-groups_entry_heading_format = "bold"
+examples_groups_entry_heading_format = "bold"
 
 # Entry body container — how entry content is visually contained
-groups_entry_body_container = "bare_with_endmarker"
+examples_groups_entry_body_container = "bare_with_endmarker"
 
 # Entry separator — what divides entries when headings are off (per-group data)
-groups_entry_separator = "horizontal_rule"
+examples_groups_entry_separator = "horizontal_rule"
 
 # Multi-group separator — visual break between groups (only when group_count > 1)
-groups_separator = "horizontal_rule"  # "horizontal_rule" | "none"
+examples_groups_separator = "horizontal_rule"  # "horizontal_rule" | "none"
 
 [constraints]
 # Enumeration format
-rules_format = ["bulleted", "numbered"]
-rules_format_threshold = 6
+constraints_rules_format = ["bulleted", "numbered"]
+constraints_rules_format_threshold = 6
 
 # Closing reinforcement activation threshold
-compliance_reminder_closing_visibility_threshold = 6
+constraints_compliance_reminder_closing_visibility_threshold = 6
 
 # Constraint count heading activation threshold
-constraint_count_heading_visibility_threshold = 6
+constraints_constraint_count_heading_visibility_threshold = 6
 
 # MUST/MUST-NOT rendering treatment
-rules_polarity_normalization = "preserve_voice"  # "preserve_voice" | "normalize_outliers" | "prefix_tags"
+constraints_rules_polarity_normalization = "preserve_voice"  # "preserve_voice" | "normalize_outliers" | "prefix_tags"
 
 # Polarity grouping for long lists
-rules_polarity_grouping_threshold = 11
+constraints_rules_polarity_grouping_threshold = 11
 
 [anti_patterns]
 # Format for rendering the pattern list
 # Options: "bare_bullets", "bold_prohibition"
-patterns_format = "bare_bullets"
+anti_patterns_patterns_format = "bare_bullets"
 
 [success_criteria]
 # Evidence item format: threshold-based on evidence count
-criteria_evidence_format_threshold = 5
-criteria_evidence_format = ["bulleted", "numbered"]
+success_criteria_criteria_evidence_format_threshold = 5
+success_criteria_criteria_evidence_format = ["bulleted", "numbered"]
 
 [failure_criteria]
 # Evidence item format
-criteria_evidence_format = "bare"
+failure_criteria_criteria_evidence_format = "bare"
 
 [input]
-context_required_format = "numbered"
-context_available_format = "bulleted"
-parameters_format = ["bulleted", "prose"]
-parameters_format_threshold = 2
+input_context_required_format = "numbered"
+input_context_available_format = "bulleted"
+input_parameters_format = ["bulleted", "prose"]
+input_parameters_format_threshold = 2
 
 [output]
 
