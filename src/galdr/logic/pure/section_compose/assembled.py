@@ -14,21 +14,19 @@ deleted. Nothing of it remains to consult, deliberately — see
 context/GALDR_ELEMENT.md, "Why the old walker code is gone."
 """
 
-from pydantic import BaseModel
-
 from galdr.logic.pure.section_compose.composed import (
     extract_preprocessing_fields,
     sort_into_slots,
 )
+from galdr.structure.model.field_view import FieldView
 from galdr.structure.model.preprocessing_fields import PreprocessingFields
 
 
 def compose_section(
-    section_name: str,
-    data_section: BaseModel,
-    structure_section: BaseModel,
-    content_section: BaseModel,
-    display_section: BaseModel | None,
+    data_fields: FieldView,
+    structure_fields: FieldView,
+    content_fields: FieldView,
+    display_fields: FieldView,
 ) -> tuple[PreprocessingFields, dict[str, list[tuple[str, str]]]]:
     """Run stage 1 of the hourglass pipeline for one section.
 
@@ -41,8 +39,6 @@ def compose_section(
     ongoing, so we don't commit to a Pydantic model until we know what
     a bundle actually contains.
     """
-    pre_fields = extract_preprocessing_fields(section_name, structure_section)
-    slots = sort_into_slots(
-        section_name, content_section, data_section, structure_section, display_section,
-    )
+    pre_fields = extract_preprocessing_fields(structure_fields)
+    slots = sort_into_slots(content_fields, data_fields, structure_fields, display_fields)
     return pre_fields, slots

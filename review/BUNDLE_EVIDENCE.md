@@ -35,33 +35,33 @@ A bare `_threshold` is the most tractable case — the same document's
 
 | section | field | axis | tail | status |
 |---|---|---|---|---|
-| constraints | `constraints_compliance_reminder_closing_selector` | structure | `_selector` | in code, absent from the table |
-| constraints | `constraints_no_inferred_constraints_preamble_selector` | structure | `_selector` | in code, absent from the table |
-| constraints | `constraints_rules_polarity_grouping_threshold` | display | `_threshold` | bare — needs a threshold type |
-| constraints | `constraints_rules_polarity_normalization` | display | `_normalization` | undeclared |
-| constraints | `constraints_section_preamble_selector` | structure | `_selector` | in code, absent from the table |
-| critical_rules | `critical_rules_tool_name_repetition` | display | `_repetition` | undeclared |
-| examples | `examples_groups_entry_body_container` | display | `_container` | undeclared |
-| examples | `examples_groups_entry_separator` | display | `_separator` | undeclared |
-| examples | `examples_groups_separator` | display | `_separator` | undeclared |
-| examples | `examples_groups_display_headings` | structure | `_headings` | undeclared |
-| examples | `examples_groups_max_number` | structure | `_number` | undeclared |
-| examples | `examples_groups_suppress_lone_heading` | structure | `_heading` | undeclared |
-| failure_criteria | `failure_criteria_abort_stance_selector` | structure | `_selector` | in code, absent from the table |
-| instructions | `instructions_section_start_selector` | structure | `_selector` | in code, absent from the table |
-| instructions | `instructions_steps_body_container` | display | `_container` | undeclared |
-| instructions | `instructions_steps_mode_restrict_to_transition` | display | `_transition` | undeclared |
-| instructions | `instructions_steps_mode_separator` | display | `_separator` | undeclared |
-| instructions | `instructions_steps_scaffolding_lightweight_threshold` | display | `_threshold` | bare — needs a threshold type |
-| instructions | `instructions_steps_scaffolding_standard_threshold` | display | `_threshold` | bare — needs a threshold type |
-| output | `output_directory_location_selector` | structure | `_selector` | in code, absent from the table |
-| output | `output_schema_embed` | structure | `_embed` | undeclared |
-| security_boundary | `security_boundary_filesystem_permissions_path_style` | display | `_style` | undeclared |
-| security_boundary | `security_boundary_framing_selector` | structure | `_selector` | in code, absent from the table |
-| success_criteria | `success_criteria_criteria_evidence_type_handling` | structure | `_handling` | undeclared |
-| success_criteria | `success_criteria_definition_declaration_selector` | structure | `_selector` | in code, absent from the table |
-| success_criteria | `success_criteria_definition_to_evidence_transition_selector` | structure | `_selector` | in code, absent from the table |
-| success_criteria | `success_criteria_evidence_intro_selector` | structure | `_selector` | in code, absent from the table |
+| constraints | `compliance_reminder_closing_selector` | structure | `_selector` | in code, absent from the table |
+| constraints | `no_inferred_constraints_preamble_selector` | structure | `_selector` | in code, absent from the table |
+| constraints | `rules_polarity_grouping_threshold` | display | `_threshold` | bare — needs a threshold type |
+| constraints | `rules_polarity_normalization` | display | `_normalization` | undeclared |
+| constraints | `section_preamble_selector` | structure | `_selector` | in code, absent from the table |
+| critical_rules | `tool_name_repetition` | display | `_repetition` | undeclared |
+| examples | `groups_entry_body_container` | display | `_container` | undeclared |
+| examples | `groups_entry_separator` | display | `_separator` | undeclared |
+| examples | `groups_separator` | display | `_separator` | undeclared |
+| examples | `groups_display_headings` | structure | `_headings` | undeclared |
+| examples | `groups_max_number` | structure | `_number` | undeclared |
+| examples | `groups_suppress_lone_heading` | structure | `_heading` | undeclared |
+| failure_criteria | `abort_stance_selector` | structure | `_selector` | in code, absent from the table |
+| instructions | `section_start_selector` | structure | `_selector` | in code, absent from the table |
+| instructions | `steps_body_container` | display | `_container` | undeclared |
+| instructions | `steps_mode_restrict_to_transition` | display | `_transition` | undeclared |
+| instructions | `steps_mode_separator` | display | `_separator` | undeclared |
+| instructions | `steps_scaffolding_lightweight_threshold` | display | `_threshold` | bare — needs a threshold type |
+| instructions | `steps_scaffolding_standard_threshold` | display | `_threshold` | bare — needs a threshold type |
+| output | `directory_location_selector` | structure | `_selector` | in code, absent from the table |
+| output | `schema_embed` | structure | `_embed` | undeclared |
+| security_boundary | `filesystem_permissions_path_style` | display | `_style` | undeclared |
+| security_boundary | `framing_selector` | structure | `_selector` | in code, absent from the table |
+| success_criteria | `criteria_evidence_type_handling` | structure | `_handling` | undeclared |
+| success_criteria | `definition_declaration_selector` | structure | `_selector` | in code, absent from the table |
+| success_criteria | `definition_to_evidence_transition_selector` | structure | `_selector` | in code, absent from the table |
+| success_criteria | `evidence_intro_selector` | structure | `_selector` | in code, absent from the table |
 
 ## Positional suffixes outside the declared table
 
@@ -72,18 +72,18 @@ engine cannot place them and the author gets no steer from the name.
 
 | section | bundle | field | axis | ends in |
 |---|---|---|---|---|
-| constraints | `rules` | `constraints_rules_polarity_grouping_threshold` | display | `threshold` |
-| constraints | `rules` | `constraints_rules_polarity_normalization` | display | `normalization` |
-| critical_rules | `tool_name` | `critical_rules_tool_name_repetition` | display | `repetition` |
-| examples | `groups` | `examples_groups_entry_body_container` | display | `container` |
-| instructions | `steps` | `instructions_steps_heading_n_only_template` | content | `only` |
-| instructions | `steps` | `instructions_steps_body_container` | display | `container` |
-| instructions | `steps` | `instructions_steps_scaffolding_lightweight_threshold` | display | `threshold` |
-| instructions | `steps` | `instructions_steps_scaffolding_standard_threshold` | display | `threshold` |
-| security_boundary | `filesystem_permissions` | `security_boundary_filesystem_permissions_list_format` | display | `list` |
-| security_boundary | `filesystem_permissions` | `security_boundary_filesystem_permissions_path_style` | display | `style` |
-| security_boundary | `filesystem_permissions` | `security_boundary_filesystem_permissions_toolset_format` | display | `toolset` |
-| success_criteria | `criteria` | `success_criteria_criteria_evidence_type_handling` | structure | `handling` |
+| constraints | `rules` | `rules_polarity_grouping_threshold` | display | `threshold` |
+| constraints | `rules` | `rules_polarity_normalization` | display | `normalization` |
+| critical_rules | `tool_name` | `tool_name_repetition` | display | `repetition` |
+| examples | `groups` | `groups_entry_body_container` | display | `container` |
+| instructions | `steps` | `steps_heading_n_only_template` | content | `only` |
+| instructions | `steps` | `steps_body_container` | display | `container` |
+| instructions | `steps` | `steps_scaffolding_lightweight_threshold` | display | `threshold` |
+| instructions | `steps` | `steps_scaffolding_standard_threshold` | display | `threshold` |
+| security_boundary | `filesystem_permissions` | `filesystem_permissions_list_format` | display | `list` |
+| security_boundary | `filesystem_permissions` | `filesystem_permissions_path_style` | display | `style` |
+| security_boundary | `filesystem_permissions` | `filesystem_permissions_toolset_format` | display | `toolset` |
+| success_criteria | `criteria` | `criteria_evidence_type_handling` | structure | `handling` |
 
 ## Sub-blocks — the declared pattern the engine does not model
 
@@ -95,12 +95,12 @@ section's data field by prefix and loses which group they belong to.
 
 | section | bundle | sub-block | suffix | field | group in data |
 |---|---|---|---|---|---|
-| examples | `groups` | `entry` | `_heading` | `examples_groups_entry_heading_format` | **not found** |
-| examples | `groups` | `entry` | `_separator` | `examples_groups_entry_separator` | **not found** |
-| examples | `groups` | `suppress_lone` | `_heading` | `examples_groups_suppress_lone_heading` | **not found** |
-| instructions | `steps` | `mode` | `_label` | `instructions_steps_mode_label_variant` | **not found** |
-| instructions | `steps` | `mode_restrict_to` | `_transition` | `instructions_steps_mode_restrict_to_transition` | **not found** |
-| instructions | `steps` | `mode` | `_separator` | `instructions_steps_mode_separator` | **not found** |
+| examples | `groups` | `entry` | `_heading` | `groups_entry_heading_format` | **not found** |
+| examples | `groups` | `entry` | `_separator` | `groups_entry_separator` | **not found** |
+| examples | `groups` | `suppress_lone` | `_heading` | `groups_suppress_lone_heading` | **not found** |
+| instructions | `steps` | `mode` | `_label` | `steps_mode_label_variant` | **not found** |
+| instructions | `steps` | `mode_restrict_to` | `_transition` | `steps_mode_restrict_to_transition` | **not found** |
+| instructions | `steps` | `mode` | `_separator` | `steps_mode_separator` | **not found** |
 
 ## Abbreviated matches — the name is short for something
 
@@ -109,13 +109,13 @@ These are renames, not defects — the suggestion is mechanical, check it.
 
 | section | field | resolves to | suggested trunk |
 |---|---|---|---|
-| examples | `examples_groups_display_headings_override` | example_display_headings | `groups_example_display_headings` |
-| examples | `examples_groups_max_number_override` | examples_max_number | `groups_examples_max_number` |
-| examples | `examples_groups_display_headings` | example_display_headings | `groups_example_display_headings` |
-| examples | `examples_groups_max_number` | examples_max_number | `groups_examples_max_number` |
-| success_criteria | `success_criteria_criteria_evidence_format` | success_evidence | `criteria_success_evidence` |
-| success_criteria | `success_criteria_criteria_evidence_format_threshold` | success_evidence | `criteria_success_evidence` |
-| failure_criteria | `failure_criteria_criteria_evidence_format` | failure_evidence | `criteria_failure_evidence` |
+| examples | `groups_display_headings_override` | example_display_headings | `groups_example_display_headings` |
+| examples | `groups_max_number_override` | examples_max_number | `groups_examples_max_number` |
+| examples | `groups_display_headings` | example_display_headings | `groups_example_display_headings` |
+| examples | `groups_max_number` | examples_max_number | `groups_examples_max_number` |
+| success_criteria | `criteria_evidence_format` | success_evidence | `criteria_success_evidence` |
+| success_criteria | `criteria_evidence_format_threshold` | success_evidence | `criteria_success_evidence` |
+| failure_criteria | `criteria_evidence_format` | failure_evidence | `criteria_failure_evidence` |
 
 ## Depth matches — the control addresses a nested field
 
@@ -124,7 +124,7 @@ trunk vocabulary has no syntax for the path; the name only works by luck.
 
 | section | field | path |
 |---|---|---|
-| input | `input_description_format_template` | `format` |
+| input | `description_format_template` | `format` |
 
 ## Conforming roles — quiet, listed for completeness
 
@@ -164,18 +164,7 @@ Unexplained:
 Either computed at render time or a dangling reference — the probe
 cannot tell which, but every one is a thing to account for.
 
-| section | content field | placeholder |
-|---|---|---|
-| critical_rules | `critical_rules_rule_count_awareness_preamble_template` | `{{rule_count}}` |
-| instructions | `instructions_highlight_step_count_preamble_template` | `{{step_count}}` |
-| instructions | `instructions_reminder_midpoint_preamble_template` | `{{midpoint}}` |
-| instructions | `instructions_reminder_midpoint_preamble_template` | `{{midpoint_next}}` |
-| instructions | `instructions_reminder_midpoint_preamble_template` | `{{step_total}}` |
-| instructions | `instructions_steps_heading_template` | `{{step_n}}` |
-| instructions | `instructions_steps_heading_template` | `{{step_total}}` |
-| instructions | `instructions_steps_heading_n_only_template` | `{{step_n}}` |
-| instructions | `instructions_follow_strictly_closing_template` | `{{step_count}}` |
-| constraints | `constraints_constraint_count_heading_template` | `{{COUNT}}` |
+_none_
 
 ## Per-section detail
 
@@ -183,259 +172,259 @@ cannot tell which, but every one is a thing to account for.
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `identity_section_start_template` | content | exact (prose anchor) |  |
+| heading | `section_start` | prose | `section_start_template` | content | exact (prose anchor) |  |
 | body | `title` | data | `title` | data | anchor |  |
 | body | `role_identity` | data | `role_identity` | data | anchor |  |
-|  |  |  | `identity_role_identity_template` | content | exact |  |
-|  |  |  | `identity_role_identity_postscript_template` | content | role |  |
-|  |  |  | `identity_role_identity_postscript_visible` | structure | role |  |
+|  |  |  | `role_identity_template` | content | exact |  |
+|  |  |  | `role_identity_postscript_template` | content | role |  |
+|  |  |  | `role_identity_postscript_visible` | structure | role |  |
 | body | `role_responsibility` | data | `role_responsibility` | data | anchor |  |
-|  |  |  | `identity_role_responsibility_template` | content | exact |  |
+|  |  |  | `role_responsibility_template` | content | exact |  |
 | body | `role_description` | data | `role_description` | data | anchor |  |
 | body | `role_expertise` | data | `role_expertise` | data | anchor |  |
-|  |  |  | `identity_role_expertise_label` | content | role |  |
-|  |  |  | `identity_role_expertise_postscript` | content | role |  |
-|  |  |  | `identity_role_expertise_postscript_visible` | structure | role |  |
-|  |  |  | `identity_role_expertise_format` | display | exact |  |
-|  |  |  | `identity_role_expertise_format_threshold` | display | exact |  |
-| closing | `identity_reminder_closing` | prose | `identity_identity_reminder_closing_template` | content | exact (prose anchor) |  |
-|  |  |  | `identity_identity_reminder_closing_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `role_expertise_label` | content | role |  |
+|  |  |  | `role_expertise_postscript` | content | role |  |
+|  |  |  | `role_expertise_postscript_visible` | structure | role |  |
+|  |  |  | `role_expertise_format` | display | exact |  |
+|  |  |  | `role_expertise_format_threshold` | display | exact |  |
+| closing | `identity_reminder_closing` | prose | `identity_reminder_closing_template` | content | exact (prose anchor) |  |
+|  |  |  | `identity_reminder_closing_visible` | structure | exact (prose anchor) |  |
 
 ### security_boundary
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `framing_section_start` | prose | `security_boundary_framing_section_start_variant` | content | exact (prose anchor) |  |
-|  |  |  | `security_boundary_framing_selector` | structure | selector |  |
-| preamble | `framing_section_preamble` | prose | `security_boundary_framing_section_preamble_variant` | content | exact (prose anchor) |  |
-|  |  |  | `security_boundary_framing_section_preamble_visible` | structure | exact (prose anchor) |  |
-|  |  |  | `security_boundary_framing_selector` | structure | selector |  |
+| heading | `framing_section_start` | prose | `framing_section_start_variant` | content | exact (prose anchor) |  |
+|  |  |  | `framing_selector` | structure | selector |  |
+| preamble | `framing_section_preamble` | prose | `framing_section_preamble_variant` | content | exact (prose anchor) |  |
+|  |  |  | `framing_section_preamble_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `framing_selector` | structure | selector |  |
 | body | `workspace_path` | data | `workspace_path` | data | anchor |  |
 | body | `filesystem_permissions` | data | `filesystem_permissions` | data | anchor |  |
-|  |  |  | `security_boundary_filesystem_permissions_label` | content | role |  |
-|  |  |  | `security_boundary_filesystem_permissions_label_visible` | structure | role |  |
-|  |  |  | `security_boundary_filesystem_permissions_path_style` | display | UNDECLARED |  |
-|  |  |  | `security_boundary_filesystem_permissions_toolset_format` | display | UNDECLARED |  |
-|  |  |  | `security_boundary_filesystem_permissions_label_visibility_threshold` | display | role |  |
-|  |  |  | `security_boundary_filesystem_permissions_list_format` | display | UNDECLARED |  |
-| body | `compound_entry` | prose | `security_boundary_compound_entry_template` | content | exact (prose anchor) |  |
-| body | `grouped_tool_heading` | prose | `security_boundary_grouped_tool_heading_template` | content | exact (prose anchor) |  |
-| body | `framing_declaration` | prose | `security_boundary_framing_declaration_variant_template` | content | exact (prose anchor) |  |
-|  |  |  | `security_boundary_framing_selector` | structure | selector |  |
-| closing | `section_closing` | prose | `security_boundary_section_closing` | content | exact (prose anchor) |  |
-|  |  |  | `security_boundary_section_closing_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `filesystem_permissions_label` | content | role |  |
+|  |  |  | `filesystem_permissions_label_visible` | structure | role |  |
+|  |  |  | `filesystem_permissions_path_style` | display | UNDECLARED |  |
+|  |  |  | `filesystem_permissions_toolset_format` | display | UNDECLARED |  |
+|  |  |  | `filesystem_permissions_label_visibility_threshold` | display | role |  |
+|  |  |  | `filesystem_permissions_list_format` | display | UNDECLARED |  |
+| body | `compound_entry` | prose | `compound_entry_template` | content | exact (prose anchor) |  |
+| body | `grouped_tool_heading` | prose | `grouped_tool_heading_template` | content | exact (prose anchor) |  |
+| body | `framing_declaration` | prose | `framing_declaration_variant_template` | content | exact (prose anchor) |  |
+|  |  |  | `framing_selector` | structure | selector |  |
+| closing | `section_closing` | prose | `section_closing` | content | exact (prose anchor) |  |
+|  |  |  | `section_closing_visible` | structure | exact (prose anchor) |  |
 
 ### input
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `input_section_start` | content | exact (prose anchor) |  |
-| preamble | `section_preamble` | prose | `input_section_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `input_section_preamble_visible` | structure | exact (prose anchor) |  |
+| heading | `section_start` | prose | `section_start` | content | exact (prose anchor) |  |
+| preamble | `section_preamble` | prose | `section_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `section_preamble_visible` | structure | exact (prose anchor) |  |
 | body | `description` | data | `description` | data | anchor |  |
-|  |  |  | `input_description_format_template` | content | depth | format |
+|  |  |  | `description_format_template` | content | depth | format |
 | body | `format` | data | `format` | data | anchor |  |
 | body | `delivery` | data | `delivery` | data | anchor |  |
 | body | `input_schema` | data | `input_schema` | data | anchor |  |
 | body | `parameters` | data | `parameters` | data | anchor |  |
-|  |  |  | `input_parameters_transition` | content | role |  |
-|  |  |  | `input_parameters_heading` | content | role |  |
-|  |  |  | `input_parameters_entry_template` | content | role |  |
-|  |  |  | `input_parameters_transition_visible` | structure | role |  |
-|  |  |  | `input_parameters_heading_visible` | structure | role |  |
-|  |  |  | `input_parameters_heading_auto_threshold` | structure | role |  |
-|  |  |  | `input_parameters_format` | display | exact |  |
-|  |  |  | `input_parameters_format_threshold` | display | exact |  |
+|  |  |  | `parameters_transition` | content | role |  |
+|  |  |  | `parameters_heading` | content | role |  |
+|  |  |  | `parameters_entry_template` | content | role |  |
+|  |  |  | `parameters_transition_visible` | structure | role |  |
+|  |  |  | `parameters_heading_visible` | structure | role |  |
+|  |  |  | `parameters_heading_auto_threshold` | structure | role |  |
+|  |  |  | `parameters_format` | display | exact |  |
+|  |  |  | `parameters_format_threshold` | display | exact |  |
 | body | `context_required` | data | `context_required` | data | anchor |  |
-|  |  |  | `input_context_required_heading` | content | role |  |
-|  |  |  | `input_context_required_intro` | content | role |  |
-|  |  |  | `input_context_required_entry_template` | content | role |  |
-|  |  |  | `input_context_required_intro_visible` | structure | role |  |
-|  |  |  | `input_context_required_format` | display | exact |  |
+|  |  |  | `context_required_heading` | content | role |  |
+|  |  |  | `context_required_intro` | content | role |  |
+|  |  |  | `context_required_entry_template` | content | role |  |
+|  |  |  | `context_required_intro_visible` | structure | role |  |
+|  |  |  | `context_required_format` | display | exact |  |
 | body | `context_available` | data | `context_available` | data | anchor |  |
-|  |  |  | `input_context_available_heading` | content | role |  |
-|  |  |  | `input_context_available_format` | display | exact |  |
-| body | `input_completeness_postscript` | prose | `input_input_completeness_postscript` | content | exact (prose anchor) |  |
-|  |  |  | `input_input_completeness_postscript_visible` | structure | exact (prose anchor) |  |
-| body | `schema_label` | prose | `input_schema_label_template` | content | exact (prose anchor) |  |
-|  |  |  | `input_schema_label_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `context_available_heading` | content | role |  |
+|  |  |  | `context_available_format` | display | exact |  |
+| body | `input_completeness_postscript` | prose | `input_completeness_postscript` | content | exact (prose anchor) |  |
+|  |  |  | `input_completeness_postscript_visible` | structure | exact (prose anchor) |  |
+| body | `schema_label` | prose | `schema_label_template` | content | exact (prose anchor) |  |
+|  |  |  | `schema_label_visible` | structure | exact (prose anchor) |  |
 
 ### critical_rules
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `critical_rules_section_start` | content | exact (prose anchor) |  |
-| preamble | `authority_preamble` | prose | `critical_rules_authority_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `critical_rules_authority_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `rule_count_awareness_preamble` | prose | `critical_rules_rule_count_awareness_preamble_template` | content | exact (prose anchor) |  |
-|  |  |  | `critical_rules_rule_count_awareness_preamble_visible` | structure | exact (prose anchor) |  |
-|  |  |  | `critical_rules_rule_count_awareness_preamble_template_auto_threshold` | structure | exact (prose anchor) |  |
+| heading | `section_start` | prose | `section_start` | content | exact (prose anchor) |  |
+| preamble | `authority_preamble` | prose | `authority_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `authority_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `rule_count_awareness_preamble` | prose | `rule_count_awareness_preamble_template` | content | exact (prose anchor) |  |
+|  |  |  | `rule_count_awareness_preamble_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `rule_count_awareness_preamble_template_auto_threshold` | structure | exact (prose anchor) |  |
 | body | `workspace_path` | data | `workspace_path` | data | anchor |  |
-|  |  |  | `critical_rules_workspace_path_format` | display | exact |  |
+|  |  |  | `workspace_path_format` | display | exact |  |
 | body | `has_output_tool` | data | `has_output_tool` | data | anchor |  |
 | body | `tool_name` | data | `tool_name` | data | anchor |  |
-|  |  |  | `critical_rules_tool_name_format` | display | exact |  |
-|  |  |  | `critical_rules_tool_name_repetition` | display | UNDECLARED |  |
+|  |  |  | `tool_name_format` | display | exact |  |
+|  |  |  | `tool_name_repetition` | display | UNDECLARED |  |
 | body | `name_needed` | data | `name_needed` | data | anchor |  |
 | body | `batch_size` | data | `batch_size` | data | anchor |  |
-|  |  |  | `critical_rules_batch_size_format` | display | exact |  |
-| body | `workspace_confinement` | prose? | `critical_rules_workspace_confinement_template` | content | exact (prose anchor) |  |
-|  |  |  | `critical_rules_workspace_confinement_visible` | structure | exact (prose anchor) |  |
-| body | `output_tool_exclusivity` | prose? | `critical_rules_output_tool_exclusivity_template` | content | exact (prose anchor) |  |
-|  |  |  | `critical_rules_output_tool_exclusivity_visible` | structure | exact (prose anchor) |  |
-| body | `batch_discipline` | prose? | `critical_rules_batch_discipline_template` | content | exact (prose anchor) |  |
-|  |  |  | `critical_rules_batch_discipline_visible` | structure | exact (prose anchor) |  |
-| body | `fail_fast_body` | prose | `critical_rules_fail_fast_body` | content | exact (prose anchor) |  |
-|  |  |  | `critical_rules_fail_fast_body_visible` | structure | exact (prose anchor) |  |
-| body | `input_is_your_only_source_body` | prose | `critical_rules_input_is_your_only_source_body` | content | exact (prose anchor) |  |
-|  |  |  | `critical_rules_input_is_your_only_source_body_visible` | structure | exact (prose anchor) |  |
-| body | `no_invention_body` | prose | `critical_rules_no_invention_body` | content | exact (prose anchor) |  |
-|  |  |  | `critical_rules_no_invention_body_visible` | structure | exact (prose anchor) |  |
-| body | `discipline_over_helpfulness_body` | prose | `critical_rules_discipline_over_helpfulness_body` | content | exact (prose anchor) |  |
-|  |  |  | `critical_rules_discipline_over_helpfulness_body_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `batch_size_format` | display | exact |  |
+| body | `workspace_confinement` | prose? | `workspace_confinement_template` | content | exact (prose anchor) |  |
+|  |  |  | `workspace_confinement_visible` | structure | exact (prose anchor) |  |
+| body | `output_tool_exclusivity` | prose? | `output_tool_exclusivity_template` | content | exact (prose anchor) |  |
+|  |  |  | `output_tool_exclusivity_visible` | structure | exact (prose anchor) |  |
+| body | `batch_discipline` | prose? | `batch_discipline_template` | content | exact (prose anchor) |  |
+|  |  |  | `batch_discipline_visible` | structure | exact (prose anchor) |  |
+| body | `fail_fast_body` | prose | `fail_fast_body` | content | exact (prose anchor) |  |
+|  |  |  | `fail_fast_body_visible` | structure | exact (prose anchor) |  |
+| body | `input_is_your_only_source_body` | prose | `input_is_your_only_source_body` | content | exact (prose anchor) |  |
+|  |  |  | `input_is_your_only_source_body_visible` | structure | exact (prose anchor) |  |
+| body | `no_invention_body` | prose | `no_invention_body` | content | exact (prose anchor) |  |
+|  |  |  | `no_invention_body_visible` | structure | exact (prose anchor) |  |
+| body | `discipline_over_helpfulness_body` | prose | `discipline_over_helpfulness_body` | content | exact (prose anchor) |  |
+|  |  |  | `discipline_over_helpfulness_body_visible` | structure | exact (prose anchor) |  |
 
 ### instructions
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `instructions_section_start_variant_template` | content | exact (prose anchor) |  |
-|  |  |  | `instructions_section_start_selector` | structure | exact (prose anchor) |  |
-| preamble | `highlight_step_count_preamble` | prose | `instructions_highlight_step_count_preamble_template` | content | exact (prose anchor) |  |
-|  |  |  | `instructions_highlight_step_count_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `sequence_integrity_preamble` | prose | `instructions_sequence_integrity_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `instructions_sequence_integrity_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `follow_strictly_preamble` | prose | `instructions_follow_strictly_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `instructions_follow_strictly_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `reminder_midpoint_preamble` | prose | `instructions_reminder_midpoint_preamble_template` | content | exact (prose anchor) |  |
-|  |  |  | `instructions_reminder_midpoint_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `instruction_mode_explanation_preamble` | prose | `instructions_instruction_mode_explanation_preamble_variant` | content | exact (prose anchor) |  |
-|  |  |  | `instructions_instruction_mode_explanation_preamble_visible` | structure | exact (prose anchor) |  |
+| heading | `section_start` | prose | `section_start_variant_template` | content | exact (prose anchor) |  |
+|  |  |  | `section_start_selector` | structure | exact (prose anchor) |  |
+| preamble | `highlight_step_count_preamble` | prose | `highlight_step_count_preamble_template` | content | exact (prose anchor) |  |
+|  |  |  | `highlight_step_count_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `sequence_integrity_preamble` | prose | `sequence_integrity_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `sequence_integrity_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `follow_strictly_preamble` | prose | `follow_strictly_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `follow_strictly_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `reminder_midpoint_preamble` | prose | `reminder_midpoint_preamble_template` | content | exact (prose anchor) |  |
+|  |  |  | `reminder_midpoint_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `instruction_mode_explanation_preamble` | prose | `instruction_mode_explanation_preamble_variant` | content | exact (prose anchor) |  |
+|  |  |  | `instruction_mode_explanation_preamble_visible` | structure | exact (prose anchor) |  |
 | body | `steps` | data | `steps` | data | anchor |  |
-|  |  |  | `instructions_steps_heading_template` | content | role |  |
-|  |  |  | `instructions_steps_heading_n_only_template` | content | UNDECLARED |  |
-|  |  |  | `instructions_steps_mode_label_variant` | content | SUB-BLOCK? |  |
-|  |  |  | `instructions_steps_index_tracking` | structure | plain enum |  |
-|  |  |  | `instructions_steps_heading_format` | display | role |  |
-|  |  |  | `instructions_steps_body_container` | display | UNDECLARED |  |
-|  |  |  | `instructions_steps_mode_separator` | display | SUB-BLOCK? |  |
-|  |  |  | `instructions_steps_mode_restrict_to_transition` | display | SUB-BLOCK? |  |
-|  |  |  | `instructions_steps_scaffolding_lightweight_threshold` | display | UNDECLARED |  |
-|  |  |  | `instructions_steps_scaffolding_standard_threshold` | display | UNDECLARED |  |
-| closing | `follow_strictly_closing` | prose | `instructions_follow_strictly_closing_template` | content | exact (prose anchor) |  |
-|  |  |  | `instructions_follow_strictly_closing_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `steps_heading_template` | content | role |  |
+|  |  |  | `steps_heading_n_only_template` | content | UNDECLARED |  |
+|  |  |  | `steps_mode_label_variant` | content | SUB-BLOCK? |  |
+|  |  |  | `steps_index_tracking` | structure | plain enum |  |
+|  |  |  | `steps_heading_format` | display | role |  |
+|  |  |  | `steps_body_container` | display | UNDECLARED |  |
+|  |  |  | `steps_mode_separator` | display | SUB-BLOCK? |  |
+|  |  |  | `steps_mode_restrict_to_transition` | display | SUB-BLOCK? |  |
+|  |  |  | `steps_scaffolding_lightweight_threshold` | display | UNDECLARED |  |
+|  |  |  | `steps_scaffolding_standard_threshold` | display | UNDECLARED |  |
+| closing | `follow_strictly_closing` | prose | `follow_strictly_closing_template` | content | exact (prose anchor) |  |
+|  |  |  | `follow_strictly_closing_visible` | structure | exact (prose anchor) |  |
 
 ### examples
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `examples_section_start` | content | exact (prose anchor) |  |
-| preamble | `section_preamble` | prose | `examples_section_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `examples_section_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `group_framing_preamble` | prose | `examples_group_framing_preamble_template` | content | exact (prose anchor) |  |
-|  |  |  | `examples_group_framing_preamble_visible` | structure | exact (prose anchor) |  |
+| heading | `section_start` | prose | `section_start` | content | exact (prose anchor) |  |
+| preamble | `section_preamble` | prose | `section_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `section_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `group_framing_preamble` | prose | `group_framing_preamble_template` | content | exact (prose anchor) |  |
+|  |  |  | `group_framing_preamble_visible` | structure | exact (prose anchor) |  |
 | body | `groups` | data | `groups` | data | anchor |  |
-|  |  |  | `examples_groups_suppress_lone_heading` | structure | SUB-BLOCK? |  |
-|  |  |  | `examples_groups_display_headings_override` | structure | abbreviated | example_display_headings |
-|  |  |  | `examples_groups_max_number_override` | structure | abbreviated | examples_max_number |
-|  |  |  | `examples_groups_display_headings` | structure | abbreviated | example_display_headings |
-|  |  |  | `examples_groups_max_number` | structure | abbreviated | examples_max_number |
-|  |  |  | `examples_groups_entry_heading_format` | display | SUB-BLOCK? |  |
-|  |  |  | `examples_groups_entry_body_container` | display | UNDECLARED |  |
-|  |  |  | `examples_groups_entry_separator` | display | SUB-BLOCK? |  |
-|  |  |  | `examples_groups_separator` | display | role |  |
-| body | `example_heading` | prose | `examples_example_heading_template` | content | exact (prose anchor) |  |
+|  |  |  | `groups_suppress_lone_heading` | structure | SUB-BLOCK? |  |
+|  |  |  | `groups_display_headings_override` | structure | abbreviated | example_display_headings |
+|  |  |  | `groups_max_number_override` | structure | abbreviated | examples_max_number |
+|  |  |  | `groups_display_headings` | structure | abbreviated | example_display_headings |
+|  |  |  | `groups_max_number` | structure | abbreviated | examples_max_number |
+|  |  |  | `groups_entry_heading_format` | display | SUB-BLOCK? |  |
+|  |  |  | `groups_entry_body_container` | display | UNDECLARED |  |
+|  |  |  | `groups_entry_separator` | display | SUB-BLOCK? |  |
+|  |  |  | `groups_separator` | display | role |  |
+| body | `example_heading` | prose | `example_heading_template` | content | exact (prose anchor) |  |
 
 ### constraints
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `constraints_section_start` | content | exact (prose anchor) |  |
-| preamble | `constraints_are_not_steps_preamble` | prose | `constraints_constraints_are_not_steps_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `constraints_constraints_are_not_steps_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `hierarchy_tier_comparison_preamble` | prose | `constraints_hierarchy_tier_comparison_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `constraints_hierarchy_tier_comparison_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `hierarchy_three_tier_explanation_preamble` | prose | `constraints_hierarchy_three_tier_explanation_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `constraints_hierarchy_three_tier_explanation_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `section_preamble` | prose | `constraints_section_preamble_variant` | content | exact (prose anchor) |  |
-|  |  |  | `constraints_section_preamble_visible` | structure | exact (prose anchor) |  |
-|  |  |  | `constraints_section_preamble_selector` | structure | exact (prose anchor) |  |
-| preamble | `no_inferred_constraints_preamble` | prose | `constraints_no_inferred_constraints_preamble_variant_template` | content | exact (prose anchor) |  |
-|  |  |  | `constraints_no_inferred_constraints_preamble_visible` | structure | exact (prose anchor) |  |
-|  |  |  | `constraints_no_inferred_constraints_preamble_selector` | structure | exact (prose anchor) |  |
+| heading | `section_start` | prose | `section_start` | content | exact (prose anchor) |  |
+| preamble | `constraints_are_not_steps_preamble` | prose | `constraints_are_not_steps_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `constraints_are_not_steps_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `hierarchy_tier_comparison_preamble` | prose | `hierarchy_tier_comparison_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `hierarchy_tier_comparison_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `hierarchy_three_tier_explanation_preamble` | prose | `hierarchy_three_tier_explanation_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `hierarchy_three_tier_explanation_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `section_preamble` | prose | `section_preamble_variant` | content | exact (prose anchor) |  |
+|  |  |  | `section_preamble_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `section_preamble_selector` | structure | exact (prose anchor) |  |
+| preamble | `no_inferred_constraints_preamble` | prose | `no_inferred_constraints_preamble_variant_template` | content | exact (prose anchor) |  |
+|  |  |  | `no_inferred_constraints_preamble_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `no_inferred_constraints_preamble_selector` | structure | exact (prose anchor) |  |
 | body | `rules` | data | `rules` | data | anchor |  |
-|  |  |  | `constraints_rules_format` | display | exact |  |
-|  |  |  | `constraints_rules_format_threshold` | display | exact |  |
-|  |  |  | `constraints_rules_polarity_normalization` | display | UNDECLARED |  |
-|  |  |  | `constraints_rules_polarity_grouping_threshold` | display | UNDECLARED |  |
-| body | `constraint_count_heading` | prose | `constraints_constraint_count_heading_template` | content | exact (prose anchor) |  |
-|  |  |  | `constraints_constraint_count_heading_visible` | structure | exact (prose anchor) |  |
-|  |  |  | `constraints_constraint_count_heading_visibility_threshold` | display | exact (prose anchor) |  |
-| closing | `compliance_reminder_closing` | prose | `constraints_compliance_reminder_closing_variant_template` | content | exact (prose anchor) |  |
-|  |  |  | `constraints_compliance_reminder_closing_visible` | structure | exact (prose anchor) |  |
-|  |  |  | `constraints_compliance_reminder_closing_visibility_threshold` | display | exact (prose anchor) |  |
-|  |  |  | `constraints_compliance_reminder_closing_selector` | structure | exact (prose anchor) |  |
+|  |  |  | `rules_format` | display | exact |  |
+|  |  |  | `rules_format_threshold` | display | exact |  |
+|  |  |  | `rules_polarity_normalization` | display | UNDECLARED |  |
+|  |  |  | `rules_polarity_grouping_threshold` | display | UNDECLARED |  |
+| body | `constraint_count_heading` | prose | `constraint_count_heading_template` | content | exact (prose anchor) |  |
+|  |  |  | `constraint_count_heading_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `constraint_count_heading_visibility_threshold` | display | exact (prose anchor) |  |
+| closing | `compliance_reminder_closing` | prose | `compliance_reminder_closing_variant_template` | content | exact (prose anchor) |  |
+|  |  |  | `compliance_reminder_closing_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `compliance_reminder_closing_visibility_threshold` | display | exact (prose anchor) |  |
+|  |  |  | `compliance_reminder_closing_selector` | structure | exact (prose anchor) |  |
 
 ### anti_patterns
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `anti_patterns_section_start` | content | exact (prose anchor) |  |
-| preamble | `section_preamble` | prose | `anti_patterns_section_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `anti_patterns_section_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `constraints_vs_anti_patterns_distinction_preamble` | prose | `anti_patterns_constraints_vs_anti_patterns_distinction_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `anti_patterns_constraints_vs_anti_patterns_distinction_preamble_visible` | structure | exact (prose anchor) |  |
+| heading | `section_start` | prose | `section_start` | content | exact (prose anchor) |  |
+| preamble | `section_preamble` | prose | `section_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `section_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `constraints_vs_anti_patterns_distinction_preamble` | prose | `constraints_vs_anti_patterns_distinction_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `constraints_vs_anti_patterns_distinction_preamble_visible` | structure | exact (prose anchor) |  |
 | body | `patterns` | data | `patterns` | data | anchor |  |
-|  |  |  | `anti_patterns_patterns_format` | display | exact |  |
+|  |  |  | `patterns_format` | display | exact |  |
 
 ### success_criteria
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `success_criteria_section_start` | content | exact (prose anchor) |  |
+| heading | `section_start` | prose | `section_start` | content | exact (prose anchor) |  |
 | body | `criteria` | data | `criteria` | data | anchor |  |
-|  |  |  | `success_criteria_criteria_separator` | content | role |  |
-|  |  |  | `success_criteria_criteria_evidence_type_handling` | structure | UNDECLARED |  |
-|  |  |  | `success_criteria_criteria_relationship` | structure | plain enum |  |
-|  |  |  | `success_criteria_criteria_evidence_format` | display | abbreviated | success_evidence |
-|  |  |  | `success_criteria_criteria_evidence_format_threshold` | display | abbreviated | success_evidence |
-| body | `verification_guidance_postscript` | prose | `success_criteria_verification_guidance_postscript` | content | exact (prose anchor) |  |
-|  |  |  | `success_criteria_verification_guidance_postscript_visible` | structure | exact (prose anchor) |  |
-| body | `success_failure_independence_statement_postscript` | prose | `success_criteria_success_failure_independence_statement_postscript` | content | exact (prose anchor) |  |
-|  |  |  | `success_criteria_success_failure_independence_statement_postscript_visible` | structure | exact (prose anchor) |  |
-| body | `definition_declaration` | prose | `success_criteria_definition_declaration_variant_template` | content | exact (prose anchor) |  |
-|  |  |  | `success_criteria_definition_declaration_selector` | structure | exact (prose anchor) |  |
-| body | `evidence_intro` | prose | `success_criteria_evidence_intro_variant` | content | exact (prose anchor) |  |
-|  |  |  | `success_criteria_evidence_intro_selector` | structure | exact (prose anchor) |  |
-| body | `definition_to_evidence_transition` | prose | `success_criteria_definition_to_evidence_transition_variant` | content | exact (prose anchor) |  |
-|  |  |  | `success_criteria_definition_to_evidence_transition_selector` | structure | exact (prose anchor) |  |
+|  |  |  | `criteria_separator` | content | role |  |
+|  |  |  | `criteria_evidence_type_handling` | structure | UNDECLARED |  |
+|  |  |  | `criteria_relationship` | structure | plain enum |  |
+|  |  |  | `criteria_evidence_format` | display | abbreviated | success_evidence |
+|  |  |  | `criteria_evidence_format_threshold` | display | abbreviated | success_evidence |
+| body | `verification_guidance_postscript` | prose | `verification_guidance_postscript` | content | exact (prose anchor) |  |
+|  |  |  | `verification_guidance_postscript_visible` | structure | exact (prose anchor) |  |
+| body | `success_failure_independence_statement_postscript` | prose | `success_failure_independence_statement_postscript` | content | exact (prose anchor) |  |
+|  |  |  | `success_failure_independence_statement_postscript_visible` | structure | exact (prose anchor) |  |
+| body | `definition_declaration` | prose | `definition_declaration_variant_template` | content | exact (prose anchor) |  |
+|  |  |  | `definition_declaration_selector` | structure | exact (prose anchor) |  |
+| body | `evidence_intro` | prose | `evidence_intro_variant` | content | exact (prose anchor) |  |
+|  |  |  | `evidence_intro_selector` | structure | exact (prose anchor) |  |
+| body | `definition_to_evidence_transition` | prose | `definition_to_evidence_transition_variant` | content | exact (prose anchor) |  |
+|  |  |  | `definition_to_evidence_transition_selector` | structure | exact (prose anchor) |  |
 
 ### failure_criteria
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `failure_criteria_section_start` | content | exact (prose anchor) |  |
-| preamble | `any_one_triggers_abort_preamble` | prose | `failure_criteria_any_one_triggers_abort_preamble` | content | exact (prose anchor) |  |
-| preamble | `abort_stance_preamble` | prose | `failure_criteria_abort_stance_preamble_variant` | content | exact (prose anchor) |  |
-|  |  |  | `failure_criteria_abort_stance_preamble_visible` | structure | exact (prose anchor) |  |
-|  |  |  | `failure_criteria_abort_stance_selector` | structure | selector |  |
+| heading | `section_start` | prose | `section_start` | content | exact (prose anchor) |  |
+| preamble | `any_one_triggers_abort_preamble` | prose | `any_one_triggers_abort_preamble` | content | exact (prose anchor) |  |
+| preamble | `abort_stance_preamble` | prose | `abort_stance_preamble_variant` | content | exact (prose anchor) |  |
+|  |  |  | `abort_stance_preamble_visible` | structure | exact (prose anchor) |  |
+|  |  |  | `abort_stance_selector` | structure | selector |  |
 | body | `criteria` | data | `criteria` | data | anchor |  |
-|  |  |  | `failure_criteria_criteria_evidence_format` | display | abbreviated | failure_evidence |
-| body | `evidence_intro` | prose | `failure_criteria_evidence_intro` | content | exact (prose anchor) |  |
-| body | `cite_definition_and_evidence_postscript` | prose | `failure_criteria_cite_definition_and_evidence_postscript` | content | exact (prose anchor) |  |
-|  |  |  | `failure_criteria_cite_definition_and_evidence_postscript_visible` | structure | exact (prose anchor) |  |
-| body | `check_before_and_during_postscript` | prose | `failure_criteria_check_before_and_during_postscript` | content | exact (prose anchor) |  |
-|  |  |  | `failure_criteria_check_before_and_during_postscript_visible` | structure | exact (prose anchor) |  |
-| body | `abort_stance_definition_label` | prose | `failure_criteria_abort_stance_definition_label_variant` | content | exact (prose anchor) |  |
-|  |  |  | `failure_criteria_abort_stance_selector` | structure | selector |  |
+|  |  |  | `criteria_evidence_format` | display | abbreviated | failure_evidence |
+| body | `evidence_intro` | prose | `evidence_intro` | content | exact (prose anchor) |  |
+| body | `cite_definition_and_evidence_postscript` | prose | `cite_definition_and_evidence_postscript` | content | exact (prose anchor) |  |
+|  |  |  | `cite_definition_and_evidence_postscript_visible` | structure | exact (prose anchor) |  |
+| body | `check_before_and_during_postscript` | prose | `check_before_and_during_postscript` | content | exact (prose anchor) |  |
+|  |  |  | `check_before_and_during_postscript_visible` | structure | exact (prose anchor) |  |
+| body | `abort_stance_definition_label` | prose | `abort_stance_definition_label_variant` | content | exact (prose anchor) |  |
+|  |  |  | `abort_stance_selector` | structure | selector |  |
 
 ### output
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `output_section_start` | content | exact (prose anchor) |  |
+| heading | `section_start` | prose | `section_start` | content | exact (prose anchor) |  |
 | body | `description` | data | `description` | data | anchor |  |
 | body | `format` | data | `format` | data | anchor |  |
-|  |  |  | `output_format_template` | content | exact |  |
+|  |  |  | `format_template` | content | exact |  |
 | body | `name_known` | data | `name_known` | data | anchor |  |
 | body | `schema_path` | data | `schema_path` | data | anchor |  |
 | body | `output_file` | data | `output_file` | data | anchor |  |
@@ -443,43 +432,43 @@ cannot tell which, but every one is a thing to account for.
 | body | `name_template` | data | `name_template` | data | anchor |  |
 | body | `name_instruction` | data | `name_instruction` | data | anchor |  |
 | body | `schema_embed` | data | `schema_embed` | data | anchor |  |
-|  |  |  | `output_schema_embed_intro` | content | role |  |
-|  |  |  | `output_schema_embed` | structure | exact |  |
-| body | `output_description` | prose? | `output_output_description_template` | content | exact (prose anchor) |  |
-| body | `schema_reference_label` | prose | `output_schema_reference_label_template` | content | exact (prose anchor) |  |
-| body | `directory_location` | prose? | `output_directory_location_variant_template` | content | exact (prose anchor) |  |
-|  |  |  | `output_directory_location_selector` | structure | exact (prose anchor) |  |
+|  |  |  | `schema_embed_intro` | content | role |  |
+|  |  |  | `schema_embed` | structure | exact |  |
+| body | `output_description` | prose? | `output_description_template` | content | exact (prose anchor) |  |
+| body | `schema_reference_label` | prose | `schema_reference_label_template` | content | exact (prose anchor) |  |
+| body | `directory_location` | prose? | `directory_location_variant_template` | content | exact (prose anchor) |  |
+|  |  |  | `directory_location_selector` | structure | exact (prose anchor) |  |
 
 ### return_format
 
 | slot | bundle | kind | field | axis | verdict | resolves to |
 |---|---|---|---|---|---|---|
-| heading | `section_start` | prose | `return_format_section_start` | content | exact (prose anchor) |  |
-| preamble | `files_vs_status_explanation_preamble` | prose | `return_format_files_vs_status_explanation_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `return_format_files_vs_status_explanation_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `token_must_be_first_word_preamble` | prose | `return_format_token_must_be_first_word_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `return_format_token_must_be_first_word_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `token_must_be_first_word_tokens_three_preamble` | prose | `return_format_token_must_be_first_word_tokens_three_preamble` | content | exact (prose anchor) |  |
-| preamble | `token_must_be_first_word_tokens_two_preamble` | prose | `return_format_token_must_be_first_word_tokens_two_preamble` | content | exact (prose anchor) |  |
-| preamble | `abort_vs_failure_distinction_preamble` | prose | `return_format_abort_vs_failure_distinction_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `return_format_abort_vs_failure_distinction_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `honest_failure_over_dubious_success_preamble` | prose | `return_format_honest_failure_over_dubious_success_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `return_format_honest_failure_over_dubious_success_preamble_visible` | structure | exact (prose anchor) |  |
-| preamble | `failure_cross_reference_preamble` | prose | `return_format_failure_cross_reference_preamble` | content | exact (prose anchor) |  |
-|  |  |  | `return_format_failure_cross_reference_preamble_visible` | structure | exact (prose anchor) |  |
+| heading | `section_start` | prose | `section_start` | content | exact (prose anchor) |  |
+| preamble | `files_vs_status_explanation_preamble` | prose | `files_vs_status_explanation_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `files_vs_status_explanation_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `token_must_be_first_word_preamble` | prose | `token_must_be_first_word_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `token_must_be_first_word_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `token_must_be_first_word_tokens_three_preamble` | prose | `token_must_be_first_word_tokens_three_preamble` | content | exact (prose anchor) |  |
+| preamble | `token_must_be_first_word_tokens_two_preamble` | prose | `token_must_be_first_word_tokens_two_preamble` | content | exact (prose anchor) |  |
+| preamble | `abort_vs_failure_distinction_preamble` | prose | `abort_vs_failure_distinction_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `abort_vs_failure_distinction_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `honest_failure_over_dubious_success_preamble` | prose | `honest_failure_over_dubious_success_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `honest_failure_over_dubious_success_preamble_visible` | structure | exact (prose anchor) |  |
+| preamble | `failure_cross_reference_preamble` | prose | `failure_cross_reference_preamble` | content | exact (prose anchor) |  |
+|  |  |  | `failure_cross_reference_preamble_visible` | structure | exact (prose anchor) |  |
 | body | `mode` | data | `mode` | data | anchor |  |
 | body | `return_schema` | data | `return_schema` | data | anchor |  |
 | body | `status_instruction` | data | `status_instruction` | data | anchor |  |
 | body | `metrics_instruction` | data | `metrics_instruction` | data | anchor |  |
 | body | `output_instruction` | data | `output_instruction` | data | anchor |  |
-| body | `report_completion_label` | prose | `return_format_report_completion_label` | content | exact (prose anchor) |  |
-| body | `report_all_metrics_postscript` | prose | `return_format_report_all_metrics_postscript` | content | exact (prose anchor) |  |
-|  |  |  | `return_format_report_all_metrics_postscript_visible` | structure | exact (prose anchor) |  |
-| body | `track_metrics_as_you_work_postscript` | prose | `return_format_track_metrics_as_you_work_postscript` | content | exact (prose anchor) |  |
-|  |  |  | `return_format_track_metrics_as_you_work_postscript_visible` | structure | exact (prose anchor) |  |
-| body | `track_metrics_as_you_work_antidrift_postscript` | prose | `return_format_track_metrics_as_you_work_antidrift_postscript` | content | exact (prose anchor) |  |
-| body | `do_not_fabricate_metrics_postscript` | prose | `return_format_do_not_fabricate_metrics_postscript` | content | exact (prose anchor) |  |
-|  |  |  | `return_format_do_not_fabricate_metrics_postscript_visible` | structure | exact (prose anchor) |  |
+| body | `report_completion_label` | prose | `report_completion_label` | content | exact (prose anchor) |  |
+| body | `report_all_metrics_postscript` | prose | `report_all_metrics_postscript` | content | exact (prose anchor) |  |
+|  |  |  | `report_all_metrics_postscript_visible` | structure | exact (prose anchor) |  |
+| body | `track_metrics_as_you_work_postscript` | prose | `track_metrics_as_you_work_postscript` | content | exact (prose anchor) |  |
+|  |  |  | `track_metrics_as_you_work_postscript_visible` | structure | exact (prose anchor) |  |
+| body | `track_metrics_as_you_work_antidrift_postscript` | prose | `track_metrics_as_you_work_antidrift_postscript` | content | exact (prose anchor) |  |
+| body | `do_not_fabricate_metrics_postscript` | prose | `do_not_fabricate_metrics_postscript` | content | exact (prose anchor) |  |
+|  |  |  | `do_not_fabricate_metrics_postscript_visible` | structure | exact (prose anchor) |  |
 
 ## Skipped
 

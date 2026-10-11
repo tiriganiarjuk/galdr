@@ -14,17 +14,15 @@ structure and display classify on the trunk left after their control
 suffix is stripped, so a control lands beside what it controls.
 """
 
-from pydantic import BaseModel
-
 from galdr.logic.pure.section_compose.primitive import (
     is_preprocessing_field,
-    strip_section_domain,
     strip_structure_control_suffix,
 )
 from galdr.logic.pure.section_compose.simple import (
     classify_content_slot,
     place_display_fields_into_slots,
 )
+from galdr.structure.model.field_view import FieldView
 from galdr.structure.model.preprocessing_fields import PreprocessingFields
 
 
@@ -51,51 +49,46 @@ def place_structure_field(
 
 
 def sort_into_slots(
-    section_name: str,
-    content_section: BaseModel,
-    data_section: BaseModel,
-    structure_section: BaseModel,
-    display_section: BaseModel | None,
+    content_fields: FieldView,
+    data_fields: FieldView,
+    structure_fields: FieldView,
+    display_fields: FieldView,
 ) -> dict[str, list[tuple[str, str]]]:
     """Sort all fields from all four axes into buffer slots.
 
     Data first (all body), content second (by positional suffix),
     structure third (by content trunk or selector duplication),
-    display last (all body).
+    display last (all body). Every name is the short universal name.
 
     Returns {slot: [(axis, field_name), ...]}.
     """
     slots: dict[str, list[tuple[str, str]]] = {
         "heading": [], "preamble": [], "body": [], "closing": [],
     }
-    for name in data_section.model_fields:
+    for name in data_fields:
         slots["body"].append(("data", name))
-    for name in content_section.model_fields:
+    for name in content_fields:
         slots[classify_content_slot(name)].append(("content", name))
-    for name in type(structure_section).model_fields:
-        if is_preprocessing_field(strip_section_domain(section_name, name)):
+    for name in structure_fields:
+        if is_preprocessing_field(name):
             continue
         for slot_name, entry in place_structure_field(name, slots):
             slots[slot_name].append(entry)
-    if display_section is not None:
-        slots = place_display_fields_into_slots(section_name, display_section, slots)
-    return slots
+    return place_display_fields_into_slots(display_fields, slots)
 
 
-def extract_preprocessing_fields(
-    section_name: str, structure_section: BaseModel,
-) -> PreprocessingFields:
+def extract_preprocessing_fields(structure_fields: FieldView) -> PreprocessingFields:
     """Extract pre-processing fields from a structure section into a typed model.
 
-    Pre-processing fields (pre_ after the section prefix) are consumed before
-    slot sorting. Not every section has every field — missing fields fall
-    back to defaults on PreprocessingFields. Boolean/Integer wrappers unwrap
-    via .root; enum wrappers unwrap via .value to their string form.
+    Pre-processing fields (pre_ prefix) are consumed before slot sorting.
+    Not every section has every field — missing fields fall back to defaults
+    on PreprocessingFields. Boolean/Integer wrappers unwrap via .root; enum
+    wrappers unwrap via .value to their string form.
     """
-    visible = getattr(structure_section, f"{section_name}_pre_section_visible", None)
-    max_entries = getattr(structure_section, f"{section_name}_pre_max_entries_rendered", None)
-    ordering = getattr(structure_section, f"{section_name}_pre_field_ordering", None)
-    tier = getattr(structure_section, f"{section_name}_pre_scaffolding_tier_override", None)
+    visible = structure_fields.get("pre_section_visible")
+    max_entries = structure_fields.get("pre_max_entries_rendered")
+    ordering = structure_fields.get("pre_field_ordering")
+    tier = structure_fields.get("pre_scaffolding_tier_override")
     return PreprocessingFields(
         section_visible=visible.root if visible is not None else True,
         max_entries_rendered=max_entries.root if max_entries is not None else None,

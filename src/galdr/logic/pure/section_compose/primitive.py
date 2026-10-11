@@ -5,6 +5,9 @@ CC=1. Single expressions with known-typed string inputs.
 The positional suffix convention: every content field's terminal suffix
 declares which buffer slot it belongs to. Modifier suffixes (_template,
 _variant) are stripped before classification — they don't affect slot.
+
+Every predicate here takes the short, section-free name. The engine never
+sees the `{section}_` domain prefix; see strip_section_domain.
 """
 
 
@@ -67,18 +70,15 @@ def strip_section_domain(section_name: str, name: str) -> str:
     """Strip the `{section}_` domain prefix from a control-surface field name.
 
     Every control field carries its section as a prefix, because a name read
-    in isolation must say where it lives. Tests on the START of a name — the
-    `pre_` marker — have to look past the domain, so they strip it first.
-    Tests on the end (slot and control suffixes) are unaffected by it.
+    in isolation must say where it lives. The engine is universal and works
+    on the short name; the prefix is stripped once, at the boundary where
+    control fields enter, and nowhere else.
     """
     return name.removeprefix(f"{section_name}_")
 
 
 def is_preprocessing_field(name: str) -> bool:
-    """True if a domain-stripped field name starts with the `pre_` prefix.
-
-    Pass the name through strip_section_domain first — on the full name the
-    marker sits after the section prefix, not at the start.
+    """True if a field name starts with the `pre_` prefix.
 
     Pre-processing fields are consumed before slot sorting — they
     control section-level behavior (skip section, truncate list,

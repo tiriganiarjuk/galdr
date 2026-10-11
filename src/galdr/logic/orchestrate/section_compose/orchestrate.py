@@ -19,6 +19,7 @@ import gate_output_structure_input
 
 from galdr.logic.impure.gate_validate.simple import validate_input
 from galdr.logic.pure.section_compose.assembled import compose_section
+from galdr.logic.pure.section_compose.simple import field_view, local_field_view
 from galdr.structure.gen.anthropic_render import AgentAnthropicRender
 from galdr.structure.gen.output_content import AgentOutputContent
 from galdr.structure.gen.output_display import AgentOutputDisplay
@@ -115,8 +116,13 @@ def compose_one_section(
         return format_skipped_section(section_name, "no content")
     structure_section = getattr(structure_model, section_name, None)
     display_section = getattr(display_model, section_name, None)
+    # The boundary: the engine below works on short universal names and never
+    # learns the section. Control fields lose their domain prefix here, once.
     pre_fields, slots = compose_section(
-        section_name, data_section, structure_section, content_section, display_section,
+        field_view(data_section),
+        local_field_view(section_name, structure_section),
+        local_field_view(section_name, content_section),
+        local_field_view(section_name, display_section),
     )
     return format_section_report(section_name, pre_fields, slots)
 

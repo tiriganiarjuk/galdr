@@ -31,31 +31,31 @@ identity
 ```
 heading:
   [section_start]
-    content    identity_section_start_template
+    content    section_start_template
 body:
   [title]
     data       title
   [role_identity]
     data       role_identity
-    content    identity_role_identity_template
-    content    identity_role_identity_postscript_template
-    structure  identity_role_identity_postscript_visible
+    content    role_identity_template
+    content    role_identity_postscript_template
+    structure  role_identity_postscript_visible
   [role_responsibility]
     data       role_responsibility
-    content    identity_role_responsibility_template
+    content    role_responsibility_template
   [role_description]
     data       role_description
   [role_expertise]
     data       role_expertise
-    content    identity_role_expertise_label
-    content    identity_role_expertise_postscript
-    structure  identity_role_expertise_postscript_visible
-    display    identity_role_expertise_format
-    display    identity_role_expertise_format_threshold
+    content    role_expertise_label
+    content    role_expertise_postscript
+    structure  role_expertise_postscript_visible
+    display    role_expertise_format
+    display    role_expertise_format_threshold
 closing:
   [identity_reminder_closing]
-    content    identity_identity_reminder_closing_template
-    structure  identity_identity_reminder_closing_visible
+    content    identity_reminder_closing_template
+    structure  identity_reminder_closing_visible
 ```
 
 **Already identified in the review document**
@@ -167,35 +167,35 @@ security_boundary
 ```
 heading:
   [framing_section_start]
-    content    security_boundary_framing_section_start_variant
-    structure  security_boundary_framing_selector
+    content    framing_section_start_variant
+    structure  framing_selector
 preamble:
   [framing_section_preamble]
-    content    security_boundary_framing_section_preamble_variant
-    structure  security_boundary_framing_section_preamble_visible
-    structure  security_boundary_framing_selector
+    content    framing_section_preamble_variant
+    structure  framing_section_preamble_visible
+    structure  framing_selector
 body:
   [workspace_path]
     data       workspace_path
   [filesystem_permissions]
     data       filesystem_permissions
-    content    security_boundary_filesystem_permissions_label
-    structure  security_boundary_filesystem_permissions_label_visible
-    display    security_boundary_filesystem_permissions_path_style
-    display    security_boundary_filesystem_permissions_toolset_format
-    display    security_boundary_filesystem_permissions_label_visibility_threshold
-    display    security_boundary_filesystem_permissions_list_format
+    content    filesystem_permissions_label
+    structure  filesystem_permissions_label_visible
+    display    filesystem_permissions_path_style
+    display    filesystem_permissions_toolset_format
+    display    filesystem_permissions_label_visibility_threshold
+    display    filesystem_permissions_list_format
   [compound_entry]
-    content    security_boundary_compound_entry_template
+    content    compound_entry_template
   [grouped_tool_heading]
-    content    security_boundary_grouped_tool_heading_template
+    content    grouped_tool_heading_template
   [framing_declaration]
-    content    security_boundary_framing_declaration_variant_template
-    structure  security_boundary_framing_selector
+    content    framing_declaration_variant_template
+    structure  framing_selector
 closing:
   [section_closing]
-    content    security_boundary_section_closing
-    structure  security_boundary_section_closing_visible
+    content    section_closing
+    structure  section_closing_visible
 ```
 
 ### security_boundary — needs attention (4)
@@ -280,51 +280,51 @@ critical_rules
 ```
 heading:
   [section_start]
-    content    critical_rules_section_start
+    content    section_start
 preamble:
   [authority_preamble]
-    content    critical_rules_authority_preamble
-    structure  critical_rules_authority_preamble_visible
+    content    authority_preamble
+    structure  authority_preamble_visible
   [rule_count_awareness_preamble]
-    content    critical_rules_rule_count_awareness_preamble_template
-    structure  critical_rules_rule_count_awareness_preamble_visible
-    structure  critical_rules_rule_count_awareness_preamble_template_auto_threshold
+    content    rule_count_awareness_preamble_template
+    structure  rule_count_awareness_preamble_visible
+    structure  rule_count_awareness_preamble_template_auto_threshold
 body:
   [workspace_path]
     data       workspace_path
-    display    critical_rules_workspace_path_format
+    display    workspace_path_format
   [has_output_tool]
     data       has_output_tool
   [tool_name]
     data       tool_name
-    display    critical_rules_tool_name_format
-    display    critical_rules_tool_name_repetition
+    display    tool_name_format
+    display    tool_name_repetition
   [name_needed]
     data       name_needed
   [batch_size]
     data       batch_size
-    display    critical_rules_batch_size_format
+    display    batch_size_format
   [workspace_confinement]
-    content    critical_rules_workspace_confinement_template
-    structure  critical_rules_workspace_confinement_visible
+    content    workspace_confinement_template
+    structure  workspace_confinement_visible
   [output_tool_exclusivity]
-    content    critical_rules_output_tool_exclusivity_template
-    structure  critical_rules_output_tool_exclusivity_visible
+    content    output_tool_exclusivity_template
+    structure  output_tool_exclusivity_visible
   [batch_discipline]
-    content    critical_rules_batch_discipline_template
-    structure  critical_rules_batch_discipline_visible
+    content    batch_discipline_template
+    structure  batch_discipline_visible
   [fail_fast_body]
-    content    critical_rules_fail_fast_body
-    structure  critical_rules_fail_fast_body_visible
+    content    fail_fast_body
+    structure  fail_fast_body_visible
   [input_is_your_only_source_body]
-    content    critical_rules_input_is_your_only_source_body
-    structure  critical_rules_input_is_your_only_source_body_visible
+    content    input_is_your_only_source_body
+    structure  input_is_your_only_source_body_visible
   [no_invention_body]
-    content    critical_rules_no_invention_body
-    structure  critical_rules_no_invention_body_visible
+    content    no_invention_body
+    structure  no_invention_body_visible
   [discipline_over_helpfulness_body]
-    content    critical_rules_discipline_over_helpfulness_body
-    structure  critical_rules_discipline_over_helpfulness_body_visible
+    content    discipline_over_helpfulness_body
+    structure  discipline_over_helpfulness_body_visible
 ```
 
 ### critical_rules — needs attention (7)
@@ -449,41 +449,41 @@ instructions
 ```
 heading:
   [section_start]
-    content    instructions_section_start_variant_template
-    structure  instructions_section_start_selector
+    content    section_start_variant_template
+    structure  section_start_selector
 preamble:
   [highlight_step_count_preamble]
-    content    instructions_highlight_step_count_preamble_template
-    structure  instructions_highlight_step_count_preamble_visible
+    content    highlight_step_count_preamble_template
+    structure  highlight_step_count_preamble_visible
   [sequence_integrity_preamble]
-    content    instructions_sequence_integrity_preamble
-    structure  instructions_sequence_integrity_preamble_visible
+    content    sequence_integrity_preamble
+    structure  sequence_integrity_preamble_visible
   [follow_strictly_preamble]
-    content    instructions_follow_strictly_preamble
-    structure  instructions_follow_strictly_preamble_visible
+    content    follow_strictly_preamble
+    structure  follow_strictly_preamble_visible
   [reminder_midpoint_preamble]
-    content    instructions_reminder_midpoint_preamble_template
-    structure  instructions_reminder_midpoint_preamble_visible
+    content    reminder_midpoint_preamble_template
+    structure  reminder_midpoint_preamble_visible
   [instruction_mode_explanation_preamble]
-    content    instructions_instruction_mode_explanation_preamble_variant
-    structure  instructions_instruction_mode_explanation_preamble_visible
+    content    instruction_mode_explanation_preamble_variant
+    structure  instruction_mode_explanation_preamble_visible
 body:
   [steps]
     data       steps
-    content    instructions_steps_heading_template
-    content    instructions_steps_heading_n_only_template
-    content    instructions_steps_mode_label_variant
-    structure  instructions_steps_index_tracking
-    display    instructions_steps_heading_format
-    display    instructions_steps_body_container
-    display    instructions_steps_mode_separator
-    display    instructions_steps_mode_restrict_to_transition
-    display    instructions_steps_scaffolding_lightweight_threshold
-    display    instructions_steps_scaffolding_standard_threshold
+    content    steps_heading_template
+    content    steps_heading_n_only_template
+    content    steps_mode_label_variant
+    structure  steps_index_tracking
+    display    steps_heading_format
+    display    steps_body_container
+    display    steps_mode_separator
+    display    steps_mode_restrict_to_transition
+    display    steps_scaffolding_lightweight_threshold
+    display    steps_scaffolding_standard_threshold
 closing:
   [follow_strictly_closing]
-    content    instructions_follow_strictly_closing_template
-    structure  instructions_follow_strictly_closing_visible
+    content    follow_strictly_closing_template
+    structure  follow_strictly_closing_visible
 ```
 
 ### instructions — needs attention (11)
@@ -652,28 +652,28 @@ examples
 ```
 heading:
   [section_start]
-    content    examples_section_start
+    content    section_start
 preamble:
   [section_preamble]
-    content    examples_section_preamble
-    structure  examples_section_preamble_visible
+    content    section_preamble
+    structure  section_preamble_visible
   [group_framing_preamble]
-    content    examples_group_framing_preamble_template
-    structure  examples_group_framing_preamble_visible
+    content    group_framing_preamble_template
+    structure  group_framing_preamble_visible
 body:
   [groups]
     data       groups
-    structure  examples_groups_suppress_lone_heading
-    structure  examples_groups_display_headings_override
-    structure  examples_groups_max_number_override
-    structure  examples_groups_display_headings
-    structure  examples_groups_max_number
-    display    examples_groups_entry_heading_format
-    display    examples_groups_entry_body_container
-    display    examples_groups_entry_separator
-    display    examples_groups_separator
+    structure  groups_suppress_lone_heading
+    structure  groups_display_headings_override
+    structure  groups_max_number_override
+    structure  groups_display_headings
+    structure  groups_max_number
+    display    groups_entry_heading_format
+    display    groups_entry_body_container
+    display    groups_entry_separator
+    display    groups_separator
   [example_heading]
-    content    examples_example_heading_template
+    content    example_heading_template
 ```
 
 ### examples — needs attention (6)
@@ -768,42 +768,42 @@ constraints
 ```
 heading:
   [section_start]
-    content    constraints_section_start
+    content    section_start
 preamble:
   [constraints_are_not_steps_preamble]
-    content    constraints_constraints_are_not_steps_preamble
-    structure  constraints_constraints_are_not_steps_preamble_visible
+    content    constraints_are_not_steps_preamble
+    structure  constraints_are_not_steps_preamble_visible
   [hierarchy_tier_comparison_preamble]
-    content    constraints_hierarchy_tier_comparison_preamble
-    structure  constraints_hierarchy_tier_comparison_preamble_visible
+    content    hierarchy_tier_comparison_preamble
+    structure  hierarchy_tier_comparison_preamble_visible
   [hierarchy_three_tier_explanation_preamble]
-    content    constraints_hierarchy_three_tier_explanation_preamble
-    structure  constraints_hierarchy_three_tier_explanation_preamble_visible
+    content    hierarchy_three_tier_explanation_preamble
+    structure  hierarchy_three_tier_explanation_preamble_visible
   [section_preamble]
-    content    constraints_section_preamble_variant
-    structure  constraints_section_preamble_visible
-    structure  constraints_section_preamble_selector
+    content    section_preamble_variant
+    structure  section_preamble_visible
+    structure  section_preamble_selector
   [no_inferred_constraints_preamble]
-    content    constraints_no_inferred_constraints_preamble_variant_template
-    structure  constraints_no_inferred_constraints_preamble_visible
-    structure  constraints_no_inferred_constraints_preamble_selector
+    content    no_inferred_constraints_preamble_variant_template
+    structure  no_inferred_constraints_preamble_visible
+    structure  no_inferred_constraints_preamble_selector
 body:
   [rules]
     data       rules
-    display    constraints_rules_format
-    display    constraints_rules_format_threshold
-    display    constraints_rules_polarity_normalization
-    display    constraints_rules_polarity_grouping_threshold
+    display    rules_format
+    display    rules_format_threshold
+    display    rules_polarity_normalization
+    display    rules_polarity_grouping_threshold
   [constraint_count_heading]
-    content    constraints_constraint_count_heading_template
-    structure  constraints_constraint_count_heading_visible
-    display    constraints_constraint_count_heading_visibility_threshold
+    content    constraint_count_heading_template
+    structure  constraint_count_heading_visible
+    display    constraint_count_heading_visibility_threshold
 closing:
   [compliance_reminder_closing]
-    content    constraints_compliance_reminder_closing_variant_template
-    structure  constraints_compliance_reminder_closing_visible
-    display    constraints_compliance_reminder_closing_visibility_threshold
-    structure  constraints_compliance_reminder_closing_selector
+    content    compliance_reminder_closing_variant_template
+    structure  compliance_reminder_closing_visible
+    display    compliance_reminder_closing_visibility_threshold
+    structure  compliance_reminder_closing_selector
 ```
 
 ### constraints — needs attention (6)
@@ -913,18 +913,18 @@ anti_patterns
 ```
 heading:
   [section_start]
-    content    anti_patterns_section_start
+    content    section_start
 preamble:
   [section_preamble]
-    content    anti_patterns_section_preamble
-    structure  anti_patterns_section_preamble_visible
+    content    section_preamble
+    structure  section_preamble_visible
   [constraints_vs_anti_patterns_distinction_preamble]
-    content    anti_patterns_constraints_vs_anti_patterns_distinction_preamble
-    structure  anti_patterns_constraints_vs_anti_patterns_distinction_preamble_visible
+    content    constraints_vs_anti_patterns_distinction_preamble
+    structure  constraints_vs_anti_patterns_distinction_preamble_visible
 body:
   [patterns]
     data       patterns
-    display    anti_patterns_patterns_format
+    display    patterns_format
 ```
 
 ### anti_patterns — conforming (8)
@@ -954,30 +954,30 @@ success_criteria
 ```
 heading:
   [section_start]
-    content    success_criteria_section_start
+    content    section_start
 body:
   [criteria]
     data       criteria
-    content    success_criteria_criteria_separator
-    structure  success_criteria_criteria_evidence_type_handling
-    structure  success_criteria_criteria_relationship
-    display    success_criteria_criteria_evidence_format
-    display    success_criteria_criteria_evidence_format_threshold
+    content    criteria_separator
+    structure  criteria_evidence_type_handling
+    structure  criteria_relationship
+    display    criteria_evidence_format
+    display    criteria_evidence_format_threshold
   [verification_guidance_postscript]
-    content    success_criteria_verification_guidance_postscript
-    structure  success_criteria_verification_guidance_postscript_visible
+    content    verification_guidance_postscript
+    structure  verification_guidance_postscript_visible
   [success_failure_independence_statement_postscript]
-    content    success_criteria_success_failure_independence_statement_postscript
-    structure  success_criteria_success_failure_independence_statement_postscript_visible
+    content    success_failure_independence_statement_postscript
+    structure  success_failure_independence_statement_postscript_visible
   [definition_declaration]
-    content    success_criteria_definition_declaration_variant_template
-    structure  success_criteria_definition_declaration_selector
+    content    definition_declaration_variant_template
+    structure  definition_declaration_selector
   [evidence_intro]
-    content    success_criteria_evidence_intro_variant
-    structure  success_criteria_evidence_intro_selector
+    content    evidence_intro_variant
+    structure  evidence_intro_selector
   [definition_to_evidence_transition]
-    content    success_criteria_definition_to_evidence_transition_variant
-    structure  success_criteria_definition_to_evidence_transition_selector
+    content    definition_to_evidence_transition_variant
+    structure  definition_to_evidence_transition_selector
 ```
 
 ### success_criteria — needs attention (5)
@@ -1069,29 +1069,29 @@ failure_criteria
 ```
 heading:
   [section_start]
-    content    failure_criteria_section_start
+    content    section_start
 preamble:
   [any_one_triggers_abort_preamble]
-    content    failure_criteria_any_one_triggers_abort_preamble
+    content    any_one_triggers_abort_preamble
   [abort_stance_preamble]
-    content    failure_criteria_abort_stance_preamble_variant
-    structure  failure_criteria_abort_stance_preamble_visible
-    structure  failure_criteria_abort_stance_selector
+    content    abort_stance_preamble_variant
+    structure  abort_stance_preamble_visible
+    structure  abort_stance_selector
 body:
   [criteria]
     data       criteria
-    display    failure_criteria_criteria_evidence_format
+    display    criteria_evidence_format
   [evidence_intro]
-    content    failure_criteria_evidence_intro
+    content    evidence_intro
   [cite_definition_and_evidence_postscript]
-    content    failure_criteria_cite_definition_and_evidence_postscript
-    structure  failure_criteria_cite_definition_and_evidence_postscript_visible
+    content    cite_definition_and_evidence_postscript
+    structure  cite_definition_and_evidence_postscript_visible
   [check_before_and_during_postscript]
-    content    failure_criteria_check_before_and_during_postscript
-    structure  failure_criteria_check_before_and_during_postscript_visible
+    content    check_before_and_during_postscript
+    structure  check_before_and_during_postscript_visible
   [abort_stance_definition_label]
-    content    failure_criteria_abort_stance_definition_label_variant
-    structure  failure_criteria_abort_stance_selector
+    content    abort_stance_definition_label_variant
+    structure  abort_stance_selector
 ```
 
 ### failure_criteria — needs attention (1)
@@ -1147,13 +1147,13 @@ output
 ```
 heading:
   [section_start]
-    content    output_section_start
+    content    section_start
 body:
   [description]
     data       description
   [format]
     data       format
-    content    output_format_template
+    content    format_template
   [name_known]
     data       name_known
   [schema_path]
@@ -1168,15 +1168,15 @@ body:
     data       name_instruction
   [schema_embed]
     data       schema_embed
-    content    output_schema_embed_intro
-    structure  output_schema_embed
+    content    schema_embed_intro
+    structure  schema_embed
   [output_description]
-    content    output_output_description_template
+    content    output_description_template
   [schema_reference_label]
-    content    output_schema_reference_label_template
+    content    schema_reference_label_template
   [directory_location]
-    content    output_directory_location_variant_template
-    structure  output_directory_location_selector
+    content    directory_location_variant_template
+    structure  directory_location_selector
 ```
 
 **Already identified in the review document**
@@ -1295,27 +1295,27 @@ return_format
 ```
 heading:
   [section_start]
-    content    return_format_section_start
+    content    section_start
 preamble:
   [files_vs_status_explanation_preamble]
-    content    return_format_files_vs_status_explanation_preamble
-    structure  return_format_files_vs_status_explanation_preamble_visible
+    content    files_vs_status_explanation_preamble
+    structure  files_vs_status_explanation_preamble_visible
   [token_must_be_first_word_preamble]
-    content    return_format_token_must_be_first_word_preamble
-    structure  return_format_token_must_be_first_word_preamble_visible
+    content    token_must_be_first_word_preamble
+    structure  token_must_be_first_word_preamble_visible
   [token_must_be_first_word_tokens_three_preamble]
-    content    return_format_token_must_be_first_word_tokens_three_preamble
+    content    token_must_be_first_word_tokens_three_preamble
   [token_must_be_first_word_tokens_two_preamble]
-    content    return_format_token_must_be_first_word_tokens_two_preamble
+    content    token_must_be_first_word_tokens_two_preamble
   [abort_vs_failure_distinction_preamble]
-    content    return_format_abort_vs_failure_distinction_preamble
-    structure  return_format_abort_vs_failure_distinction_preamble_visible
+    content    abort_vs_failure_distinction_preamble
+    structure  abort_vs_failure_distinction_preamble_visible
   [honest_failure_over_dubious_success_preamble]
-    content    return_format_honest_failure_over_dubious_success_preamble
-    structure  return_format_honest_failure_over_dubious_success_preamble_visible
+    content    honest_failure_over_dubious_success_preamble
+    structure  honest_failure_over_dubious_success_preamble_visible
   [failure_cross_reference_preamble]
-    content    return_format_failure_cross_reference_preamble
-    structure  return_format_failure_cross_reference_preamble_visible
+    content    failure_cross_reference_preamble
+    structure  failure_cross_reference_preamble_visible
 body:
   [mode]
     data       mode
@@ -1328,18 +1328,18 @@ body:
   [output_instruction]
     data       output_instruction
   [report_completion_label]
-    content    return_format_report_completion_label
+    content    report_completion_label
   [report_all_metrics_postscript]
-    content    return_format_report_all_metrics_postscript
-    structure  return_format_report_all_metrics_postscript_visible
+    content    report_all_metrics_postscript
+    structure  report_all_metrics_postscript_visible
   [track_metrics_as_you_work_postscript]
-    content    return_format_track_metrics_as_you_work_postscript
-    structure  return_format_track_metrics_as_you_work_postscript_visible
+    content    track_metrics_as_you_work_postscript
+    structure  track_metrics_as_you_work_postscript_visible
   [track_metrics_as_you_work_antidrift_postscript]
-    content    return_format_track_metrics_as_you_work_antidrift_postscript
+    content    track_metrics_as_you_work_antidrift_postscript
   [do_not_fabricate_metrics_postscript]
-    content    return_format_do_not_fabricate_metrics_postscript
-    structure  return_format_do_not_fabricate_metrics_postscript_visible
+    content    do_not_fabricate_metrics_postscript
+    structure  do_not_fabricate_metrics_postscript_visible
 ```
 
 **Already identified in the review document**
@@ -1399,15 +1399,15 @@ input
 ```
 heading:
   [section_start]
-    content    input_section_start
+    content    section_start
 preamble:
   [section_preamble]
-    content    input_section_preamble
-    structure  input_section_preamble_visible
+    content    section_preamble
+    structure  section_preamble_visible
 body:
   [description]
     data       description
-    content    input_description_format_template
+    content    description_format_template
   [format]
     data       format
   [delivery]
@@ -1416,31 +1416,31 @@ body:
     data       input_schema
   [parameters]
     data       parameters
-    content    input_parameters_transition
-    content    input_parameters_heading
-    content    input_parameters_entry_template
-    structure  input_parameters_transition_visible
-    structure  input_parameters_heading_visible
-    structure  input_parameters_heading_auto_threshold
-    display    input_parameters_format
-    display    input_parameters_format_threshold
+    content    parameters_transition
+    content    parameters_heading
+    content    parameters_entry_template
+    structure  parameters_transition_visible
+    structure  parameters_heading_visible
+    structure  parameters_heading_auto_threshold
+    display    parameters_format
+    display    parameters_format_threshold
   [context_required]
     data       context_required
-    content    input_context_required_heading
-    content    input_context_required_intro
-    content    input_context_required_entry_template
-    structure  input_context_required_intro_visible
-    display    input_context_required_format
+    content    context_required_heading
+    content    context_required_intro
+    content    context_required_entry_template
+    structure  context_required_intro_visible
+    display    context_required_format
   [context_available]
     data       context_available
-    content    input_context_available_heading
-    display    input_context_available_format
+    content    context_available_heading
+    display    context_available_format
   [input_completeness_postscript]
-    content    input_input_completeness_postscript
-    structure  input_input_completeness_postscript_visible
+    content    input_completeness_postscript
+    structure  input_completeness_postscript_visible
   [schema_label]
-    content    input_schema_label_template
-    structure  input_schema_label_visible
+    content    schema_label_template
+    structure  schema_label_visible
 ```
 
 ### input — needs attention (3)
