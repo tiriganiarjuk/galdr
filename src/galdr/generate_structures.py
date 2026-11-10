@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
-#     "datamodel-code-generator>=0.26",
+#     "datamodel-code-generator==0.55.0",
 # ]
 # ///
 """Generate Pydantic models from JSON Schema files.
@@ -23,7 +23,6 @@ import tomllib
 from pathlib import Path
 
 from galdr.logic.transform.codegen_clean.composed import strip_redundant_constraints
-from galdr.logic.transform.codegen_clean.primitive import strip_future_annotations
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
 SMIDJA = Path.home() / "ai" / "smidja"
@@ -72,6 +71,7 @@ def main() -> int:
                 "--use-standard-collections",
                 "--use-annotated",
                 "--use-title-as-name",
+                "--disable-future-imports",
             ],
             capture_output=True,
             text=True,
@@ -83,7 +83,6 @@ def main() -> int:
             continue
 
         content = output_path.read_text()
-        content = strip_future_annotations(content)
         content = strip_redundant_constraints(content)
         output_path.write_text(content)
         sys.stdout.write(f"  {schema_name} -> {module_path}.py\n")

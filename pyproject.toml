@@ -15,7 +15,11 @@ galdr = "galdr.cli:main"
 [dependency-groups]
 dev = [
     "pytest>=8.0",
-    "datamodel-code-generator>=0.26",
+    # Exact pin: structure/gen/ is reproducible only on this version.
+    # TODO: move to 0.91.0 — it needs no constraint cleanup (delete
+    # logic/transform/codegen_clean/), but it changes the generated models
+    # (required fields lose their schema default), so review that diff first.
+    "datamodel-code-generator==0.55.0",
 ]
 
 [build-system]
