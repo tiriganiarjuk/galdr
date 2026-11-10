@@ -103,7 +103,3 @@ Evidence list format switches between bulleted and numbered based on count vs th
 ### ⚠️ ISSUE 5: `pre_section_visible` master toggle not checked by engine
 
 Same as other sections — section-skip decision not implemented at orchestrate level.
-
----
-
-See `plans/DEFERRED_RENDERING_FEATURES.md` for deferred rendering features (`output_vs_agent_voice`) that were unlinked from the schema pending engine support.

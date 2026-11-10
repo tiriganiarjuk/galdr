@@ -169,9 +169,9 @@ product with no gate on its contents.
 
 **Where embed lives — settled.**
 
-> **Reasoning.** *"Embed or not is a decision that arrives as data — it has
-> been decided before it gets to galdr. Galdr is about how things get
-> outputted."*
+> **Reasoning** (Johnny, 2026-10-12). *"we can't have "knobs and levers" that
+> would affect the file permissions granted because those are already decided
+> and immutable"*
 
 So embed is **data**, and the grant Regin derives from it is exact. Testing a
 variant means re-running the data cascade, which is correct: it is a data
@@ -217,15 +217,21 @@ exists, so no `core/` work — `core/` is `schg`. The key inside both stays
 Identity then survives by type: two simplegroups → two `$defs` →
 `list[ContextItemRequired]` / `list[ContextItemAvailable]`.
 
+> **Reasoning** (Johnny, 2026-10-12). *"it should be authored as it is... gate
+> checked (required's is always true, available's always false.) - terminology
+> should reflect current usage [required / available]"*
+
+So: the definition keeps the two lists as authored today (no wrapper); each list's
+item carries its modality as a fixed value the gate checks; the words are
+`required` and `available`. Discussion words such as *mandatory* or *optional* are
+analogues, never names.
+
 ### The prose work
 
-**Drop `context_required_intro_visible`.** The whole force of the mandate is one
-fragment behind a toggle; switch it off and the data still says required while
-the prose stops saying must. A knob that can make the definition contradict
-itself. Not a judgement call:
-
-> TOML_ARCHITECTURE § Visibility Toggles vs Data Gates: *"If the ONLY scenario
-> is 'data present → always render,' there's no toggle."*
+**`context_required_intro_visible` stays** (decided 2026-10-12). The data says
+required whether or not the intro renders; the toggle decides only whether the
+mandate prose is said. That is a whether-to-say-it knob. The earlier argument for
+dropping it was an assistant inference and is withdrawn.
 
 **Give `context_available` an intro.** It has none, so "should" is never
 stated.

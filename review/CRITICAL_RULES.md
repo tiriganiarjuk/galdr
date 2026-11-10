@@ -139,7 +139,3 @@ CLOSING:
 ### ⚠️ ISSUE 3: All display controls not wired
 
 Five display fields control inline formatting (backtick wrapping, repetition, separators). None are read by the engine. Rules currently render with hardcoded defaults.
-
----
-
-See `plans/DEFERRED_RENDERING_FEATURES.md` for deferred rendering features (`rule_presentation`, `internal_hierarchy`) that were unlinked from the schema pending engine support.

@@ -66,14 +66,14 @@ Structure.toml controls what renders without affecting how it's worded or format
 
 ```toml
 [identity]
-field_ordering = "identity_first"
-role_expertise_is_strictly_limited_postscript_visible = true
-identity_reminder_closing_visible = false
+identity_pre_field_ordering = "identity_first"
+identity_role_expertise_postscript_visible = true
+identity_identity_reminder_closing_visible = false
 
 [constraints]
-section_visible = true
-max_entries_rendered = 0
-section_preamble_selector = "standalone"
+constraints_pre_section_visible = true
+constraints_pre_max_entries_rendered = 0
+constraints_section_preamble_selector = "standalone"
 ```
 
 Structure is stable — it defines the shape of what renders. Experiments typically change content or display, not structure.
@@ -91,11 +91,11 @@ Content.toml defines every piece of text that appears in the rendered output tha
 
 ```toml
 [identity]
-heading = "AGENT: {{title}}"
-declaration = "You are a {{role_identity}}."
-expertise_label = "**Your judgment is authoritative in:**"
+identity_section_start_template = "AGENT: {{title}}"
+identity_role_identity_template = "You are a {{role_identity}}."
+identity_role_expertise_label = "**Your judgment is authoritative in:**"
 
-[constraints.section_preamble_variant]
+[constraints.constraints_section_preamble_variant]
 standalone = "These constraints govern your execution..."
 references_instructions = "While executing your instructions..."
 references_critical_rules = "These constraints are binding operational rules..."
@@ -113,14 +113,14 @@ Display.toml defines how data renders visually — list formats, thresholds, sep
 
 ```toml
 [identity]
-expertise_format = ["bulleted", "inline"]
-expertise_format_threshold = 3
+identity_role_expertise_format = ["bulleted", "inline"]
+identity_role_expertise_format_threshold = 3
 
 [instructions]
-step_header_format = "bold"
-step_body_container = "none"
-scaffolding_tier_lightweight_activation_threshold = 3
-scaffolding_tier_standard_activation_threshold = 7
+instructions_steps_heading_format = "bold"
+instructions_steps_body_container = "none"
+instructions_steps_scaffolding_lightweight_threshold = 3
+instructions_steps_scaffolding_standard_threshold = 7
 ```
 
 Format fields use a tuple convention for count-based switching: `["above_threshold", "at_or_below"]`. Plain strings mean "always this format."

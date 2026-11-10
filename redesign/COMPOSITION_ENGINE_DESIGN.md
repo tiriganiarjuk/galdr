@@ -88,6 +88,8 @@ Each section controls the divider above it. Global default applies unless overri
 
 **Frontmatter and Dispatcher** — different render paths. Frontmatter is YAML serialization. Dispatcher programs the caller, not the agent. Neither shares the body-section engine.
 
+The dispatcher is not built until the agent is, and it does not need designing now. It is a natural extension of having the agent: whatever the agent needs becomes what the dispatcher hands over — paths, inclusions — derived from the same specification. Batching is never done by hand: the dispatcher feeds what needs batching and the batch size to a deterministic tool and sends out what comes back. Because almost everything it does is deterministic, it needs far less play in wording than the agent prompt.
+
 ---
 
 ## Guardrails Family
