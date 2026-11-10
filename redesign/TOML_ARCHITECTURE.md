@@ -362,6 +362,16 @@ These are NOT redundant. A data gate says "this data doesn't exist, so there's n
 
 **Rule**: If the ONLY scenario is "data present → always render," there's no toggle. But if there's a legitimate reason to suppress prose when data is present (testing, simplification, section is already covered elsewhere), the toggle is justified.
 
+**The knob principle** (Johnny, 2026-10-04, verbatim):
+
+> *"a knob is a knob only if it can always be turned"*
+>
+> *"The only really hard and fast rule is that wrong states should not be allowed... it isn't really "a knob" if you need a resolver to figure out the valid state"*
+>
+> *"if it is a knob then the knob value is applied whenever the value "exists" / it is like _visible: / _visible == True / this means if this is a value that could be shown then we will show it / (we would never show it if it isn't actually valid)"*
+
+A toggle therefore expresses intent, applied wherever it is valid. It never produces a state the data forbids, and a choice with only one valid value for a given constellation is not a knob at all.
+
 ### What Does NOT Need a `_visible` Toggle
 
 **Variant content fields** — when a `_variant` selector chooses between prose alternatives, the individual content fields for each variant value do not get independent `_visible` toggles. Selecting the variant selects its prose. If you don't want the prose, change the variant or toggle the parent concept's visibility. Example: CONSTRAINTS `section_preamble_variant = "references_critical_rules"` renders `section_preamble_references_critical_rules` along with `hierarchy_tier_comparison` and `hierarchy_three_tier_explanation`. These are part of the variant's prose package, not independently togglable.

@@ -36,10 +36,9 @@ does not currently produce an agent prompt.** It answers *where does every field
 
 That is the designed order of work, not a stall — see "Why stage 1 comes first" below.
 
-Eight functions hold up everything that runs: `compose_section`, `sort_into_slots`,
-`extract_preprocessing_fields`, `place_structure_field`, `classify_content_slot`,
-`place_display_fields_into_slots`, plus the suffix predicates in `primitive.py`. If you are
-looking for more engine than that, there isn't any.
+The whole engine is the four files of `logic/pure/section_compose/` plus the one
+orchestrator that calls them. Read them; they are short. If you are looking for more engine
+than that, there isn't any.
 
 ---
 

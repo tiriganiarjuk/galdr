@@ -24,7 +24,7 @@ Chunking isn't just sorting — it's also gathering. For each field placed in a 
 
 For a content field: find its visibility toggle in structure (if one exists). If it's a variant, find the selector value in structure. If it has display controls by trunk, collect those.
 
-For a data field: find all content that decorates it (by trunk matching — see `07_TRUNK_MATCHING.md`). Find the display format and threshold. Collect the data value itself.
+For a data field: find all content that decorates it (by trunk matching — see `08_NAMING_REQUIREMENTS.md`). Find the display format and threshold. Collect the data value itself.
 
 The result: each entry in the intermediate container is a bundle with all its inputs gathered. Nothing left to look up during rendering.
 

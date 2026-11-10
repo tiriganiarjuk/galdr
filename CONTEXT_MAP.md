@@ -36,22 +36,25 @@ Galdr is the composition engine — the final stage of the agent pipeline (Verda
 
 1. `context/AGENT_BUILD_SYSTEM.md` — the pipeline-wide map: what the whole system is for, why determinism is the goal, and the double gate that makes LLM-written transformation safe. Wikilinked to the five element documents; follow them as needed.
 2. `context/GALDR_ELEMENT.md` — Galdr itself: the four axes, the invariance test that decides where a field belongs, how names carry the mechanism, and **what of the engine actually exists today** (stage 1; stages 2–4 are not built).
-3. `context/GALDR_CHALLENGES.md` — volatile companion. Its C, D and E sections are *requirements for the unbuilt waist*, not a bug list; A, B, F and G are live. Its own header says how to read it — do not skip that.
-4. `redesign/FOUR_AXIS_SPEC.md` — the four-axis model and the benchmarking matrix: what each axis contains, and why entangling any two of them destroys the product.
-5. `redesign/COMPOSITION_ENGINE_DESIGN.md` — the generic engine: one `compose_section()` for all sections, buffer slots, data gates, zero per-section code.
-6. `redesign/01_PROCESSING_FLOW.md` — the four-stage pipeline (chunk, gather, resolve+render, buffer) and why each stage shrinks the problem.
-7. `redesign/TOML_ARCHITECTURE.md` — the naming law: positional suffixes, field interface patterns, threshold types, section categories. The engine reads names mechanically; this doc is the authority on what names mean.
+> The next one is the frame for everything that follows. The names will look inconsistent to
+> you; that look is the mechanism. Read it before you form any opinion about a field name.
+3. `redesign/08_NAMING_REQUIREMENTS.md` — the names are the engine: how a control name is peeled, layer by layer, into where it lives, what lever it is, what the waist must do to it, where it renders and which data it decorates. Ends in its own proof.
+4. `context/GALDR_CHALLENGES.md` — volatile companion. Its C, D and E sections are *requirements for the unbuilt waist*, not a bug list; A, B, F and G are live. Its own header says how to read it — do not skip that.
+5. `redesign/FOUR_AXIS_SPEC.md` — the four-axis model and the benchmarking matrix: what each axis contains, and why entangling any two of them destroys the product.
+6. `redesign/COMPOSITION_ENGINE_DESIGN.md` — the generic engine: one `compose_section()` for all sections, buffer slots, data gates, zero per-section code.
+7. `redesign/01_PROCESSING_FLOW.md` — the four-stage pipeline (chunk, gather, resolve+render, buffer) and why each stage shrinks the problem.
+8. `redesign/TOML_ARCHITECTURE.md` — the naming law: positional suffixes, field interface patterns, threshold types, section categories. The engine reads names mechanically; this doc is the authority on what names mean.
 > The next four are read by you, personally, in this context — never delegated
 > to a subagent, never absorbed via a summary.
 
-8. `WHY_THIS_FEELS_WRONG.md` — the frame: what this environment is, and why it
+9. `WHY_THIS_FEELS_WRONG.md` — the frame: what this environment is, and why it
    will feel over-constrained until you understand it
-9. `EVERY_CHECK_IS_A_PROXY.md` — why the feedback steers where it steers; what
-   each constraint is a proxy for. Read before doc 10, so the level system reads
+10. `EVERY_CHECK_IS_A_PROXY.md` — why the feedback steers where it steers; what
+   each constraint is a proxy for. Read before doc 11, so the level system reads
    as engineering rather than as limits.
-10. `THE_LEVEL_SYSTEM.md` — zones, levels, and the decision procedure for where
+11. `THE_LEVEL_SYSTEM.md` — zones, levels, and the decision procedure for where
    every piece of code lives. Prerequisite to writing anything.
-11. `HOW_DATA_ENTERS.md` — the boundary: how external data becomes typed, and
+12. `HOW_DATA_ENTERS.md` — the boundary: how external data becomes typed, and
    why unknown data never gets in. Prerequisite to reading any file.
 
 **Proof:** before writing anything: (a) state three project-specific constraints
@@ -77,16 +80,15 @@ oriented — go back and read.
 | hourglass resolver (visibility, variants, interpolation, suppress-on-incomplete) | `redesign/04_HOURGLASS_RESOLVER.md` |
 | body ordering (data drives, decorations, standalone content) | `redesign/05_BODY_ORDERING.md` |
 | renderer set / data shape detection | `redesign/06_RENDERER_TYPES.md` |
-| trunk matching (content↔data linking) | `redesign/07_TRUNK_MATCHING.md` |
-| naming rules in one page | `redesign/08_NAMING_REQUIREMENTS.md` |
+| how a name resolves: peel, shape, partners, trunk matching | `redesign/08_NAMING_REQUIREMENTS.md` |
 | enforcement output tools, end to end | `redesign/CUSTOM_WRITE_TOOL.md` |
 | per-section four-axis field inventory | `review/{SECTION}.md` |
 | bundle snapshot + probes | `review/BUNDLE_INSPECTION.md`, `probe/*.py` |
-| deferred rendering features | `plans/DEFERRED_RENDERING_FEATURES.md` |
 | data / content / structure / display model shapes | `src/galdr/structure/gen/*.py` |
 | the live control-surface TOMLs | `extracted/content.toml`, `extracted/structure.toml`, `extracted/display.toml` |
 | how to run | `src/galdr/cli.py` — the CLI is the truth; `uv run galdr --help` |
 | a live data input to run against | produced by regin, in bragi: `~/ai/spaces/bragi/definitions/agents/{name}/anthropic_render.toml` |
 | gate pattern / orchestrate wiring reference | `~/ai/smidja/regin/src/regin/logic/` |
 | level progression reference | `~/ai/smidja/draupnir/src/draupnir/logic/` |
-| current state / what's left to build | read live: the code + `git log`. Nothing is stored. |
+| current state | read live: the code + `git log`. Nothing is stored. |
+| what is left to do | `TODO.md` — forward-only; finished items are deleted |
