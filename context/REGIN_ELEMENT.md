@@ -17,7 +17,7 @@ files. Output: `anthropic_render.toml`, gate-validated — Galdr's **data axis**
 takes three further inputs (structure, content, display) which have nothing to do with
 Regin; this file is the only thing that crosses between the two stages.
 
-Everything between is written to disk as a numbered TOML checkpoint.
+Everything between is written to disk as a named TOML checkpoint.
 
 ---
 
@@ -74,15 +74,6 @@ because it is the clearest recorded case of names beating instructions.
 > because no filename mentions one.
 
 The one naming rule that survived every scheme is verb tense:
-
-```
-paths_resolve    the module — an action, this DOES the work
-paths_resolved   the checkpoint — a state, this IS the output
-```
-
-Get the tense backwards and the next reader believes work is done that hasn't started.
-
-The same history produced a verb-tense rule you will see everywhere:
 
 ```
 paths_resolve    the module — an action, this DOES the work
@@ -191,9 +182,8 @@ gate-validated it is never rewritten, so there is no update and no anomaly to pr
 Be precise about what "frozen" means here, because two senses are in play. The *artifacts*
 are immutable once written. The generated checkpoint models are not: across
 `structure/gen/` there are **413** `extra='forbid'` declarations and **zero** `frozen=True`.
-`model_copy` appears **nowhere** in the logic tree, despite several repository documents
-describing every transformation as using `model_copy(update={})`. The hand-written helper
-models under `structure/model/` are genuinely frozen.
+`model_copy` appears **nowhere** in the logic tree. The hand-written helper models under
+`structure/model/` are genuinely frozen.
 
 What the orchestrators actually do is assign attributes directly, at **three** sites — all
 of them merges, all attaching a sibling checkpoint parsed from JSON, all immediately passed
@@ -215,10 +205,7 @@ The models under `structure/gen/` are generated from the JSON Schemas. **Editing
 does nothing** — they are overwritten on the next generation. Change the Verdandi YAML
 and run the cascade.
 
-The repository's documentation has drifted from the code in several places: level
-numbering in the README does not match what the CLI logs, a referenced `DAG_EXPLAINED.md`
-does not exist, and instructions reference a test file that isn't there. The CLI is the
-truth about what runs.
+The CLI is the truth about what runs.
 
 The four L3 content reducers are named for what they inline: `instructions`, `examples`,
 `guardrails`, `success`. Do not conflate the fourth with `criteria_merge` — some documents
@@ -229,5 +216,4 @@ L4.
 **Fourteen checkpoints, thirteen schemas.** The odd one is `paths_verify`, which validates
 against `PATHS_RESOLVED` — the same schema on both sides, because the branch transforms
 nothing and the gate contributes the filesystem check. That is "Delta: NONE, the gate IS
-the branch" visible in the artifact count. The CLI docstring says "13 gated stages" and
-undercounts by one.
+the branch" visible in the artifact count.
