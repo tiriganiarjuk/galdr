@@ -70,6 +70,16 @@ the error is reported, and the run exits non-zero. So does a run that finds no f
 This is the same rule every Python stage follows, and it applies to the schema
 generator itself. There is no bootstrapping exception.
 
+### Schemas leave through a writer
+
+Every schema Draupnir produces — a project's schemas and fragments, and its own input
+schemas — is written by `write_json_validate_json`. The writer validates the text as a JSON
+Schema document against the official 2020-12 metaschema, which the validator carries compiled
+in, and then writes it exactly as given. `--check` reads each on-disk file back through
+`read_json_validate_json` and compares it with the compiled document as JSON values: a file
+that is absent or is not a JSON Schema is reported as unreadable, one that holds a different
+value as drifted.
+
 ### Compilation is a graph walk, not a tree walk
 
 Everything loaded becomes a node in a directed graph; every reference becomes an edge
