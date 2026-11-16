@@ -2,7 +2,7 @@
 
 Composition engine for the agent definition pipeline. Transforms gate-validated agent data into deployable artifacts across independently swappable configuration axes — enabling systematic benchmarking of agent configurations from a single source definition.
 
-**Final stage of the agent definition pipeline:** [Verdandi](https://github.com/johnny111272/verdandi) → [Draupnir](https://github.com/johnny111272/draupnir) → [Nornir](https://github.com/johnny111272/nornir) Gates → [Regin](https://github.com/johnny111272/regin) → Galdr
+**Final stage of the agent definition pipeline:** [Verdandi](https://github.com/tiriganiarjuk/verdandi) → [Draupnir](https://github.com/tiriganiarjuk/draupnir) → [Nornir](https://github.com/tiriganiarjuk/nornir) Gates → [Regin](https://github.com/tiriganiarjuk/regin) → Galdr
 
 ## Status
 
@@ -44,7 +44,7 @@ Both are fully determined by the four input axes. The same inputs always produce
 
 ## Supervision Contract Export (Projected)
 
-As the enforcement infrastructure migrates from vendor-dependent hooks to the [Bifrost](https://github.com/johnny111272/nornir) traffic-layer proxy, Galdr will produce a third output: a **Bifrost supervision schema** derived from the same agent definition.
+As the enforcement infrastructure migrates from vendor-dependent hooks to the [Bifrost](https://github.com/tiriganiarjuk/nornir) traffic-layer proxy, Galdr will produce a third output: a **Bifrost supervision schema** derived from the same agent definition.
 
 This schema defines the agent's behavioural boundaries, alignment signals for context management, security policy with graduated enforcement thresholds, and operational envelope metrics (API budget, request rate limits, time bounds). Because it derives from the same source definition as the agent itself, the supervision contract cannot diverge from what the agent is configured to do — deploying an agent without deploying its monitoring contract becomes structurally impossible.
 
