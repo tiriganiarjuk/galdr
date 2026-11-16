@@ -2,7 +2,7 @@
 # /// script
 # requires-python = ">=3.13"
 # dependencies = [
-#     "datamodel-code-generator==0.55.0",
+#     "datamodel-code-generator==0.91.0",
 # ]
 # ///
 """Generate Pydantic models from JSON Schema files.
@@ -19,12 +19,13 @@ Run after Draupnir regenerates schemas to keep models in sync.
 
 import subprocess
 import sys
-import tomllib
 from pathlib import Path
 
-from galdr.logic.transform.codegen_clean.composed import strip_redundant_constraints
+from galdr.logic.impure.gate_validate.simple import read_toml_config
+from galdr.structure.model.codegen_schemas import CodegenSchemas
 
 PACKAGE_ROOT = Path(__file__).resolve().parent
+CONFIG_SCHEMA_DIR = PACKAGE_ROOT.parent.parent / "schemas" / "config"
 SMIDJA = Path.home() / "ai" / "smidja"
 SCHEMA_DIRS = [
     SMIDJA / "verdandi" / "agent-builder" / "output",
@@ -45,17 +46,19 @@ def find_schema(schema_name: str) -> Path | None:
 
 def main() -> int:
     """Generate all Pydantic model modules from JSON Schemas."""
-    config = tomllib.loads(CONFIG_PATH.read_text())
-    all_schemas: dict[str, str] = {}
-    for section in config.values():
-        all_schemas.update(section)
+    config = CodegenSchemas.model_validate_json(
+        read_toml_config(CONFIG_PATH, "codegen-schemas", CONFIG_SCHEMA_DIR),
+    )
+    all_schemas = config.checkpoint | config.output
 
     success = 0
     failed = 0
     for schema_name, module_path in all_schemas.items():
         schema_path = find_schema(schema_name)
         if schema_path is None:
-            sys.stdout.write(f"  SKIP: {schema_name} (schema not found)\n")
+            searched = ", ".join(str(schema_dir) for schema_dir in SCHEMA_DIRS)
+            sys.stderr.write(f"  FAIL: {schema_name} (schema not found in {searched})\n")
+            failed += 1
             continue
 
         output_path = STRUCTURE_DIR / f"{module_path}.py"
@@ -82,9 +85,6 @@ def main() -> int:
             failed += 1
             continue
 
-        content = output_path.read_text()
-        content = strip_redundant_constraints(content)
-        output_path.write_text(content)
         sys.stdout.write(f"  {schema_name} -> {module_path}.py\n")
         success += 1
 
