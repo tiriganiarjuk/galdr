@@ -81,7 +81,10 @@ oriented — go back and read.
 | body ordering (data drives, decorations, standalone content) | `redesign/05_BODY_ORDERING.md` |
 | renderer set / data shape detection | `redesign/06_RENDERER_TYPES.md` |
 | how a name resolves: peel, shape, partners, trunk matching | `redesign/08_NAMING_REQUIREMENTS.md` |
-| enforcement output tools, end to end | `redesign/CUSTOM_WRITE_TOOL.md` |
+| an agent's output tool, from definition to prompt | `redesign/CUSTOM_WRITE_TOOL.md` |
+| how a Nornir tool is made, and the contracts gates, readers and writers expose | `~/ai/smidja/nornir/HOW_A_NORNIR_TOOL_IS_MADE.md`, `~/ai/smidja/nornir/MUST_READ_BEFORE_BUILDING.md` § Approved interfaces |
+| schemas for Galdr's own config files (read through `read_toml_validate_json`) | `schemas/config/` |
+| schemas for what a run writes (through `write_json_validate_markdown`) | `schemas/output/` |
 | per-section four-axis field inventory | `review/{SECTION}.md` |
 | bundle snapshot + probes | `review/BUNDLE_INSPECTION.md`, `probe/*.py` |
 | data / content / structure / display model shapes | `src/galdr/structure/gen/*.py` |

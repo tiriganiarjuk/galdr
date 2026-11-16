@@ -147,19 +147,20 @@ import gate_anthropic_render_input          # a .so on the import path
 result = gate_anthropic_render_input.validate(str(path))
 #  → {"ok": bool, "data": str | None, "error": {...} | None}
 
-model = AgentAnthropicRender.model_validate_json(result["data"])
+outcome = GateResult.model_validate(result).root      # GateSuccess | GateRefusal
+model = AgentAnthropicRender.model_validate_json(outcome.data)   # on a GateSuccess
 ```
 
-No subprocess. No parser import. From `model_validate_json` onward the data is typed
+No subprocess. No parser import. The result is typed as one of two outcomes the moment it
+arrives, a refusal stops the stage, and from `model_validate_json` onward the data is typed
 and stays typed.
 
 **What actually enforces this — stated precisely, because the aspirational version is
 misleading.** The Python has no *convenient* path outward and every stage is written to
-use gates. It is not physically prevented: `open()` exists in every Python namespace,
-and in fact Galdr currently writes its output file with a direct `write_text` call
-rather than through an output gate. The wall is held by three things — gates being the
-only reasonable path, a guardrail system that analyses every file you write and flags
-zone violations, and you knowing the rule. **Treat "no IO in Python" as an active
+use gates. It is not physically prevented: `open()` exists in every Python namespace.
+The wall is held by three things — gates being the only reasonable path, a guardrail
+system that analyses every file you write and flags zone violations, and you knowing
+the rule. **Treat "no IO in Python" as an active
 obligation, not a guarantee you can lean on.**
 
 The design's own history reads: secure the boundaries → externalize the IO → *there is

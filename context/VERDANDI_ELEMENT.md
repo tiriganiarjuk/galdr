@@ -33,8 +33,8 @@ convincing rather than less.
 
 **Verdandi is the schema for writing schemas.** Nobody authors JSON Schema here. You
 write one small YAML file, at a named level, which may only reference lower levels and may
-only carry the keys that level accepts — and that file passes through `gate_verdandi_input`
-on its way in. The same medicine, applied one turn up: not *don't write a bad schema* but
+only carry the keys that level accepts — and that file passes through
+`read_yaml_validate_json`, against its level's schema, on its way in. The same medicine, applied one turn up: not *don't write a bad schema* but
 *a bad schema is not expressible.*
 
 That is also why it is the least agent-specific thing in the pipeline. Everything

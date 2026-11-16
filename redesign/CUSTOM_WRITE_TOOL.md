@@ -1,236 +1,113 @@
 # Custom Write Tools
 
-How enforcement output tools work, from agent definition to deployed binary.
+How an agent's output tool gets from its definition into its prompt.
 
 ## Overview
 
-Agents that produce structured output (JSON or JSONL) don't use generic file writes. They use **enforcement output tools** — purpose-built Rust binaries that validate every write against an embedded JSON Schema before committing to disk. Each binary is ~15 lines of Rust config on top of a shared runtime (`write_core`).
+Agents that produce structured output (JSON or JSONL) don't use generic file writes. They use **enforcement output tools** — purpose-built Nornir writer binaries, each fixed at compile time to one schema, one format and one destination, validating every write before it reaches disk.
 
-The system has five layers:
+This document follows the tool through the agent pipeline:
 
 1. **Agent definition** — declares what output tool it needs
-2. **Regin discovery** — matches the spec against deployed tools (or fails with a build request)
-3. **Codegen** — generates the Rust crate from parameters
-4. **Runtime** — `write_core` handles all validation, path protection, and IO
-5. **Deployment** — builds, symlinks, and verifies
+2. **Regin discovery** — matches that declaration against the deployed writers
+3. **The prompt** — the matched tool's invocation arrives in Galdr's data
+
+How a writer is built, generated and deployed is Nornir's own subject, and its documents are the home for it:
+
+| Need | Read |
+|------|------|
+| how any Nornir tool is made, and why constraints are fixed in | `~/ai/smidja/nornir/HOW_A_NORNIR_TOOL_IS_MADE.md` |
+| the contracts a tool exposes (CLI, PyO3, failure classes) | `~/ai/smidja/nornir/MUST_READ_BEFORE_BUILDING.md` § Approved interfaces |
+| writer and store composition, naming, adding a writer | `~/ai/smidja/nornir/NORNIR_CONVENTIONS.md` § Naming, § Writers |
+| generating a writer crate | `~/ai/smidja/nornir/generate_writer.py` (its docstring is the usage) |
 
 ## The Demand Signal
 
-The agent definition's `[security.security_schema]` and `[task.processing]` sections together produce an `enforcement_output_tool` group during Regin's permission resolution. This group contains:
+The agent definition's task-processing and security declarations together produce an `enforcement_output_tool` group, assembled by Regin's security resolver. Its definition is Verdandi's, and that file is the authority for the fields and their conditions: `~/ai/smidja/verdandi/agent-builder/source/group/enforcement_output_tool.yaml`.
 
-| Field | Source | Example |
-|-------|--------|---------|
-| `enforcement_output_tool_format` | `processing_output_file_format` | `jsonl` |
-| `enforcement_output_tool_write_frequency` | `processing_output_write_frequency` | `record` |
-| `enforcement_output_tool_batch_size` | `processing_output_batch_size` | `20` |
-| `enforcement_output_tool_name_needed` | `processing_output_file_name_known` | `true` (when `partially` or `unknown`) |
-| `enforcement_output_tool_name_pattern` | `processing_output_file_name_template` | `{uid}.summaries.jsonl` |
-| `enforcement_output_tool_schema_path` | `security_output_schema` (absolutized) | `/abs/path/to/summaries.schema.json` |
-| `enforcement_output_tool_file_path` | `security_io_output_file` (absolutized) | `/abs/path/to/output.jsonl` |
-| `enforcement_output_tool_directory_path` | `security_io_output_directory` (absolutized) | `/abs/path/to/interviews/` |
+Every field in the group is conditional:
 
-The conditional system controls which fields appear:
+| Field | Present when |
+|-------|--------------|
+| `output_tool_format` | the definition declares an output file format |
+| `output_tool_write_frequency` | the format is `jsonl` |
+| `output_tool_batch_size` | the write frequency is `batch` |
+| `output_tool_schema_path` | the format is `jsonl` or `json` |
+| `output_tool_file_path` | `task.processing.output_file_name_known` is `known` |
+| `output_tool_directory_path` | it is `partially` or `unknown` |
+| `output_tool_name_needed` | it is `partially` or `unknown` |
+| `output_tool_name_pattern` | it is `partially` |
 
-- `file_path` only when `processing_output_file_name_known = "known"` (full path known at definition time)
-- `directory_path` + `name_pattern` when `partially` (suffix known, LLM provides prefix/stem)
-- `directory_path` only when `unknown` (LLM provides full filename)
+So the filename the definition knows decides the shape:
 
-## Tool Discovery (Regin Level 8)
-
-During anthropic resolution, `tool_discovery.py` matches the agent's spec against `tool_registry.toml`. Matching checks **all** of:
-
-1. `output_format` — jsonl or json
-2. `write_frequency` — record or batch
-3. `schema_path` — exact path match
-4. Output path — depends on kind:
-   - `fixed_file`: exact `file_path` match
-   - `directory_name` / `directory_prefix`: exact `directory_path` match AND naming pattern suffix match
-
-The naming pattern suffix is extracted from the `FilenameTemplate` (everything after the `{variable}` placeholder) and compared against the registry's `name_extension` (prefixed with `.`) or `name_suffix`:
-
-```
-Pattern: {uid}.summaries.jsonl  →  suffix: .summaries.jsonl
-Registry: name_suffix = ".summaries.jsonl"  →  match
-
-Pattern: {entry-id}.json  →  suffix: .json
-Registry: name_extension = "json"  →  match (becomes .json)
-```
-
-**Three outcomes:**
-
-- **No spec** — agent has no output tool. `discover_custom_tool` returns `None`.
-- **Match** — returns `ResolvedTool` with binary name, invocation variant, and heredoc display.
-- **No match** — raises `CustomToolNotFound` with a `ToolBuildRequest` containing everything needed to build the missing binary.
+- `known` — a `file_path`; the full path is fixed at definition time
+- `partially` — a `directory_path` and a `name_pattern`; the agent provides the prefix or stem
+- `unknown` — a `directory_path`; the agent provides the full filename
 
 ## The Tool Registry
 
-`tools/regin/tool_registry.toml` lists all deployed writer binaries with their capabilities:
+`~/ai/smidja/nornir/tool_registry.toml` is the inventory of deployed writers. It lives in Nornir because the binaries do. Regin reads it through `read_toml_validate_json`, against `nornir/schemas/tools/tool-registry.schema.json`.
 
 ```toml
 [[tools]]
-binary_name = "append_interview_summaries_record"
-invocation = "append_interview_summaries_record {name} <<'EOF'\n{json_data}\nEOF"
+binary_name = "append_truth_qc_report_record"
+invocation = "append_truth_qc_report_record <<'EOF'\n{json_data}\nEOF"
 output_format = "jsonl"
 write_frequency = "record"
-output_path_kind = "directory_prefix"
-schema_path = "/abs/path/to/summaries.schema.json"
-directory_path = "/abs/path/to/interviews"
-name_suffix = ".summaries.jsonl"
+output_path_kind = "fixed_file"
+schema_path = "spaces/bragi/schemas/qc-report.schema.json"
+file_path = "spaces/bragi/truth/qc_semantic_report.jsonl"
 ```
 
-Fields:
-
-| Field | Required | Purpose |
-|-------|----------|---------|
+| Field | Present | Purpose |
+|-------|---------|---------|
 | `binary_name` | always | Name of the deployed binary |
-| `invocation` | always | Canonical invocation pattern — single source of truth for how to call this binary |
+| `invocation` | always | Canonical invocation pattern — the one statement of how to call this binary |
 | `output_format` | always | `jsonl` or `json` |
 | `write_frequency` | always | `record` or `batch` |
 | `output_path_kind` | always | `fixed_file`, `directory_name`, or `directory_prefix` |
-| `schema_path` | always | Absolute path to the `.schema.json` file |
-| `file_path` | `fixed_file` only | Absolute path to the output file |
-| `directory_path` | directory kinds | Absolute path to the output directory |
+| `schema_path` | always | The `.schema.json` file the writer embeds |
+| `file_path` | `fixed_file` only | The output file |
+| `directory_path` | directory kinds | The output directory |
 | `name_extension` | `directory_name` | File extension without dot (e.g., `json`) |
 | `name_suffix` | `directory_prefix` | File suffix including dots (e.g., `.summaries.jsonl`) |
 
-The `invocation` field is the canonical invocation pattern. It is generated by `generate_writer.py` at crate creation time and read directly by Regin L8 — no derivation, no fabrication. Two forms:
+Paths are relative to the ai root (`~/ai`).
+
+The `invocation` field is written by `generate_writer.py` when the crate is created and read through unchanged by Regin. Two forms:
 
 - `fixed_file`: `binary_name <<'EOF'\n{json_data}\nEOF`
 - `directory_name` / `directory_prefix`: `binary_name {name} <<'EOF'\n{json_data}\nEOF`
 
-## Binary Naming Convention
+The path kind decides what the agent supplies at run time:
 
-```
-{verb}_{human_chosen_name}_{frequency}[_{batch_size}]
-```
+| Kind | The writer fixes | The agent provides | Written to |
+|------|------------------|--------------------|------------|
+| `fixed_file` | the whole path | nothing | the file |
+| `directory_name` | directory + extension | filename stem | `{dir}/{stem}.{ext}` |
+| `directory_prefix` | directory + suffix | prefix | `{dir}/{prefix}{suffix}` |
 
-- `append_` — JSONL format (append to existing file)
-- `write_` — JSON format (create new file, atomic)
-- The middle segment is **human-chosen** for readability among dozens of binaries
-- `_record` or `_batch_N` suffix
+The component the agent provides is checked as a plain name before any path is built, so it cannot leave the directory.
 
-Examples:
+## Tool Discovery (Regin Level 8)
 
-```
-append_truth_qc_report_record        # JSONL, record-at-a-time, fixed file
-write_truth_glossary_record           # JSON, one file per invocation, directory + extension
-append_embedding_normalize_batch_20   # JSONL, 20 records per batch, fixed file
-append_interview_summaries_record     # JSONL, record-at-a-time, directory + suffix
-```
+`discover_tool` (`regin/logic/pure/tool_resolve/composed.py`) matches the agent's output spec against the registry, entry by entry; the first match wins. A match requires the output format to be equal, and each of these to be equal wherever the spec states it:
 
-## The Writer Binary
+1. `write_frequency`
+2. `schema_path`
+3. `file_path`
+4. `directory_path`
 
-Each writer is a Rust crate with two files. The `main.rs` is a `WriterConfig` struct literal:
+A field the spec leaves out matches any entry.
 
-```rust
-use schemas_embedded::SUMMARIES;
-use write_core::{OutputFormat, OutputPath, WriteFrequency, WriterConfig};
+**Two outcomes:**
 
-fn main() {
-    write_core::run(&WriterConfig {
-        name: "append_interview_summaries_record",
-        schema: &SUMMARIES,
-        schema_source_path: "/abs/path/to/summaries.schema.json",
-        format: OutputFormat::Jsonl,
-        frequency: WriteFrequency::Record,
-        output: OutputPath::DirectoryPrefix {
-            dir: "/abs/path/to/interviews",
-            suffix: ".summaries.jsonl",
-        },
-        batch_size: None,
-    });
-}
-```
+- **Match** — a `ResolvedTool`: the binary name, the invocation variant (`no-name` for `fixed_file`, `with-name` otherwise), and the registry's `invocation` string.
+- **`None`** — the agent declared no output tool, or no registry entry matched. Either way the agent is built as one with no output tool. `context/NORNIR_GATES_ELEMENT.md` § The Regin side, and where it stops, covers what follows from that.
 
-Everything is hardcoded at compile time. The binary embeds the schema, the paths, the format, the frequency, and the batch limit. The LLM provides only:
+## What the Agent Is Given
 
-- **Data** via stdin (piped JSON or heredoc)
-- **Name** as a CLI argument (only for directory-based outputs)
-
-## Output Path Strategies
-
-| Strategy | Config | LLM provides | Constructed path |
-|----------|--------|--------------|------------------|
-| `FixedFile("/path/output.jsonl")` | hardcoded path | nothing | `/path/output.jsonl` |
-| `DirectoryName { dir, ext }` | dir + extension | filename stem | `{dir}/{stem}.{ext}` |
-| `DirectoryPrefix { dir, suffix }` | dir + suffix | prefix | `{dir}/{prefix}{suffix}` |
-
-Path traversal protection validates the LLM-provided component before path construction. Attempts like `../escape` or `/absolute/override` are rejected.
-
-## write_core Runtime
-
-`write_core::run()` handles:
-
-- **Stdin reading** — reads all input to a string
-- **JSON parsing** — validates well-formed JSON
-- **Schema validation** — validates against the embedded schema (`schemas_embedded`)
-- **Path resolution** — constructs the output path from config + CLI arg
-- **Path traversal protection** — rejects `..`, absolute overrides in LLM-provided components
-- **Format enforcement** — JSONL appends to existing files; JSON creates new files atomically
-- **Batch limits** — for `Batch` frequency, enforces max records per invocation
-- **Atomic writes** — JSON files written to temp + renamed (no partial writes)
-- **`--help`** — prints all hardcoded config, schema path, invocation pattern
-- **`--dump-schema`** — prints the embedded JSON Schema to stdout for inspection
-
-Exit protocol: `OK` on success, `FAIL:<reason>` on failure. Exit code 0 or 1.
-
-## schemas_embedded
-
-`schemas_embedded` is a Rust crate that compiles JSON Schema files into the binary via `include_str!()`. Each schema becomes a `pub static EmbeddedValidator`:
-
-```rust
-static SUMMARIES_JSON: &str =
-    include_str!("/abs/path/to/summaries.schema.json");
-pub static SUMMARIES: EmbeddedValidator =
-    EmbeddedValidator::new(SUMMARIES_JSON, "summaries");
-```
-
-Absolute paths are used so the schemas can be inspected from `--help` output without consulting source code. The validator compiles the schema once on first use (`OnceLock`) and validates via `jsonschema`.
-
-## Generating a New Writer
-
-Use `tools/nornir/generate_writer.py`:
-
-```bash
-./tools/nornir/generate_writer.py \
-    --name append_interview_summaries_record \
-    --schema-const SUMMARIES \
-    --schema-path /abs/path/to/summaries.schema.json \
-    --format jsonl \
-    --frequency record \
-    --output-kind directory_prefix \
-    --dir-path /abs/path/to/interviews \
-    --suffix .summaries.jsonl
-```
-
-This generates `writers/{name}/Cargo.toml` and `writers/{name}/src/main.rs`, then prints the manual wiring steps:
-
-1. Add the schema to `schemas_embedded/src/lib.rs` (if new)
-2. Add `"writers/{name}"` to workspace `Cargo.toml` members
-3. Add entry to `tool_registry.toml`
-4. Add to `WRITER_CRATES` in `tools/nornir/deploy_writers.py`
-
-Use `--dry-run` to preview without writing files.
-
-## Deployment
-
-Two separate scripts in `tools/nornir/`:
-
-**Gates and CLI checkers** — schema validation infrastructure:
-```bash
-./tools/nornir/deploy_gates.py
-```
-Builds 8 CLI check tools (`check_*`) and 32 PyO3 gate modules (`gate_*`) via maturin. Gates deploy to `~/ai/tools/lib/`, CLI tools symlink to `~/ai/tools/bin/`. Run after Verdandi/Draupnir schema changes.
-
-**Writer tools** — enforcement output binaries:
-```bash
-./tools/nornir/deploy_writers.py
-```
-Builds writer binaries via `cargo build --release`, symlinks to `~/ai/tools/bin/`, verifies with `--help`. Run after adding or modifying a writer crate.
-
-## Invocation by the LLM
-
-The generated agent prompt includes a `writing_output` section with the exact invocation pattern. This pattern comes directly from the registry's `invocation` field — Resin reads it through, Galdr renders it as a code-fenced block.
+The matched tool reaches Galdr as data: `writing_output` carries the invocation, `critical_rules` the tool name, and the frontmatter the hook and tool allowlist that hold the agent to it.
 
 **Fixed file (no name needed):**
 ```bash
@@ -246,7 +123,19 @@ append_interview_summaries_record my-interview-id <<'EOF'
 EOF
 ```
 
-The binary handles everything else — the LLM never constructs file paths.
+The binary handles everything else — the agent never constructs a file path.
+
+**What comes back.** A writer answers under Nornir's CLI contract:
+
+| Outcome | stdout | stderr | exit code |
+|---------|--------|--------|-----------|
+| written | the receipt | nothing | 0 |
+| refused or failed; nothing is written | nothing | first line: the failure class; then the message, which says what to do next | 1 |
+| wrong arguments | nothing | the usage | 2 |
+
+The receipt is one line of JSON: `{"written": 1}`, and for a writer that stamps fields the agent may not supply, also the last record's stamps under the writer's own field names — `{"written": 3, "last_record_stamps": {"exchange": 43, …}}`. Its schema is `~/ai/smidja/nornir/schemas/tools/write-receipt.schema.json`.
+
+`binary_name --help` prints the writer's fixed configuration and this contract; `--dump-schema` prints its embedded schema.
 
 ## End-to-End Flow
 
@@ -257,34 +146,26 @@ Agent definition TOML
 Regin levels 1-7 (resolve paths, permissions, merge, regroup)
     │
     ▼
-Regin level 8: tool_discovery.py
+Regin level 8: discover_tool against nornir/tool_registry.toml
     │
-    ├─ match found → ResolvedTool (binary name, invocation)
+    ├─ match → ResolvedTool (binary name, invocation)
     │       │
     │       ▼
-    │   anthropic_resolver populates:
-    │     - writing_output (invocation pattern for LLM)
+    │   the Anthropic render carries:
+    │     - writing_output (invocation pattern for the agent)
     │     - critical_rules (workspace path, tool name)
     │     - frontmatter.hooks (Bash hook validates tool usage)
     │     - frontmatter.tools (tool allowlist)
     │       │
     │       ▼
-    │   Galdr renders agent .md with writing_output section
+    │   Galdr composes the prompt's writing_output section from that data
     │       │
     │       ▼
-    │   LLM uses: binary_name [name] <<'EOF'
+    │   the agent calls: binary_name [name] <<'EOF'
     │
-    └─ no match → CustomToolNotFound + ToolBuildRequest
+    └─ None → the agent is built with no output tool
             │
             ▼
-        generate_writer.py (codegen)
-            │
-            ▼
-        Manual wiring (Cargo.toml, registry, schemas_embedded)
-            │
-            ▼
-        deploy_writers.py (build + symlink + verify)
-            │
-            ▼
-        Re-run Regin → match found → agent passes
+        a writer for it is made in Nornir (generate_writer.py, registry entry,
+        nornir_deploy --build writers), and Regin is run again
 ```

@@ -5,8 +5,13 @@
 ## Scope
 
 Nornir is a large Rust monorepo — a hundred-plus crates, most of them unrelated to this
-pipeline. **This system uses its gate builder**: the compiled schema validators that
-every stage boundary passes through. Everything else in Nornir is out of scope here.
+pipeline. **This system uses three kinds of Nornir tool**: the gates every stage boundary
+passes through, the readers that bring a file in against a schema named per call, and the
+writers a finished agent is given. Everything else in Nornir is out of scope here.
+
+How any Nornir tool is made, and the contracts it exposes, are Nornir's own documents:
+`~/ai/smidja/nornir/HOW_A_NORNIR_TOOL_IS_MADE.md` and
+`~/ai/smidja/nornir/MUST_READ_BEFORE_BUILDING.md` § Approved interfaces.
 
 ---
 
@@ -30,7 +35,13 @@ model = AgentAnthropicRender.model_validate_json(result["data"])
 ```
 
 No subprocess. No parser import. `result["data"]` is a validated JSON string on its way
-into a model — **not** raw material for `json.loads`.
+into a model — **not** raw material for `json.loads`. A caller branches on
+`result["error"]["type"]`, the failure class; `result["error"]["message"]` is for people.
+
+An input gate has a second face, for a shell: `gate_anthropic_render_input <file>` prints
+the validated JSON and exits 0. A refusal exits 1 with the failure class on stderr's first
+line, then the message. So a surface file can be checked on its own, without running the
+stage that reads it.
 
 ### Four patterns
 
@@ -61,21 +72,22 @@ The gate inventory splits cleanly, and the distinction is not cosmetic:
 > the double gate.
 >
 > **Entry points** — input-only gates with no output counterpart: the seven
-> `gate_include_*_input`, the three Galdr control surfaces, and `gate_verdandi_input`.
-> Nothing writes these files back, so there is nothing to bracket. They exist to be the
-> place where authored material first becomes typed.
+> `gate_include_*_input` and the three Galdr control surfaces. Nothing writes these files
+> back, so there is nothing to bracket. They exist to be the place where authored material
+> first becomes typed.
 
-An include file, a `content.toml`, a Verdandi level file — each is hand- or agent-authored
-and would otherwise arrive as trusted data through a side door. An entry-point gate is what
-makes that impossible.
+An include file, a `content.toml` — each is hand- or agent-authored and would otherwise
+arrive as trusted data through a side door. An entry-point gate is what makes that
+impossible. A Verdandi level file is authored material too, and it enters through a reader
+(see "A schema named at call time" below).
 
 ### What a gate actually checks — three kinds, not one
 
 "Schema validation" undersells it. A gate does three separable things, in shared crates
 every gate draws on:
 
-> **Format conversion** (`format_core`) — TOML in, JSON out, and back. This is why no
-> Python project imports a TOML parser.
+> **Format conversion** (`format_core`) — TOML in, JSON out, and back. Decoding lives
+> here, so a Python stage has no parser to import.
 >
 > **Schema validation** (`schema_core` + `schemas_embedded`) — the embedded JSON Schema,
 > strict by construction: `additionalProperties: false` and complete required-lists.
@@ -129,17 +141,31 @@ That is also the repair path for the failure Verdandi exists to prevent. A too-p
 schema is silent for as long as it stands; tightening it and rebuilding converts every
 previously-tolerated input into a loud failure at the boundary.
 
-### The gate that does not embed
+### A schema named at call time
 
-`gate_verdandi_input` loads its schema from disk by name at runtime. It is generic — one
-gate validating all fifteen Verdandi level formats, with the caller naming which schema
-to use per call.
+A gate and a reader are one engine, `reader_io`, at two levels of one constraint. The
+engine takes its schema from a `SchemaSource`, which is either *named* — loaded from
+`{schema_dir}/{schema_name}.schema.json` when the call is made — or *embedded* in the
+binary.
 
-This genuinely weakens the guarantees claimed for embedding: that gate *can* be pointed
-at a wrong or missing schema, and its schema changes are live without a rebuild. That is
-a real inconsistency in the model, not a detail to wave past. It exists because a
-generic validator cannot bake in fifteen alternatives; whether the trade is the right
-one is a question for the author, not something to resolve by reasoning.
+```python
+import read_yaml_validate_json
+
+result = read_yaml_validate_json.read(str(path), schema_name, str(schema_dir))
+#  → the same {"ok", "data", "error"} contract a gate returns
+```
+
+> **A reader** (`read_{format}_validate_json`) is general: any schema, any caller. Its
+> schema is live the moment the schema file changes. Draupnir reads all fifteen Verdandi
+> level formats through `read_yaml_validate_json`, naming the level's schema per call. A
+> stage's own configuration file enters the same way, through `read_toml_validate_json`,
+> against a schema the project keeps under `schemas/config/`.
+>
+> **A gate** is that engine with one schema and one format fixed in. Its caller chooses
+> nothing but the file, and its schema changes only by rebuilding.
+
+How much is fixed in follows who uses the tool and how closely they are watched: the less
+oversight, the more is compiled in. A stage boundary in the agent pipeline gets a gate.
 
 ---
 
@@ -163,9 +189,9 @@ correct.
 >
 > **`generate_writer.py`** — builds a new writer crate from parameters, emitting
 > `writers/{name}/Cargo.toml` and a `main.rs` that is roughly twenty lines: a `WriterConfig`
-> handed to `write_engine::run`. It deliberately does **not** self-register — it prints the
-> four lines a human must add (`schemas_embedded`, workspace members, `tool_registry.toml`,
-> `deploy_categories.toml`).
+> handed to `write_engine::run_cli`. It deliberately does **not** self-register — it prints
+> the entries a human must add (workspace members, `deploy_categories.toml`,
+> `tool_registry.toml`), and the schema goes into `schemas_embedded` by hand first.
 >
 > **`write_engine`** — the shared runtime every writer delegates to. Reads stdin, validates
 > against the embedded schema, then writes.
@@ -178,14 +204,34 @@ filename component the agent supplies at runtime goes through
 `path_core::validate_path_segment` first, so the one degree of freedom the agent has cannot
 become traversal. Writes are atomic or append-with-fsync.
 
-And the failures are written **for the agent**, not for a log:
+A writer answers under Nornir's CLI contract. Success exits 0 and prints a receipt on
+stdout, so the agent holds proof of what was written:
 
 ```
-FAIL:batch too large — got 47 records, max is 20.
-Split the batch into smaller chunks.
+{"written": 1}
+{"written": 3, "last_record_stamps": {"exchange": 43, "ts": "2026-11-10T04:55:15Z", "session": "20261110T045515Z"}}
 ```
 
-That is a repair instruction delivered through the only channel the agent is listening on.
+`written` is the record count. A writer that stamps fields the agent may not supply — a
+sequence number, a timestamp, a session id — reports the stamps of the last record it
+wrote, under its own field names; this is the one place the agent learns them. The
+receipt is built and checked against its schema before the write, and names no path.
+
+A refusal writes nothing, exits 1, and says why on stderr — the failure class on the
+first line, then the message:
+
+```
+validation_error
+The batch holds 47 records; this writer takes at most 20 per call. Split the records into batches of at most 20 and make one call per batch.
+```
+
+Wrong arguments exit 2 with the usage.
+
+Every refusal a Nornir tool can make is written once, in one registry,
+`core/failure_mode_core/failure_modes.toml`: its class, what was refused and where, and
+its route — what to do next. A route leads to the fix or to the user, and stays inside the
+constraint that refused. That is a repair instruction delivered through the only channel
+the agent is listening on.
 
 ### The Regin side, and where it stops
 
@@ -207,9 +253,9 @@ Two further sharp edges in the same path, both tracked in Verdandi's `TODO.md`:
 > entry of the right format — binding an agent to a writer that validates against a
 > different schema entirely.
 >
-> This is very likely the upstream cause of the literal `{{tool_name}}` that
-> [[GALDR_ELEMENT]] reports shipping into the staging artifact. Not one bug — a silent
-> `None` here meeting an unimplemented suppress-on-incomplete there.
+> What Galdr receives in that case is an agent with no `tool_name`. Suppress-on-incomplete
+> ([[GALDR_ELEMENT]]) is the mechanism that makes every rule naming the tool render as
+> nothing, so the silent `None` here is carried through to a prompt with no output rules.
 
 ---
 
@@ -239,11 +285,12 @@ because the same component owns the door.
 
 The stated evolution: secure the boundaries → externalize the IO → *there is no door*.
 
-**How far that has actually gone, precisely.** Input is gated everywhere. Output is not
-yet — Galdr writes its result with a direct `write_text` call rather than through an
-output gate. Python retains `open()`; nothing removes it. What holds the line is that
-gates are the only reasonable path, that a guardrail system analyses every file you
-write and flags zone violations, and that you know the rule.
+**How far that has actually gone, precisely.** A stage's input comes in through a gate
+or a reader, and its result leaves through an output gate or a text writer — Galdr's
+through `write_json_validate_markdown`, against a schema under `schemas/output/`. Python
+retains `open()`; nothing removes it. What holds the line is that the compiled tools are
+the only reasonable path, that a guardrail system analyses every file you write and
+flags zone violations, and that you know the rule.
 
 **Treat "no IO in Python" as an obligation you maintain, not a guarantee you inherit.**
 The aspirational phrasing — violations being *unrepresentable* — describes the target,
@@ -286,14 +333,19 @@ argument would not hold.
 ## Working with it
 
 **Build with `nornir_deploy`. Never bare `cargo build` or `maturin build`.** A bare cargo
-build leaves the artifact in `target/release/` where nothing looks for it. Gates
-additionally need the maturin path — wheel build, `.so` extraction into
-`~/ai/tools/lib/`, and code signing, without which macOS kills the process on import.
+build leaves the artifact in cargo's target directory, where nothing looks for it: a tool
+is live once it is copied into `~/ai/tools/bin/`. Gates additionally need the maturin
+path — wheel build, `.so` extraction into `~/ai/tools/lib/`, and code signing, without
+which macOS kills the process on import.
 
-**When you meet data with no gate for its format or schema, stop and ask the author for
-one.** Not parse it "temporarily," not type it `Any` "for now." Every gate that exists
-came into being that way. There is no self-service procedure — a gate is hand-written
-Rust plus a workspace entry plus a deploy category, so adding a schema file and
-rebuilding will not produce one.
+**When you meet data with nothing to bring it in, the first question is which level it
+needs.** A file a stage owns and reads for itself — a config, a map — enters through a
+reader: write its schema under the project's `schemas/config/`, call
+`read_{format}_validate_json`, validate the result into a model. A new stage boundary in
+the pipeline gets a gate, and a gate is made from a recipe: one entry in Nornir's
+`gates/gate_recipes.toml` — name, kind, schema, whether paths are verified — from which
+`generate_gates.py` writes the crate. Whether a boundary gets a gate, and under which
+schema, is the author's decision, so stop and ask. In either case the data waits: it is
+never parsed "temporarily" and never typed `Any` "for now."
 
 Unidentified data waits at the door.

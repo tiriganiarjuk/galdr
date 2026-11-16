@@ -32,7 +32,8 @@ Three entry points:
 
 The last two are the self-hosting loop; see below.
 
-**Invocation:** bare `uv run draupnir` is the generate-everything mode. The flags are
+**Invocation:** bare `uv run draupnir` is the generate-everything mode: it compiles every
+Verdandi project that has a schema level, and `--project` narrows it to one. The flags are
 `--check` (report drift without writing), `--list`, `--fragments`, `--project`,
 `--verdandi-dir`, `--output-dir`, `--workspace`.
 
@@ -55,12 +56,16 @@ fixed up later. Every model is in final form from the moment it validates.
 The cache is keyed `level/name` — the same string used as a reference inside the YAML.
 The reference syntax and the lookup key are the same thing.
 
-### YAML enters through a gate
+### YAML enters through a reader
 
 Draupnir imports no YAML parser. Not `yaml`, not anything. It calls
-`gate_verdandi_input` — a compiled Rust module — which reads the file, converts YAML to
-JSON, validates against the level's schema, and returns a validated JSON string.
-Draupnir's side is a two-line `ffi.py` wrapper and one `model_validate_json`.
+`read_yaml_validate_json` — a compiled Rust module — naming the level's schema per call.
+The reader reads the file, converts YAML to JSON, validates against that schema, and
+returns one of two outcomes: a success carrying the validated JSON string, or a refusal
+carrying its failure class and message.
+Draupnir's side is an `ffi.py` wrapper that types that outcome at once, and one
+`model_validate_json` on a success. A refusal fails closed: the file stays out of the cache,
+the error is reported, and the run exits non-zero. So does a run that finds no files at all.
 
 This is the same rule every Python stage follows, and it applies to the schema
 generator itself. There is no bootstrapping exception.
@@ -88,10 +93,10 @@ in the first and inlines in the second.
 hand-written models  (structure/model/)
         │ export-schemas
         ▼
-schemas/input/{level}.schema.json  ──►  read at runtime by gate_verdandi_input
+schemas/input/{level}.schema.json  ──►  named per call to read_yaml_validate_json
         │ generate-models                to validate Verdandi YAML
         ▼
-generated input models  (structure/gen/input/)  ──►  parse the gate's output
+generated input models  (structure/gen/input/)  ──►  parse the reader's output
 ```
 
 One source of truth, two consumers, zero manual sync. The models that define what a
@@ -211,9 +216,7 @@ detection script and the confirmed instance are in `TODO.md` in the Verdandi rep
 State it plainly when you meet it: a predicate target is a reference like any other, and
 it is currently the only kind that is not resolved.
 
-### Two things that will confuse you but do not matter
+### The level count
 
-The documentation disagrees with the code on the level count — the `Level` enum has 15
-members, the builder table has 14, because `schema` is assembled rather than built. And
-the test suite imports modules that no longer exist. Neither is load-bearing for using
-the tool.
+The `Level` enum has 15 members and the builder table has 14, because `schema` is assembled
+rather than built.

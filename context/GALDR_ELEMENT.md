@@ -234,15 +234,8 @@ The designed mechanism for conditionality without conditional code: a template s
 containing `{{...}}` after interpolation renders as nothing. An agent with no output
 tool has no `tool_name`, so the rule mentioning it disappears — no gate logic anywhere.
 
-> **Specified, not implemented — and not currently reachable either.** `interpolate`
-> preserves unmatched placeholders verbatim rather than blanking the fragment, so the rule
-> as written would not suppress. But interpolation is not running at all: every caller sits
-> in the orphaned half of `composed.py`. Implementing suppress-on-incomplete is stage-3
-> work, and stage 3 does not exist.
->
-> The literal `{{tool_name}}` visible in `staging/` is **not** evidence of this. That file
-> predates the walker's disconnection. Diagnosing from it leads to a bug that is not there —
-> which has already happened once.
+> Suppress-on-incomplete belongs to stage 3, the resolver: it is built there, together
+> with interpolation.
 
 ---
 
