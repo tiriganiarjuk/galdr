@@ -30,11 +30,11 @@ does not.
 
 | universal | axis | sections | in |
 |---|---|---|---|
-| `section_start` | content | 10 | critical_rules, examples, constraints, anti_patterns, success_criteria, failure_criteria, output, writing_output, return_format, input |
+| `section_start` | content | 10 | input, critical_rules, examples, constraints, anti_patterns, success_criteria, failure_criteria, output, writing_output, return_format |
 | `pre_max_entries_rendered` | structure | 4 | constraints, anti_patterns, success_criteria, failure_criteria |
 | `pre_section_visible` | structure | 4 | constraints, anti_patterns, success_criteria, failure_criteria |
-| `section_preamble_visible` | structure | 4 | examples, constraints, anti_patterns, input |
-| `section_preamble` | content | 3 | examples, anti_patterns, input |
+| `section_preamble_visible` | structure | 4 | input, examples, constraints, anti_patterns |
+| `section_preamble` | content | 3 | input, examples, anti_patterns |
 | `criteria_evidence_format` | display | 2 | success_criteria, failure_criteria |
 
 ### Section-only, grouped by terminal suffix
@@ -335,6 +335,137 @@ closing:
 | display | `security_boundary_filesystem_permissions_toolset_format` | `filesystem_permissions_toolset_format` | addresses `filesystem_permissions`.toolset |
 | display | `security_boundary_filesystem_permissions_label_visibility_threshold` | `filesystem_permissions_label_visibility_threshold` | decorates `filesystem_permissions` |
 | display | `security_boundary_filesystem_permissions_list_format` | `filesystem_permissions_list_format` | addresses `filesystem_permissions`.list |
+
+## input
+
+```
+input
+  └─ description
+  └─ format
+  └─ delivery
+  └─ input_schema
+  └─ parameters
+       └─ parameters[].param_name
+       └─ parameters[].param_type
+       └─ parameters[].param_required
+       └─ parameters[].param_description
+  └─ context_required
+       └─ context_required[].context_label
+       └─ context_available[].context_label
+       └─ context_required[].context_path
+       └─ context_available[].context_path
+  └─ context_available
+```
+
+**Bundles produced**
+
+```
+    axis       universal (bundler)                          source (files)
+heading:
+  [section_start]
+    content    section_start                                input_section_start
+preamble:
+  [section_preamble]
+    content    section_preamble                             input_section_preamble
+    structure  section_preamble_visible                     input_section_preamble_visible
+body:
+  [description]
+    data       description                                  description
+    content    description_format_template                  input_description_format_template
+  [format]
+    data       format                                       format
+  [delivery]
+    data       delivery                                     delivery
+  [input_schema]
+    data       input_schema                                 input_schema
+  [parameters]
+    data       parameters                                   parameters
+    content    parameters_transition                        input_parameters_transition
+    content    parameters_heading                           input_parameters_heading
+    content    parameters_entry_template                    input_parameters_entry_template
+    structure  parameters_transition_visible                input_parameters_transition_visible
+    structure  parameters_heading_visible                   input_parameters_heading_visible
+    structure  parameters_heading_auto_threshold            input_parameters_heading_auto_threshold
+    display    parameters_format                            input_parameters_format
+    display    parameters_format_threshold                  input_parameters_format_threshold
+  [context_required]
+    data       context_required                             context_required
+    content    context_required_heading                     input_context_required_heading
+    content    context_required_intro                       input_context_required_intro
+    content    context_required_entry_template              input_context_required_entry_template
+    structure  context_required_intro_visible               input_context_required_intro_visible
+    display    context_required_format                      input_context_required_format
+  [context_available]
+    data       context_available                            context_available
+    content    context_available_heading                    input_context_available_heading
+    display    context_available_format                     input_context_available_format
+  [input_completeness_postscript]
+    content    input_completeness_postscript                input_input_completeness_postscript
+    structure  input_completeness_postscript_visible        input_input_completeness_postscript_visible
+  [schema_label]
+    content    schema_label_template                        input_schema_label_template
+    structure  schema_label_visible                         input_schema_label_visible
+```
+
+### input — needs attention (3)
+
+#### `input_description_format_template` → `description_format_template` · content
+
+- **Defined as:** Integrated description and format declaration. Template with {{format}} and {{description}} placeholders. Presents what the agent receives and in what shape as a single sentence.
+
+- **Review doc (✅):** `"Your input is a {{format}} file containing {{description}}."`
+
+- **Currently addresses:** addresses `description`.format
+- **Value:** `Your input is a {{format}} file containing {{description}}.`
+
+- **Tentative fix:** 3 of its section-mates declare `_heading`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `input_description_format_heading_template`
+
+#### `input_context_required_entry_template` → `context_required_entry_template` · content
+
+- **Defined as:** Template for rendering a single context entry. Contains {{context_label}} and {{context_path}} placeholders. Label-first presentation with path as the action target.
+
+- **Review doc (✅):** `"**{{context_label}}**: Read \`{{context_path}}\`"`
+
+- **Currently addresses:** prose, role `_entry_template`
+- **Value:** `**{{context_label}}**: Read `{{context_path}}``
+
+- **Tentative fix:** 3 of its section-mates declare `_heading`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `input_context_required_entry_heading_template`
+
+#### `input_parameters_entry_template` → `parameters_entry_template` · content
+
+- **Defined as:** Template for rendering a single parameter entry. Contains {{param_name}}, {{param_type}}, and {{param_description}} placeholders. Code-formatted parameter name signals literal identifier.
+
+- **Review doc (✅):** `` "`{{param_name}}` ({{param_type}}): {{param_description}}" ``
+
+- **Currently addresses:** prose, role `_entry_template`
+- **Value:** ``{{param_name}}` ({{param_type}}): {{param_description}}`
+
+- **Tentative fix:** 3 of its section-mates declare `_heading`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `input_parameters_entry_heading_template`
+
+### input — conforming (20)
+
+| axis | source | universal | addresses |
+|---|---|---|---|
+| content | `input_section_start` | `section_start` | prose, role `_start` under `section` |
+| content | `input_section_preamble` | `section_preamble` | prose, role `_preamble` under `section` |
+| content | `input_context_required_heading` | `context_required_heading` | decorates `context_required` |
+| content | `input_context_required_intro` | `context_required_intro` | decorates `context_required` |
+| content | `input_context_available_heading` | `context_available_heading` | decorates `context_available` |
+| content | `input_parameters_transition` | `parameters_transition` | decorates `parameters` |
+| content | `input_parameters_heading` | `parameters_heading` | decorates `parameters` |
+| content | `input_input_completeness_postscript` | `input_completeness_postscript` | prose, role `_postscript` under `input_completeness` |
+| content | `input_schema_label_template` | `schema_label_template` | prose, role `_label` under `schema` |
+| structure | `input_section_preamble_visible` | `section_preamble_visible` | prose, role `_preamble` under `section` |
+| structure | `input_context_required_intro_visible` | `context_required_intro_visible` | decorates `context_required` |
+| structure | `input_parameters_transition_visible` | `parameters_transition_visible` | decorates `parameters` |
+| structure | `input_input_completeness_postscript_visible` | `input_completeness_postscript_visible` | prose, role `_postscript` under `input_completeness` |
+| structure | `input_schema_label_visible` | `schema_label_visible` | prose, role `_label` under `schema` |
+| structure | `input_parameters_heading_visible` | `parameters_heading_visible` | decorates `parameters` |
+| structure | `input_parameters_heading_auto_threshold` | `parameters_heading_auto_threshold` | decorates `parameters` |
+| display | `input_context_required_format` | `context_required_format` | data anchor |
+| display | `input_context_available_format` | `context_available_format` | data anchor |
+| display | `input_parameters_format` | `parameters_format` | data anchor |
+| display | `input_parameters_format_threshold` | `parameters_format_threshold` | data anchor |
 
 ## critical_rules
 
@@ -906,17 +1037,6 @@ closing:
 
 - **Problem:** control suffix `_selector` — in code, absent from the table
 
-#### `constraints_no_inferred_constraints_preamble_selector` → `no_inferred_constraints_preamble_selector` · structure
-
-- **Defined as:** Selects how strongly the no-inferred-constraints warning is worded. 'light' is a brief reminder. 'explicit' is a template-based warning that names the constraint count.
-
-- **Review doc (✅):** → selects key in content #7
-
-- **Currently addresses:** prose, role `_preamble` under `no_inferred_constraints`
-- **Value:** `light`
-
-- **Problem:** control suffix `_selector` — in code, absent from the table
-
 #### `constraints_compliance_reminder_closing_selector` → `compliance_reminder_closing_selector` · structure
 
 - **Defined as:** Selects the tone of the closing compliance reminder. 'evaluation_warning' frames compliance as tied to evaluation. 'simultaneity' emphasizes that all constraints apply simultaneously.
@@ -925,6 +1045,17 @@ closing:
 
 - **Currently addresses:** prose, role `_closing` under `compliance_reminder`
 - **Value:** `evaluation_warning`
+
+- **Problem:** control suffix `_selector` — in code, absent from the table
+
+#### `constraints_no_inferred_constraints_preamble_selector` → `no_inferred_constraints_preamble_selector` · structure
+
+- **Defined as:** Selects how strongly the no-inferred-constraints warning is worded. 'light' is a brief reminder. 'explicit' is a template-based warning that names the constraint count.
+
+- **Review doc (✅):** → selects key in content #7
+
+- **Currently addresses:** prose, role `_preamble` under `no_inferred_constraints`
+- **Value:** `light`
 
 - **Problem:** control suffix `_selector` — in code, absent from the table
 
@@ -1130,8 +1261,8 @@ body:
 | structure | `success_criteria_pre_max_entries_rendered` | `pre_max_entries_rendered` | preprocessing (pre_*) |
 | structure | `success_criteria_success_failure_independence_statement_postscript_visible` | `success_failure_independence_statement_postscript_visible` | prose, role `_postscript` under `success_failure_independence_statement` |
 | structure | `success_criteria_verification_guidance_postscript_visible` | `verification_guidance_postscript_visible` | prose, role `_postscript` under `verification_guidance` |
-| display | `success_criteria_criteria_evidence_format_threshold` | `criteria_evidence_format_threshold` | addresses `criteria`.evidence |
 | display | `success_criteria_criteria_evidence_format` | `criteria_evidence_format` | addresses `criteria`.evidence |
+| display | `success_criteria_criteria_evidence_format_threshold` | `criteria_evidence_format_threshold` | addresses `criteria`.evidence |
 
 ## failure_criteria
 
@@ -1453,137 +1584,6 @@ body:
 | structure | `return_format_track_metrics_as_you_work_postscript_visible` | `track_metrics_as_you_work_postscript_visible` | prose, role `_postscript` under `track_metrics_as_you_work` |
 | structure | `return_format_do_not_fabricate_metrics_postscript_visible` | `do_not_fabricate_metrics_postscript_visible` | prose, role `_postscript` under `do_not_fabricate_metrics` |
 | structure | `return_format_failure_cross_reference_preamble_visible` | `failure_cross_reference_preamble_visible` | prose, role `_preamble` under `failure_cross_reference` |
-
-## input
-
-```
-input
-  └─ description
-  └─ format
-  └─ delivery
-  └─ input_schema
-  └─ parameters
-       └─ parameters[].param_name
-       └─ parameters[].param_type
-       └─ parameters[].param_required
-       └─ parameters[].param_description
-  └─ context_required
-       └─ context_required[].context_label
-       └─ context_available[].context_label
-       └─ context_required[].context_path
-       └─ context_available[].context_path
-  └─ context_available
-```
-
-**Bundles produced**
-
-```
-    axis       universal (bundler)                          source (files)
-heading:
-  [section_start]
-    content    section_start                                input_section_start
-preamble:
-  [section_preamble]
-    content    section_preamble                             input_section_preamble
-    structure  section_preamble_visible                     input_section_preamble_visible
-body:
-  [description]
-    data       description                                  description
-    content    description_format_template                  input_description_format_template
-  [format]
-    data       format                                       format
-  [delivery]
-    data       delivery                                     delivery
-  [input_schema]
-    data       input_schema                                 input_schema
-  [parameters]
-    data       parameters                                   parameters
-    content    parameters_transition                        input_parameters_transition
-    content    parameters_heading                           input_parameters_heading
-    content    parameters_entry_template                    input_parameters_entry_template
-    structure  parameters_transition_visible                input_parameters_transition_visible
-    structure  parameters_heading_visible                   input_parameters_heading_visible
-    structure  parameters_heading_auto_threshold            input_parameters_heading_auto_threshold
-    display    parameters_format                            input_parameters_format
-    display    parameters_format_threshold                  input_parameters_format_threshold
-  [context_required]
-    data       context_required                             context_required
-    content    context_required_heading                     input_context_required_heading
-    content    context_required_intro                       input_context_required_intro
-    content    context_required_entry_template              input_context_required_entry_template
-    structure  context_required_intro_visible               input_context_required_intro_visible
-    display    context_required_format                      input_context_required_format
-  [context_available]
-    data       context_available                            context_available
-    content    context_available_heading                    input_context_available_heading
-    display    context_available_format                     input_context_available_format
-  [input_completeness_postscript]
-    content    input_completeness_postscript                input_input_completeness_postscript
-    structure  input_completeness_postscript_visible        input_input_completeness_postscript_visible
-  [schema_label]
-    content    schema_label_template                        input_schema_label_template
-    structure  schema_label_visible                         input_schema_label_visible
-```
-
-### input — needs attention (3)
-
-#### `input_description_format_template` → `description_format_template` · content
-
-- **Defined as:** Integrated description and format declaration. Template with {{format}} and {{description}} placeholders. Presents what the agent receives and in what shape as a single sentence.
-
-- **Review doc (✅):** `"Your input is a {{format}} file containing {{description}}."`
-
-- **Currently addresses:** addresses `description`.format
-- **Value:** `Your input is a {{format}} file containing {{description}}.`
-
-- **Tentative fix:** 3 of its section-mates declare `_heading`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `input_description_format_heading_template`
-
-#### `input_context_required_entry_template` → `context_required_entry_template` · content
-
-- **Defined as:** Template for rendering a single context entry. Contains {{context_label}} and {{context_path}} placeholders. Label-first presentation with path as the action target.
-
-- **Review doc (✅):** `"**{{context_label}}**: Read \`{{context_path}}\`"`
-
-- **Currently addresses:** prose, role `_entry_template`
-- **Value:** `**{{context_label}}**: Read `{{context_path}}``
-
-- **Tentative fix:** 3 of its section-mates declare `_heading`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `input_context_required_entry_heading_template`
-
-#### `input_parameters_entry_template` → `parameters_entry_template` · content
-
-- **Defined as:** Template for rendering a single parameter entry. Contains {{param_name}}, {{param_type}}, and {{param_description}} placeholders. Code-formatted parameter name signals literal identifier.
-
-- **Review doc (✅):** `` "`{{param_name}}` ({{param_type}}): {{param_description}}" ``
-
-- **Currently addresses:** prose, role `_entry_template`
-- **Value:** ``{{param_name}}` ({{param_type}}): {{param_description}}`
-
-- **Tentative fix:** 3 of its section-mates declare `_heading`; this declares none, so it reaches the body slot by the default-fallback rule rather than by saying so. Suggests `input_parameters_entry_heading_template`
-
-### input — conforming (20)
-
-| axis | source | universal | addresses |
-|---|---|---|---|
-| content | `input_section_start` | `section_start` | prose, role `_start` under `section` |
-| content | `input_section_preamble` | `section_preamble` | prose, role `_preamble` under `section` |
-| content | `input_context_required_heading` | `context_required_heading` | decorates `context_required` |
-| content | `input_context_required_intro` | `context_required_intro` | decorates `context_required` |
-| content | `input_context_available_heading` | `context_available_heading` | decorates `context_available` |
-| content | `input_parameters_transition` | `parameters_transition` | decorates `parameters` |
-| content | `input_parameters_heading` | `parameters_heading` | decorates `parameters` |
-| content | `input_input_completeness_postscript` | `input_completeness_postscript` | prose, role `_postscript` under `input_completeness` |
-| content | `input_schema_label_template` | `schema_label_template` | prose, role `_label` under `schema` |
-| structure | `input_section_preamble_visible` | `section_preamble_visible` | prose, role `_preamble` under `section` |
-| structure | `input_context_required_intro_visible` | `context_required_intro_visible` | decorates `context_required` |
-| structure | `input_parameters_transition_visible` | `parameters_transition_visible` | decorates `parameters` |
-| structure | `input_input_completeness_postscript_visible` | `input_completeness_postscript_visible` | prose, role `_postscript` under `input_completeness` |
-| structure | `input_schema_label_visible` | `schema_label_visible` | prose, role `_label` under `schema` |
-| structure | `input_parameters_heading_visible` | `parameters_heading_visible` | decorates `parameters` |
-| structure | `input_parameters_heading_auto_threshold` | `parameters_heading_auto_threshold` | decorates `parameters` |
-| display | `input_context_required_format` | `context_required_format` | data anchor |
-| display | `input_context_available_format` | `context_available_format` | data anchor |
-| display | `input_parameters_format` | `parameters_format` | data anchor |
-| display | `input_parameters_format_threshold` | `parameters_format_threshold` | data anchor |
 
 ## section_order
 

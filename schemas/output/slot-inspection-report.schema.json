@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "slot-inspection-report-schema-v1",
+  "title": "Slot Inspection Report",
+  "description": "What a Galdr run writes: the stage-1 slot inspection, as the {frontmatter, body} envelope write_json_validate_markdown takes. The report carries no frontmatter, so the file is its body. Written by src/galdr/logic/impure/document_write/.",
+  "type": "object",
+  "required": ["frontmatter", "body"],
+  "additionalProperties": false,
+  "properties": {
+    "frontmatter": {
+      "type": "object",
+      "maxProperties": 0
+    },
+    "body": {
+      "type": "string",
+      "pattern": "^# Stage 1 Slot Inspection\\n"
+    }
+  }
+}

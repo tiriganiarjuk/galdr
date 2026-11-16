@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "control-surface-tables-schema-v1",
+  "title": "Control Surface Tables",
+  "description": "A control surface as tools/rename_fields.py reads it straight after a rename: one table per section, holding that section's keys. The tool consumes the key names only, to check each against its Verdandi declaration. A surface's full shape is validated by its gate, once the schema cascade has carried the rename through. Source: extracted/{content,structure,display}.toml.",
+  "type": "object",
+  "minProperties": 1,
+  "propertyNames": { "pattern": "^[a-z][a-z0-9_]*$" },
+  "additionalProperties": {
+    "type": "object",
+    "propertyNames": { "pattern": "^[a-z][a-z0-9_]*$" }
+  }
+}

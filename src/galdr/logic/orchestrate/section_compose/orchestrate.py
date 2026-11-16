@@ -17,6 +17,7 @@ import gate_output_content_input
 import gate_output_display_input
 import gate_output_structure_input
 
+from galdr.logic.impure.document_write.simple import write_slot_inspection_report
 from galdr.logic.impure.gate_validate.simple import validate_input
 from galdr.logic.pure.section_compose.assembled import compose_section
 from galdr.logic.pure.section_compose.simple import field_view, local_field_view, source_name
@@ -25,6 +26,7 @@ from galdr.structure.gen.output_content import AgentOutputContent
 from galdr.structure.gen.output_display import AgentOutputDisplay
 from galdr.structure.gen.output_structure import AgentOutputStructure
 from galdr.structure.model.preprocessing_fields import PreprocessingFields
+from galdr.structure.model.slot_inspection_report import SlotInspectionReport
 
 
 def load_all_inputs(
@@ -166,6 +168,6 @@ def run(
         data_path, content_path, structure_path, display_path,
     )
     blocks = compose_all_sections(data, content, structure, display)
-    report = "# Stage 1 Slot Inspection\n\n" + "\n---\n\n".join(blocks) + "\n"
-    output_path.write_text(report, encoding="utf-8")
+    body = "# Stage 1 Slot Inspection\n\n" + "\n---\n\n".join(blocks) + "\n"
+    write_slot_inspection_report(SlotInspectionReport(body=body), output_path)
     return 0

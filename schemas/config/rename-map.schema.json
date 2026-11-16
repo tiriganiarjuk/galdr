@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rename-map-schema-v1",
+  "title": "Rename Map",
+  "description": "A control-surface rename map: one table per section, each entry `old = \"new\"`. Source: tools/rename_maps/*.toml. Read by tools/rename_fields.py through read_toml_validate_json.",
+  "type": "object",
+  "minProperties": 1,
+  "propertyNames": { "$ref": "#/$defs/name" },
+  "additionalProperties": {
+    "type": "object",
+    "propertyNames": { "$ref": "#/$defs/name" },
+    "additionalProperties": { "type": "string", "$ref": "#/$defs/name" }
+  },
+  "$defs": {
+    "name": { "pattern": "^[a-z][a-z0-9_]*$" }
+  }
+}

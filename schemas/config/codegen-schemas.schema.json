@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "codegen-schemas-schema-v1",
+  "title": "Codegen Schemas Config",
+  "description": "Maps each JSON Schema Galdr generates a Pydantic module from to that module's path under src/galdr/structure/. Source: src/galdr/codegen_schemas.toml. Read by src/galdr/generate_structures.py through read_toml_validate_json.",
+  "type": "object",
+  "required": ["checkpoint", "output"],
+  "additionalProperties": false,
+  "properties": {
+    "checkpoint": {
+      "description": "Data schemas produced by the agent-builder project: the checkpoint Galdr reads.",
+      "$ref": "#/$defs/schema_to_module"
+    },
+    "output": {
+      "description": "Control-surface schemas produced by the agent-output project.",
+      "$ref": "#/$defs/schema_to_module"
+    }
+  },
+  "$defs": {
+    "schema_to_module": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^gen/[a-z_]+$"
+      }
+    }
+  }
+}
