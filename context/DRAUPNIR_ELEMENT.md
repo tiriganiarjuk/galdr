@@ -12,7 +12,7 @@ on its behalf — and the only thing that produces the schemas everything else d
 directory structure and file shape; Draupnir is what makes violating one a compile error
 rather than a convention someone might choose to follow. The same data-from-logic split
 the system applies everywhere, applied here to the constraint system itself — and the
-self-hosting loop closes the circle, because Draupnir's own input models *are* the
+self-hosting loop closes the circle, because Draupnir's own input schemas *are* the
 definition of what a Verdandi file may contain.
 
 The property that matters most about it is that it is a **reliable, idempotent** schema
@@ -27,10 +27,10 @@ Three entry points:
 | Command | Does |
 |---|---|
 | `draupnir` | compile Verdandi YAML → JSON Schema documents |
-| `draupnir-export-schemas` | export Draupnir's own models → the input schemas |
-| `draupnir-generate-models` | generate Draupnir's input models from those schemas |
+| `draupnir-generate-models` | generate Draupnir's input models from its authored input schemas, and its tool models from the Nornir tool schemas it reads output through |
+| `draupnir-export-schemas` | export the manifest schema from the `VerdandiManifest` model |
 
-The last two are the self-hosting loop; see below.
+`draupnir-generate-models` completes the self-hosting loop; see below.
 
 **Invocation:** bare `uv run draupnir` is the generate-everything mode: it compiles every
 Verdandi project that has a schema level, and `--project` narrows it to one. The flags are
@@ -100,18 +100,20 @@ in the first and inlines in the second.
 ### The self-hosting loop
 
 ```
-hand-written models  (structure/model/)
-        │ export-schemas
-        ▼
 schemas/input/{level}.schema.json  ──►  named per call to read_yaml_validate_json
-        │ generate-models                to validate Verdandi YAML
+   (authored source)                    to validate Verdandi YAML
+        │ generate-models
         ▼
 generated input models  (structure/gen/input/)  ──►  parse the reader's output
 ```
 
-One source of truth, two consumers, zero manual sync. The models that define what a
-Verdandi file may contain also produce the validator that enforces it and the type that
-parses it.
+One source of truth, two consumers, zero manual sync. The schemas that define what a
+Verdandi file may contain are both the validator that enforces it and the source of the
+type that parses it.
+
+Each input schema is closed, and each reference in it records the levels it may name
+as a pattern, `^(atom|enum|…)/<name>$`. A misspelled key, or a reference to a level its
+position does not permit, is refused where the file is read.
 
 ### Fragments — closing the second door
 
@@ -209,22 +211,19 @@ for "did someone edit a generated schema by hand."
 
 ### One gap that is load-bearing
 
-Draupnir turns every reference into a typed graph edge — except one. A conditional
-predicate's target field is carried through as an opaque string: `build_if_condition` in
-`logic/transform/conditional_build/simple.py` places `when.field` straight into the
-emitted `required` and `properties` without checking that a field of that name exists in
-the enclosing container.
+A conditional predicate's target field is a reference too, and it comes in two forms.
 
-So a mistyped predicate target **fails open.** `only_when` quietly stops being exclusive;
-`always_when` quietly stops requiring anything. Both failures are invisible in the
-generated schema, which looks entirely well-formed.
+A target with no leading dot names a sibling in the same container. At load,
+`node_predicate_violations` checks that a sibling of that name exists, and a mistyped
+sibling target stops the run.
 
-There is one such typo in the tree today, and its effect is that the schema constraining
-an agent's own structured output is never required when that output is JSON or JSONL. The
-detection script and the confirmed instance are in `TODO.md` in the Verdandi repository.
+A target with a leading dot names a field from the schema root
+(`.task.processing.output_file_format`), and that path is not resolved. A mistyped root
+path **fails open**: `only_when` quietly stops being exclusive, `always_when` quietly stops
+requiring anything, and the generated schema looks entirely well-formed.
 
-State it plainly when you meet it: a predicate target is a reference like any other, and
-it is currently the only kind that is not resolved.
+State it plainly when you meet it: a root-path predicate target is a reference like any
+other, and it is currently the only kind that is not resolved.
 
 ### The level count
 
