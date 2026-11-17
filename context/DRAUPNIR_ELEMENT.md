@@ -165,7 +165,7 @@ same violation in new clothes. The third was worse than a failure — it widened
 aliases shared between input loading and output generation, which would have poisoned
 every downstream schema and contaminated the entire pipeline through the gates.
 
-The diagnosis, recorded in the repository:
+The diagnosis:
 
 > "We kept trying to fix the symptom while preserving the disease. Recursive descent
 > requires the leaf to know how to call the root. That's an upward dependency, and the
@@ -174,6 +174,18 @@ The diagnosis, recorded in the repository:
 The constraints were not obstacles. They were reporting a true fact about the algorithm.
 Schemas are a topological problem — the data is a directed acyclic graph — so the
 solution is a graph, and every workaround disappears because the need for them does.
+
+Graph in, graph out. A JSON Schema with shared `$defs` is itself a graph: each
+definition is a node and each `$ref` an edge. Compiling is translating one graph into
+another — the Verdandi hierarchy in, a schema's definitions out — so a graph is not an
+optimisation here but the natural representation, and recursion was a graph forced into
+the shape of a tree walk.
+
+That is why everything fell into place at once. Ordering, sharing and dispatch were not
+computed better by the graph; each one *is* a property the graph already has — a
+topological order, an in-degree, a node attribute — so the machinery built to compute
+them was no longer needed. And the references were never something to resolve: the
+string a file names is its cache key, and the cache key is the edge.
 
 **Carry this as the general rule: if you cannot solve a problem while staying inside
 the structure, you have not found the right architecture yet.**
