@@ -57,13 +57,6 @@ Galdr is the composition engine — the final stage of the agent pipeline (Verda
 12. `HOW_DATA_ENTERS.md` — the boundary: how external data becomes typed, and
    why unknown data never gets in. Prerequisite to reading any file.
 
-**Proof:** before writing anything: (a) state three project-specific constraints
-that diverge from how you'd normally do this work, with reasons; (b) from the
-four environment docs, state the one item you found most interesting, the one
-that most surprised you, and the one you are most eager to put into practice —
-chosen by you, in your own words. Generic acknowledgment means you are not
-oriented — go back and read.
-
 ---
 
 ## Refresh guide — want X → read Y
